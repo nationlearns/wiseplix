@@ -57,6 +57,16 @@
     <!-- Main STyle Sheet -->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/style.css') }}">
 
+    <style>
+
+        .whole-category-card{
+           transition: transform 0.2s ease-in-out;
+        }
+        .whole-category-card:hover{
+            transform: translateY(-3px)
+        }
+    </style>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-21XRZX7MFP"></script>
 <script>
@@ -70,7 +80,7 @@
 
 <body>
     <!-- LOADING AREA START ===== -->
-    <div class="loading-area">
+    {{-- <div class="loading-area">
         <div class="loading-box"></div>
         <div class="loading-pic">
             <div class="windows8">
@@ -91,7 +101,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- LOADING AREA  END ====== -->
     <div class="page-wraper"> <!-- HEADER START -->
         @include('header')
@@ -121,33 +131,30 @@
             <div class="aon-page-jobs-wrap">
                 <div class="container">
                     <div class="row">
-
-
-
                         <!-- Left part start -->
                         <div class="col-lg-12 col-md-12">
-
-
                             <div class="row">
                                 <!-- COLUMNS 1 -->
                                 @foreach($data as $item)
                                 <div class="col-lg-3 col-md-12">
-                                    <div class="aon-blog-style-1">
-                                        <div class="post-bx">
-                                            <!-- Content section for blogs start -->
-                                            <div class="post-thum">
-                                                <img title="{{ $item->alt_name }}" alt="{{ $item->alt_name }}" src="https://wiseplix-prod.s3.ap-south-1.amazonaws.com/Images/category_image/{{ $item->upload_category_image }}">
-                                            </div>
-                                            <div class="post-info">
-                                                <div class="post-text">
-                                                    <h4 class="post-title">
-                                                        <a href="{{route('category.view',$item->slug)}}">{{ str_replace('-', ' ', $item->slug) }}</a>
-                                                    </h4>
+                                    <div class="aon-blog-style-1 whole-category-card">
+                                        <a href="{{route('category.view', $item->slug)}}" class="">
+                                            <div class="post-bx">
+                                                <!-- Content section for blogs start -->
+                                                <div class="post-thum">
+                                                    <img title="{{ $item->alt_name }}" alt="{{ $item->alt_name }}" src="https://wiseplix-prod.s3.ap-south-1.amazonaws.com/Images/category_image/{{ $item->upload_category_image }}">
                                                 </div>
+                                                <div class="post-info">
+                                                    <div class="post-text">
+                                                        <h4 class="post-title">
+                                                            {{ str_replace('-', ' ', $item->slug) }}
+                                                        </h4>
+                                                    </div>
 
+                                                </div>
+                                                <!-- Content section for blogs end -->
                                             </div>
-                                            <!-- Content section for blogs end -->
-                                        </div>
+                                        </a>
                                     </div>
                                 </div>
                                 @endforeach
@@ -171,7 +178,9 @@
                                                     class="fa fa-chevron-right"></i></a>
                                         </li>
                                     </ul> --}}
-                                    {!! $data->links() !!}
+                                    <div class="my-5">
+                                        {!! $data->links() !!}
+                                    </div>
                                 </div>
 
                             </div>
