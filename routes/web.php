@@ -128,6 +128,14 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         Route::get('users/profile/{id}', 'UserProfile')->name('users.profile');
         Route::get('/all/questions','Questions')->name('all.questions');
         Route::get('add/question','AddQuestion')->name('add.question');
+        Route::get('/question/{question_id}/options','showOption')->name('show.question.options');
+        Route::get('/question/{question_id}/add-options', 'showAddOptionPage')->name('add.question.option');
+        Route::post('/question/{question_id}/add-options/store', 'storeOptions')->name('store.question.option');
+
+        Route::get('option/{option_id}', 'getOption');
+        Route::patch('option/{option_id}/update', 'updateOption')->name('option.update');
+        Route::delete('option/{option_id}/delete', 'deleteOption')->name('option.delete');
+
         Route::post('store/question', 'StoreQuestion')->name('store.question');
         Route::get('edit/question/{id}','EditQuestion')->name('edit.question');
         Route::post('update/question', 'UpdateQuestion')->name('update.question');

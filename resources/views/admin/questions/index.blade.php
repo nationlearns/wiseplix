@@ -55,6 +55,7 @@
                                             <td>
                                                 <a href="{{route('edit.question',$item->id)}}" class="btn btn-dark">Edit</a>
                                                 <a href="{{route('delete.question',$item->id)}}" class="btn btn-danger">Delete</a>
+                                                <a href="{{route('show.question.options', $item->id)}}" class="btn btn-info">Show Options</a>
                                             </td>
                                         </tr>
                                     @endforeach

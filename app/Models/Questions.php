@@ -46,15 +46,17 @@ class Questions extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function options(): HasMany
-    {
-        return $this->hasMany(QuestionOptions::class, 'question_id', 'id');
-    }
+    
 
     protected $dates = ['created_at', 'updated_at'];
 
     public $timestamps = false;
 
+
+    public function options(): HasMany
+    {
+        return $this->hasMany(QuestionOptions::class, 'question_id',);
+    }
 
     public function category(){
         return $this->belongsTo(Categories::class,'category_id','id');

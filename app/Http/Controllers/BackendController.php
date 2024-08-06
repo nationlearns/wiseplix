@@ -7,6 +7,7 @@ use App\Models\Categories;
 use App\Models\Faqs;
 use App\Models\User;
 use App\Models\Questions;
+use App\Models\QuestionOptions;
 use App\Models\Leads;
 use App\Models\Location;
 use Carbon\Carbon;
@@ -189,6 +190,9 @@ class BackendController extends Controller
         return view('admin.users.view_profile', compact('user'));
     }
 
+    
+
+
     public function Questions()
     {
         $data = Questions::with('category', 'subcategory')->get();
@@ -203,25 +207,30 @@ class BackendController extends Controller
 
     public function StoreQuestion(Request $request)
     {
-        Questions::insert([
+        $question = Questions::create([
             'category_id' => $request->category_id,
             'subcategory_id' => $request->subcategory_id,
             'question_label' => $request->question_label,
             'created_at' => Carbon::now()
         ]);
 
-        return redirect()->route('all.questions')->with('success', 'Questions Added Sucessfully');
+
+        return redirect()->route('add.question.option', $question['id'])->with('success', 'Questions Added Sucessfully');
     }
 
-    public function EditQuestion($id)
-    {
+
+
+
+
+
+
+    public function EditQuestion($id){
         $id = Questions::findOrFail($id);
         $cat = Categories::get();
         return view('admin.questions.editquestion', compact('cat', 'id'));
     }
 
-    public function UpdateQuestion(Request $request)
-    {
+    public function UpdateQuestion(Request $request){
         $id = $request->id;
 
         Questions::findOrfail($id)->update([
@@ -233,10 +242,71 @@ class BackendController extends Controller
         return redirect()->route('all.questions')->with('success', 'Questions Updated Sucessfully');
     }
 
-    public function DeleteQuestion($id)
-    {
+    public function DeleteQuestion($id){
         $id = Questions::findOrFail($id)->delete();
         return redirect()->route('all.questions')->with('success', 'Questions Deleted Sucessfully');
+    }
+
+    public function getOption($id){
+        $data = QuestionOptions::where('id', $id)->first();
+        return response()->json($data, 200);
+    }
+
+    public function showAddOptionPage(Request $request, $id){
+
+        $cat = Categories::get();
+
+        $question = Questions::where('id', $id)->first();
+
+        return view('admin.questions.option.create', compact('cat', 'question'));
+
+    }
+
+    public function storeOptions(Request $request, $id){
+
+        $question = Questions::where('id', $id)->first();        
+
+        // Loop through the titles and save them to the database
+        foreach ($request->title as $title) {
+
+            QuestionOptions::create([
+                'question_id' => $question['id'],
+                'title' => $title,
+                'val' => $title,
+            ]);
+        }
+
+        // Redirect back with a success message
+        return redirect()->route('show.question.options', $question['id'])->with('success', 'Options saved successfully!');
+
+
+
+
+    }
+
+    public function showOption($id){
+        $question = Questions::where('id', $id)->first();
+
+        $options = QuestionOptions::where('question_id', $question['id'])->get();
+        return view('admin.questions.option', compact('question', 'options')); 
+
+    }
+
+
+    public function updateOption(Request $request, $id){
+
+        QuestionOptions::findOrfail($id)->update([
+            'title' => $request['title'],
+            'updated_at' => Carbon::now()
+        ]);
+
+        return redirect()->back()->with('success', 'Option Updated successfully!');
+    }
+
+    public function deleteOption($id){
+        QuestionOptions::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'Questions Deleted Sucessfully');
+
     }
 
     
