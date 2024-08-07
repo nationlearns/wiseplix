@@ -1,39 +1,55 @@
 <div class="modal fade" id="myModal" role="dialog" aria-labelledby="questionModalLabel" aria-hidden="true" style="margin-top:71px; overflow:fixed; position: fixed; font-family: system-ui; background-color: rgb(155 150 150 / 50%);" data-backdrop="static">
-	<div class="modal-dialog">
+
+	<style>
+
+
+
+	</style>
+	
+	
+	<div class="modal-dialog ">
 		<div class="modal-content">
-			<div class="modal-header" style="padding: 1rem 1rem !important;border-bottom: 0 none;">
+			<div class="modal-header py-4">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButton">
-					<span aria-hidden="true">×</span>
+					<span aria-hidden="true" class="text-white">×</span>
 				</button>
 			</div>
 			<div class="modal-body" style="padding: 0.5rem;">
-				<div class="heading" style=" display:none;border: 1px solid; border-radius: 5px; padding: 10px 0px 0px 0px;" id="header-menu">
-					<h6 style="text-align: center; font-size: inherit; font-family: gorditabold; margin-bottom: 10px;">
-						Your Just a few steps Away to connect with your budget friendly professional.</h6>
+				<div class="heading my-4" style=" display:none;border: 1px solid; border-radius: 5px; padding: 10px 0px 0px 0px;" id="header-menu">
+					<h5 class="text-center py-2" style="">
+						Your Just a few steps Away to connect with your budget friendly professional.</h5>
 				</div>
 				<div class="heading" style="border: 1px solid; display:none; border-radius: 5px; padding: 10px 0px 0px 0px;" id="header1">
-					<h6 style="text-align: center; font-size: large; font-family: gorditabold; margin-bottom: 10px;">
+					<h6 style="text-align: center; font-size: large; ; margin-bottom: 10px;">
 						Great News, You're almost there!</h6>
 				</div>
 				<input type="hidden" id="subcategoryId" value="" name="subcategoryId">
 
+				<h3 style="" class="text-center text-black mb-3">Select the Services you want?</h3>
 				<form id="titleForm" style="display:none; margin-top: 5px; ">
-					<h3 style="margin-bottom: 15px; font-weight: 700; margin-top:15px;font-family: gorditabold; text-align:center; color:rgb(18, 29, 29)">Select the Services you want?</h3>
 					<!-- The radio buttons will be inserted here -->
 
 				</form>
+				
 				<p class="error" style="color:red" id="error"> </p>
+				
 				<h3 class="success" style="color:green" id="success"></h3>
-				<h3 id="question-text" style="margin-bottom: 0.5rem; font-weight: 700;font-family: gorditabold;"></h3>
+				
+				<h3 id="question-text" class="my-3 py-2" style="margin-left:10px;font-weight: 700;"></h3>
+				
 				<form id="options-form">
 				</form>
+
+				
+				{{-- Additional Info Form --}}
 				<form id="textForm" style="display: none;">
 					<div class="form-group">
-						<label for="exampleFormControlTextarea1" style="font-weight: 700; font-family: gorditabold;">Additional Info</label>
-						<textarea class="form-control" style="height:calc(3rem + 0.75rem + 2px) !important" id="otherDetails" rows="3"></textarea>
+						<label for="exampleFormControlTextarea1" style="">Additional Info</label>
+						<textarea class="form-control" style="height:calc(3rem + 0.75rem + 2px) !important" id="otherDetails" rows="10"></textarea>
 					</div>
 				</form>
 
+				{{-- User Information Form --}}
 				<form id="detail-form" style="display: none;">
 					<h3 class="text-dark text-center">Please tell us your name:</h3>
 					<div class="form-group">
@@ -53,11 +69,10 @@
 							<option value="other">Other</option>
 						</select>
 					</div>
-
 				</form>
 
 				<form class="pincode-form" id="pincodeForm" style="display: none;">
-				<h3 class="text-dark text-center" style="font-family: gorditabold">Where you want service?</h3>
+					<h3 class="text-dark text-center" style="">Where you want service?</h3>
 
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Pin Code" id="numberInput" />
@@ -69,8 +84,10 @@
 						<ul class="category-list" id="addressSuggestions"></ul>
 					</div>
 				</form>
+
+
 				<form id="verifyMobile" style="display: none;">
-					<h3 class="text-dark text-center" style="font-family: gorditabold">Your number is safe with us.</h3>
+					<h3 class="text-dark text-center" style="">Your number is safe with us.</h3>
 					<p class="text-dark fs-4 text-center" style="font-family:gorditamedium">Some matches prefer to provide quotes over the phone to get more details.</p>
 					<div class="form-group">
 						{{-- <label style="font-weight: 700;">Mobile Number</label> --}}
@@ -110,7 +127,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="modal-footer" style="padding: 0.25rem 1rem !important; border-top: 0 none;">
+				<div class="modal-footer" style="border-top: 0 none;">
 
 					<button type="button" class="modal-btn" style="display:none " val="" id="selectTitle">Next</button>
 					<button type="button" class="modal-btn" style="display:none" id="next-button">Next</button>

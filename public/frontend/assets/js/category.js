@@ -20,15 +20,23 @@ $(window).on('load', function() {
 
 function populateRadioButtons(data) {
     var radioGroup = $('#titleForm');
-    data.forEach(function(item) {
-        var radioButton = $('<input type="radio" name="title" class="input-radio" value="' + item.subcategory_id + '"> ' + item.name + '<br>');
+    data.forEach(function (item) {
+        
+
+        var label_start = '<label>'
+        var label_end = '</label>'
+
+        var radioButton = $(label_start + '<input type="radio" name="title" class="card-input-element" value="' + item.subcategory_id + '"><div class="panel panel-default card-input"><div class="panel-heading">' + item.name + '</div></div>'+label_end);
+
+
         radioGroup.append(radioButton);
+
     });
 
     // Display the form after populating radio buttons
     $("#selectTitle").css('display', 'block');
     $("#titleForm").css({
-        'display': 'block',
+        'display': 'flex',
         'margin-top': '20px'
     });
     $("#header-menu").css('display', 'block');
