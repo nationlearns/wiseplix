@@ -44,11 +44,15 @@ class UserController extends Controller
 
         return redirect('/');
     }
-    public function Profile()
-    {
-        $id = Auth::user()->id;
-        $user_id = User::where('id', $id)->first();
-        $myreq = Leads::where('user_id', Auth::user()->id)->get();
+    public function Profile(){
+
+        $user_id = Auth::user();
+
+        $myreq = Leads::where('user_id', $user_id->id)->get();
+
+        // return $myreq;
+        // $id = Auth::user()->id;
+        // $user_id = User::where('id', $id)->first();
         return view('profile', compact('user_id', 'myreq'));
     }
 

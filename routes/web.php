@@ -96,8 +96,10 @@ Route::get('/dashboard', function () {
     return view('dashboard', compact('data','blog'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth','role:user'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('user/logout',[UserController::class,'UserLogout'])->name('user.logout');
+});
+Route::middleware(['auth','role:user'])->group(function () {
     Route::get('profile',[UserController::class,'Profile'])->name('profile');
 });
 Route::get('/subcategory/ajax/{category_id}' , [PriceController::class,'GetSubCategory']);
