@@ -343,9 +343,9 @@
                         <div class="logo-header">
                             <div class="logo-header-inner logo-header-one">
                                 <a href="{{ url('/') }}">
-                                    <img src="{{ asset('frontend/assets/images/logowise.jpeg') }}" alt=""
+                                    <img src="{{ asset('images/logo/wiseplix-logo.png') }}" alt="" width="120"
                                         class="site-logo-has">
-                                    <img src="{{ asset('frontend/assets/images/logowise.jpeg') }}" alt=""
+                                    <img src="{{ asset('images/logo/wiseplix-logo.png') }}" alt="" width="120"
                                         class="site-logo-sticky">
                                 </a>
                             </div>

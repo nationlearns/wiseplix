@@ -23,7 +23,7 @@
                     <div class="sf-site-link sf-widget-link">
                         <h4 class="sf-f-title"></h4>
                         <ul>
-                            <li><a href="{{url('/')}}"><img src="https://wiseplix.com/frontend/assets/images/logowise.jpeg" alt="" width="150" height="50"></a></li>
+                            <li><a href="{{url('/')}}"><img src="https://wiseplix.com/images/logo/wiseplix-logo.png" alt="" width="150" height="50"></a></li>
                             <li><a href="">88, Borewell Rd, Palm Meadows,  </a></li>
                             <li><a href="">Whitefield, Bengaluru,</a></li>
                             <li><a href="">Karnataka 560066</a></li>

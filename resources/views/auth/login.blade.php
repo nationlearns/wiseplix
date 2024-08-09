@@ -77,7 +77,7 @@
                 <div class="col-md-6 contents">
                     <div class="row justify-content-center">
                         <a href="https://wiseplix.com/" class="text-center">
-                            <img src="https://wiseplix.com/frontend/assets/images/logowise.jpeg" alt="WisePlix" height="50px" width="200px" class="mb-4">
+                            <img src="https://wiseplix.com/images/logo/wiseplix-logo.png" alt="WisePlix" height="50px" width="200px" class="mb-4">
                           </a>
                         <div class="col-md-12">
                             <div class="form-block">
