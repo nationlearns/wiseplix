@@ -25,17 +25,16 @@ class UserController extends Controller
         return view('contactus');
     }
 
-    public function viewAbout()
-    {
+    public function viewAbout(){
         return view('aboutus');
     }
-    public function Blogs()
-    {
+
+    public function Blogs(){
         $data = Blogs::latest()->paginate(4);
         return view('blogs', compact('data'));
     }
-    public function UserLogout(Request $request): RedirectResponse
-    {
+
+    public function UserLogout(Request $request): RedirectResponse{
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
@@ -44,16 +43,24 @@ class UserController extends Controller
 
         return redirect('/');
     }
+    
     public function Profile(){
 
         $user_id = Auth::user();
 
-        $myreq = Leads::where('user_id', $user_id->id)->get();
+        $myreq = Leads::where('user_id', $user_id->id)->orderBy('created_at', 'Desc')->get();
+
+
+        
+
 
         // return $myreq;
         // $id = Auth::user()->id;
         // $user_id = User::where('id', $id)->first();
         return view('profile', compact('user_id', 'myreq'));
+
+
+
     }
 
     public function AllCategory()

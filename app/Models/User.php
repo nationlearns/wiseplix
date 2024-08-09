@@ -55,4 +55,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function associate(){
+        return $this->hasOne('App\Models\AssociateProfile', 'user_id');
+    }
 }

@@ -163,7 +163,7 @@
                     <div class="sf-page-scroll-nav clearfix">
                         <ul class="clearfix">
                             <li><a href="#aon-provider-info">About</a></li>
-                            <li><a href="#aon-provider-services">Services</a></li>
+                            <li><a href="#aon-provider-services">Requests</a></li>
                             <li><a href="#aon-provider-coInfo">Contact Info</a></li>
                             <li><a href="#aon-provider-review">Review</a></li>
                         </ul>
@@ -221,7 +221,7 @@
                     <div class="col-lg-8 col-md-12">
                         <!-- Services Detail-->
                         <div class="sf-provi-bio-box m-b50">
-                            <h3 class="sf-provi-title">Service</h3>
+                            <h3 class="sf-provi-title">About</h3>
                             <div class="sf-divider-line"></div>
                             <div class="sf-provi-cat"><strong>Categories:</strong> Packers and Movers</div>
                             <div class="sf-provi-bio-text">
@@ -257,29 +257,93 @@
                         </div>
                         <!-- Services -->
                         <div class="sf-provi-service-box  m-b50" id="aon-provider-services">
-                            <h3 class="sf-provi-title">Service</h3>
+                            <h3 class="sf-provi-title">Lead Requests</h3>
                             <div class="sf-divider-line"></div>
                             <ul class="sf-provi-service-list">
                                 @foreach ($myreq as $item)
-                                <li class="sf-provi-service-box">
+                                    <li class="sf-provi-service-box">
 
-                                    <div class="sf-provi-service-top">
-                                        <div class="sf-provi-service-left">
-                                            <h4 class="sf-provi-service-ttle"><span
-                                                    class="sf-provi-toggle-btn">+</span>{{$item->name}}
-                                                <span>Offer</span></h4>
-                                            <div class="sf-provi-service-price">RS124.00</div>
-                                            <p>Status <span class="badge bg-danger text-light">{{$item->lead_status}}</span></p>
-                                            <div class="sf-provi-service-hour"><i class="fa fa-clock-o"></i>{{$item->created_at}}</div>
+                                        <div class="sf-provi-service-top">
+                                            <div class="sf-provi-service-left">
+                                                <h4 class="sf-provi-service-ttle"><span
+                                                        class="sf-provi-toggle-btn">+</span>{{$item->name}}
+                                                    <span>Offer</span></h4>
+                                                <div class="sf-provi-service-price">RS124.00</div>
+                                                
+                                                <p>Status: 
+                                                    
+                                                    @if ($item->status == 1)
+                                                        <span class="badge bg-info text-light">Open</span>
+                                                    @else
+                                                        <span class="badge bg-danger text-light">Closed</span>
+                                                    @endif
+                                                </p>
+                                                
+                                                <div class="sf-provi-service-hour"><i class="fa fa-clock-o"></i>{{date('d M, Y', strtotime($item->created_at)); }}</div>
+                                            </div>
+
+                                            
+
                                         </div>
+                                        <div class="sf-provi-service-bottom">
+                                            <div class="sf-provi-descriptio">Mobile : {{$item->mobile}}.</div>
+                                            <div class="sf-provi-descriptio">Email : {{$item->email}}.</div>
+                                            <div class="sf-provi-descriptio">
+                                                <div class="card my-3">
+                                                    <div class="card-header">
+                                                        <h6 class="mb-0" style="font-weight: 600">Contacted By</h6>
+                                                    </div>
 
-                                    </div>
-                                    <div class="sf-provi-service-bottom">
-                                        <div class="sf-provi-descriptio">Mobile : {{$item->mobile}}.</div>
-                                        <div class="sf-provi-descriptio">Email : {{$item->email}}.</div>
-                                    </div>
-                                    
-                                </li>
+                                                    <div class="card-body">
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Name</th>
+                                                                    <th scope="col">Associate Profile</th>
+                                                                    <th scope="col">Status</th>
+                                                                    <th scope="col">Message</th>
+                                                                    <th scope="col">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($item->getPurchaseDetails as $associate)
+                                                                    
+                                                                    <tr>
+                                                                        <th scope="row">{{$associate->user['name']}}</th>
+                                                                        <td>
+                                                                            @if ($associate->user->associate()->exists())
+                                                                                
+                                                                            <a class="btn btn-sm btn-dark" href="{{route('associate.profile', $associate->user->associate->id)}}">View Profile</a>
+                                                                            @endif
+                                                                  
+                                                                        </td>
+                                                                        <td>
+
+                                                                            @if ($associate['status'] == 'pending')
+                                                                                <span class="badge bg-info text-light">Pending</span>
+
+                                                                            @elseif($associate['status'] == 'approved')
+                                                                                <span class="badge bg-success text-light">Approved</span>
+                                                                            @elseif($associate['status'] == 'rejected')
+                                                                                <span class="badge bg-danger text-light">Rejected</span>
+                                                                            @endif
+
+                                                                        </td>
+                                                                        <td>{{$associate['message']}}</td>
+                                                                        <td>
+                                                                            <a href="#" class="btn btn-warning btn-sm">Update</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        
+                                    </li>
                                 @endforeach
                             </ul>
 
@@ -287,7 +351,7 @@
 
                         <!-- Cotact Information-->
                         <div class="sf-provi-coInfo-box m-b50" id="aon-provider-coInfo">
-                            <h3 class="sf-provi-title">Cotact Information</h3>
+                            <h3 class="sf-provi-title">Contact Information</h3>
                             <div class="sf-divider-line"></div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -332,7 +396,7 @@
                             </div>
                         </div>
                         <!-- Customer Reviews-->
-                        <div class="sf-provi-articles-box m-b50" id="aon-provider-review">
+                        {{-- <div class="sf-provi-articles-box m-b50" id="aon-provider-review">
                             <h3 class="sf-provi-title"> Customer Reviews</h3>
                             <div class="sf-divider-line"></div>
 
@@ -604,7 +668,7 @@
                                 </div>
                             </div>
 
-                        </div>
+                        </div> --}}
 
 
                     </div>

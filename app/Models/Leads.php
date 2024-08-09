@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\PurchaseLeadDetails;
 
 class Leads extends Model
 {
@@ -19,5 +20,9 @@ class Leads extends Model
 
     public function subcategory(){
         return $this->belongsTo(Subcategory::class,'subcategory_id','id');
+    }
+
+    public function getPurchaseDetails(){
+        return $this->hasMany(PurchaseLeadDetails::class, 'lead_id');
     }
 }

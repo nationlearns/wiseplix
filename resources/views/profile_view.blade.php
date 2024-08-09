@@ -99,7 +99,7 @@
                         <div class="sf-banner-job-heading-area">
                             <div class="sf-banner-job-logo-pic"><img
                                     src="{{ asset('frontend/assets/images/job4.jpg') }}" alt=""></div>
-                            <div class="sf-banner-job-heading-large">{{ $id->company_name }}</div>
+                            <div class="sf-banner-job-heading-large">{{ $id->full_name }}</div>
                             <ul class="sf-banner-job-dutation">
                                 <li><i class="fa fa-envelope"></i> G-mail: <span class="jobs-timing">{{$id->email}}</span></li>
                                 <li><i class="fa fa-phone"></i> Phone Number : <span class="jobs-date-label">{{$id->phone}}</span></li>
