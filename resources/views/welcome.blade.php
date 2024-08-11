@@ -162,8 +162,8 @@
         .otp .validate {
             border-radius: 20px;
             height: 40px;
-            background-color: red;
-            border: 1px solid red;
+            /* background-color: red;
+            border: 1px solid red; */
             width: 140px;
         }
 
@@ -1243,12 +1243,12 @@
                         <div id="submitOtp" style="display: none;">
                             <div class="container otp height-100 d-flex justify-content-center align-items-center">
                                 <div class="position-relative">
-                                    <div class="card p-2 text-center" id="validateOtp">
+                                    <div class="card p-2 text-center my-4" id="validateOtp">
                                         <h4 class="success" style="color:green" id="success1"></h4>
                                         <h6>Please enter the one time password <br> to verify your account</h6>
-                                        <div><span>A code has been sent to</span>
+                                        {{-- <div><span>A code has been sent to</span>
                                             <small id="mobileNumber"></small>
-                                        </div>
+                                        </div> --}}
                                         <div id="otp"
                                             class="inputs d-flex flex-row justify-content-center mt-2">
                                             <input type="text"
@@ -1278,11 +1278,12 @@
                                         </div>
 
                                         <button class="btn" id="edit_mobile">Edit Mobile</button>
-                                        <div class="mt-4" style="display:inline">
-                                            <button type="button" class="btn btn-success" id="ResendOtp">Resend
-                                                OTP</button>
-                                            <button class="btn btn-danger px-4 validate"
-                                                id="validate">Validate</button>
+                                        <div class="mt-4 text-center" >
+                                            <div>
+                                                <button class="btn btn-dark px-4 validate" id="validate">Validate</button>
+                                            </div>
+                                            
+                                            <button type="button" style="background: transparent;font-size:12px" class="border-0 my-3" id="ResendOtp"><u>Resend OTP</u></button>
                                         </div>
                                     </div>
                                     <div class="card p-2 text-center" style="display: none;" id="validateSuccess">

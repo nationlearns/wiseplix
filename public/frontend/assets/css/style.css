@@ -38938,8 +38938,8 @@ button.close {
 .otp .validate {
     border-radius: 20px;
     height: 40px;
-    background-color: red;
-    border: 1px solid red;
+    /* background-color: red;
+    border: 1px solid red; */
     width: 140px;
 }
 
