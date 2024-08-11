@@ -379,6 +379,10 @@ function saveLeads() {
             } else {
                 $('#submitData').attr('disabled', false);
             }
+        },
+        error: function (request, status, error) {      
+            alert(request.responseJSON['message']);               
+            window.location.href = '/';           
         }
     });
 }

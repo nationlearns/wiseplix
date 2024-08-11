@@ -74,35 +74,55 @@ class LeadsController extends Controller
             // If $data['answers'] is not set or empty, add a null entry to $answerArray
             $answerArray[]['answers'] = null;
         }
+
+
+
+
         $checkUserData = User::where('mobile', $data['mobile'])->first();
         $userId = $checkUserData->id;
-        $user = Leads::create([
-            'user_id' => $userId,
-            'category_id' => $category_id,
-            'subcategory_id' => $data['subcategory_id'],
-            'answers' => !empty($data['answers']) ? json_encode($data['answers']) : null,
-            'name' =>  $data['name'],
-            'email' => $data['email'],
-            'mobile' => $data['mobile'],
-            'gender' => $data['gender'],
-            'lead_status' => 'NotSold',
-            'status' => '1',
-            'added_by' => $checkUserData->id,
-            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
-            'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
-            'bought_times' => '0',
-            'other_query' => $data['comment'],
-            'location_id' => $data['location_id'],
-            'pin_code'  => $data['pinCodeValue'],
-            'district_name' =>  $data['disticName'],
-            'state' =>   $data['stateName'],
-            'area_name' => $data['areaName'],
 
 
-        ]);
-        $subcategory_id = $data['subcategory_id'];
-        $this->notificationOfLeads($userId, $category_id, $data);
-        return response()->json(['status' => 200, 'success' => 'Leads Created Successfully', 'subcategory_id' => $subcategory_id]);
+        
+        // Check how many requests have been made for the same product and city
+        $requestCount = Leads::where('user_id', $userId)
+                            ->where('category_id', $category_id)
+                            // ->where('subcategory_id', $data['subcategory_id'])
+                            ->where('district_name', $data['disticName'])
+                            ->whereBetween('created_at', [now()->subDay(), now()])
+                            ->count();
+
+        if ($requestCount >= 2) {
+            return response()->json(['message' => 'Error!! You have reached the maximum number of requests for this category and city.'], 429);
+        }
+        else{
+            $user = Leads::create([
+                'user_id' => $userId,
+                'category_id' => $category_id,
+                'subcategory_id' => $data['subcategory_id'],
+                'answers' => !empty($data['answers']) ? json_encode($data['answers']) : null,
+                'name' =>  $data['name'],
+                'email' => $data['email'],
+                'mobile' => $data['mobile'],
+                'gender' => $data['gender'],
+                'lead_status' => 'NotSold',
+                'status' => '1',
+                'added_by' => $checkUserData->id,
+                'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                'bought_times' => '0',
+                'other_query' => $data['comment'],
+                'location_id' => $data['location_id'],
+                'pin_code'  => $data['pinCodeValue'],
+                'district_name' =>  $data['disticName'],
+                'state' =>   $data['stateName'],
+                'area_name' => $data['areaName'],
+    
+    
+            ]);
+            $subcategory_id = $data['subcategory_id'];
+            $this->notificationOfLeads($userId, $category_id, $data);
+            return response()->json(['status' => 200, 'success' => 'Leads Created Successfully', 'subcategory_id' => $subcategory_id]);
+        }
     }
 
 
