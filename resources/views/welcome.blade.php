@@ -285,7 +285,7 @@
             appearance: none;
             transition: background-color 0.3s, box-shadow 0.3s;
             cursor: pointer;
-            font-family: gorditabold;
+            ;
 
         }
 
@@ -316,6 +316,17 @@
             padding: 5px;
             margin: 10px;
             border-radius: 15px;
+        }
+
+        #questionandans > .form-check-label{
+            position: relative;
+            top: -1.8px;
+            width: 100%;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;;
+        }
+        #questionandans:hover {
+            border-color: #00bcd4;
         }
     </style>
 </head>
@@ -456,7 +467,7 @@
                 <div class="aon-find-bar aon-findBar-vertical">
                     <div class="container">
                         <!-- Search Form start-->
-                        <div class="search-form ">
+                        <div class="search-form shadow-sm" style="border-radius: 12px">
                             <form class="clearfix search-providers" method="get">
                                 <input type="hidden" name="s" value="">
 
@@ -464,8 +475,8 @@
 
                                     <div class="aon-searchbar-left">
                                         <ul class="clearfix sf-searchfileds-count-5">
-                                            <li>
-                                                <label>Category</label>
+                                            <li class="mb-3">
+                                                <label class="mb-2">Category</label>
                                                 <input type="text"
                                                     class="form-control sf-form-control aon-categories-select sf-select-box"
                                                     value="" placeholder="What Services are you looking for?"
@@ -477,28 +488,10 @@
 
                                                 <ul class="category-list" id="categorySuggestions"></ul>
 
-                                                <!-- <select id="categorysrh" name="catid" class="form-control sf-form-control aon-categories-select sf-select-box" title="Select Category">
-                                    <option class="bs-title-option" value="">Select a Category</option>
-                                    <option value="17">Cab Service</option>
-                                    <option value="30" data-content="<img class='childcat-img' width='50' height='auto' src={{ asset('frontend/assets/images/cat-thum/cat-2.jpg') }}>
-                                      <span class='childcat'>Car Dealers</span>">Car Dealers
-                                    </option>
-                                    <option value="19" data-content="<img class='childcat-img' width='50' height='auto' src={{ asset('frontend/assets/images/cat-thum/cat-3.jpg') }}>
-                                      <span class='childcat'>Food & Drink</span>">Food & Drink
-                                    </option>
-                                    <option value="19" data-content="<img class='childcat-img' width='50' height='auto' src={{ asset('frontend/assets/images/cat-thum/cat-4.jpg') }}>
-                                      <span class='childcat'>Plumber</span>">Plumber
-                                    </option>
-                                    <option value="19" data-content="<img class='childcat-img' width='50' height='auto' src={{ asset('frontend/assets/images/cat-thum/cat-5.jpg') }}>
-                                      <span class='childcat'>Electrician</span>">Electrician
-                                    </option>
-                                  </select> -->
-                                                {{-- <span class="sf-search-icon"><img
-                                                        src="{{ asset('frontend/assets/images/search-bar/maintenance.png') }}"
-                                                alt="" /></span> --}}
+            
                                             </li>
-                                            <li>
-                                                <label>Pincode</label>
+                                            <li class="mb-2">
+                                                <label class="mb-2">Pincode</label>
                                                 <input type="text"
                                                     class="form-control sf-form-control aon-categories-select sf-select-box"
                                                     placeholder="Pin Code" id="numberInput" />
@@ -508,20 +501,11 @@
                                                 <input type="hidden" id="stateName" value="">
                                                 <input type="hidden" id="areaName" value="">
                                                 <ul class="category-list" id="addressSuggestions"></ul>
-                                                <!-- <select class="sf-select-box form-control sf-form-control bs-select-hidden" data-live-search="true" name="country" id="country" title="Country" data-header="Select a Country">
-                                  <option class="bs-title-option" value="">Select Country</option>
-                                  <option value="">Select Country</option>
-                                  <option value="Turkey">Turkey</option>
-                                  <option value="United States">United States</option>
-                                </select> -->
-                                                {{-- <span class="sf-search-icon"><img
-                                                        src="{{ asset('frontend/assets/images/search-bar/globe.png') }}"
-                                                alt="" /></span> --}}
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="aon-searchbar-right">
-                                        <button type="button" id="openModalBtn" class="site-button"><i
+                                        <button type="button" id="openModalBtn" class="site-button" ><i
                                                 class="fa fa-search"></i> Find Provider</button>
                                     </div>
 
@@ -1178,37 +1162,40 @@
     <!-- Popup-modal -->
     <div class="modal fade" id="questionModal" tabindex="-1" role="dialog" aria-labelledby="questionModalLabel"
         aria-hidden="true"
-        style="margin-top:71px; overflow:hidden; position: fixed; font-family: gorditabold; background-color: rgb(155 150 150 / 50%); "
+        style="margin-top:71px; overflow:hidden; position: fixed; ; background-color: rgb(155 150 150 / 50%); "
         data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header"
-                    style="padding:1rem !important; border-bottom: 0 none; background-image: url('https://as1.ftcdn.net/v2/jpg/01/21/99/80/1000_F_121998032_kLc38p2V6FknaB8i1NCXT61CU0sugVsG.jpg');">
+                <div class="modal-header py-4" style="background-image: url('https://as1.ftcdn.net/v2/jpg/01/21/99/80/1000_F_121998032_kLc38p2V6FknaB8i1NCXT61CU0sugVsG.jpg');">
                     <button type="button" class="close" id="closeButton" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="modal-body" style="padding: 0.5rem;">
-                        <div class="heading"
+                        <div class="heading my-3"
                             style=" display:none;border: 1px solid; border-radius: 5px; padding: 10px 0px 0px 0px;"
                             id="header-menu">
-                            <h6
-                                style="text-align: center; font-size: large; font-family: gorditabold; margin-bottom: 10px;">
-                                Your Just a few steps Away to connect with your budget friendly professional.</h6>
+                            <h5 class="text-center py-2">
+                                Your Just a few steps Away to connect with your budget friendly professional.</h5>
                         </div>
                         <div class="heading"
                             style="border: 1px solid; display:none; border-radius: 5px; padding: 10px 0px 0px 0px;"
                             id="header1">
-                            <h6
-                                style="text-align: center; font-size: large; font-family: gorditabold; margin-bottom: 10px;">
-                                Great News, You're almost there!</h6>
+                            <h5 class="text-center "
+                                style="text-align: center; font-size: large; ; margin-bottom: 10px;">
+                                Great News, You're almost there!</h5 >
                         </div>
+
                         <p class="error" style="color:red" id="error"> </p>
+
                         <h3 class="success" style="color:green" id="success"></h3>
-                        <h4 id="question-text" style="font-weight: 700; margin-bottom: 0.5rem;"></h4>
+
+                        <h4 id="question-text" class="my-3 py-2" style="margin-left:10px;font-weight: 700;"></h4>
+
                         <form id="options-form">
                         </form>
+                        
                         <form id="textForm" style="display: none;">
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1" class="form-check-label"
@@ -1239,7 +1226,7 @@
                             </div>
                         </form>
                         <form id="verifyMobile" style="display: none;">
-                            <h3 class="text-dark text-center" style="font-family: gorditabold">Your number is safe
+                            <h3 class="text-dark text-center" style="">Your number is safe
                                 with us.</h3>
                             <p class="text-dark fs-4 text-center" style="font-family:gorditamedium">Some matches
                                 prefer to provide quotes over the phone to get more details.</p>
@@ -1312,7 +1299,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer" style="padding: 0.25rem 1rem !important; border-top: 0 none;">
+                    <div class="modal-footer" style="border-top: 0 none;">
                         <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_button">Close</button> -->
                         <button type="button" class="btn btn-info" id="next-button">Next</button>
                         <button type="button" class="btn btn-info" style="display: none;"
