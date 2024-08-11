@@ -467,7 +467,7 @@
                 <div class="aon-find-bar aon-findBar-vertical">
                     <div class="container">
                         <!-- Search Form start-->
-                        <div class="search-form shadow-sm" style="border-radius: 12px">
+                        <div class="search-form shadow" style="border-radius: 12px">
                             <form class="clearfix search-providers" method="get">
                                 <input type="hidden" name="s" value="">
 
