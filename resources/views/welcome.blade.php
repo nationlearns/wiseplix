@@ -548,11 +548,14 @@
                                     <div class="aon-cat-item">
                                         <div class="aon-cat-pic media-bg-animate shine-hover">
                                             <a class="shine-box"
-                                                href="{{ route('category.view', $item->slug) }}"><img
+                                                href="{{ route('category.view', $item->slug) }}">
+                                                
+                                                <img src="{{asset('images/category-icons/'.$item->cat_image)}}" alt="" class="mw-100">
+                                                {{-- <img
                                                     src="https://wiseplix-prod.s3.ap-south-1.amazonaws.com/Images/category_image/{{ $item->upload_category_image }}"
-                                                    alt=""></a>
+                                                    alt=""></a> --}}
                                         </div>
-                                        <h4 class="aon-cat-title">{{ str_replace('-', ' ', $item->slug) }}</h4>
+                                        <h4 class="aon-cat-title">{{ $item->alt_name }}</h4>
                                     </div>
                                 </div>
                             @endforeach

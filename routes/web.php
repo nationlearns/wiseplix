@@ -7,6 +7,8 @@ use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\Blogs;
+use App\Models\Categories;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -24,17 +26,33 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $data = DB::table('categories')
     ->whereIn('slug', [
-        'Phography&Videography',
-        'Packers-and-Movers',
-        'Events',
-        'Lawyer-and-Legal-Services',
-        'Chartered-Accountants-and-Auditors'
+        'photography-and-videography',
+        'packers-and-movers',
+        'events',
+        'lawyer-and-legal-services',
+        'chartered-accountants-and-auditors'
     ])
     ->where('status', 1)
-    ->paginate(5);
+    ->get();
+
+    $cat = Categories::all();
+
+        foreach($cat as $category){
+            // $data = json_decode($category->title, true); 
+            
+            
+            $category->cat_image = Str::slug($category->slug).'.jpeg';
+            $category->update();
+        }
+
     $blog = Blogs::latest()->paginate(3);
     return view('welcome', compact('data','blog'));
+
+
 })->name('home');
+
+
+
 
 Route::get('/update-pass', function () {
     return view('aboutus');

@@ -141,13 +141,21 @@
                                         <a href="{{route('category.view', $item->slug)}}" class="">
                                             <div class="post-bx">
                                                 <!-- Content section for blogs start -->
+
+
+
+
                                                 <div class="post-thum">
-                                                    <img title="{{ $item->alt_name }}" alt="{{ $item->alt_name }}" src="https://wiseplix-prod.s3.ap-south-1.amazonaws.com/Images/category_image/{{ $item->upload_category_image }}">
+                                                    <img 
+                                                        title="{{ $item->alt_name }}" 
+                                                        alt="{{ $item->alt_name }}" 
+                                                        src="{{asset('images/category-icons/'.$item->cat_image)}}"
+                                                        >
                                                 </div>
                                                 <div class="post-info">
                                                     <div class="post-text">
                                                         <h4 class="post-title">
-                                                            {{ str_replace('-', ' ', $item->slug) }}
+                                                            {{ $item->alt_name }}
                                                         </h4>
                                                     </div>
 
