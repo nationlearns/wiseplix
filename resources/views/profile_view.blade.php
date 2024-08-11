@@ -62,7 +62,7 @@
 
 <body>
     <!-- LOADING AREA START ===== -->
-    <div class="loading-area">
+    {{-- <div class="loading-area">
         <div class="loading-box"></div>
         <div class="loading-pic">
             <div class="windows8">
@@ -83,10 +83,23 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- LOADING AREA  END ====== -->
     <div class="page-wraper"> <!-- HEADER START -->
         @include('header')
+
+        <div class="container">
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="position: absolute;top:4rem; right:4rem; z-index:999">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+        </div>
+
+
         <!-- HEADER END -->
 
         <!-- Content -->
@@ -100,12 +113,21 @@
                             <div class="sf-banner-job-logo-pic"><img
                                     src="{{ asset('frontend/assets/images/job4.jpg') }}" alt=""></div>
                             <div class="sf-banner-job-heading-large">{{ $id->full_name }}</div>
-                            <ul class="sf-banner-job-dutation">
+                            <ul class="sf-banner-job-dutation mb-4">
                                 <li><i class="fa fa-envelope"></i> G-mail: <span class="jobs-timing">{{$id->email}}</span></li>
                                 <li><i class="fa fa-phone"></i> Phone Number : <span class="jobs-date-label">{{$id->phone}}</span></li>
                                 <li><i class="fa fa-list-alt"></i> Category Name : <span class="jobs-date-label">{{$cat_name}}</span></li>
                             </ul>
+                            <div class="text-center py-3">
+
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
+                                        Connect with associate
+                                    </button>
+
+                            </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -214,6 +236,42 @@
     <!-- Login Sign Up Modal -->
     @include('loginmodel')
     <!-- Login Sign Up Modal -->
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Connect With Associate</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p">
+                    <form action="{{route('associate-message.store')}}" method="POST" class="my-4" enctype="multipart/form-data">
+                        @csrf
+                        <input type="text" name="associate_id" id="" value="{{$id->id}}">
+                        <div class="form-group" style="min-height:100px">
+                            <label for="message">Message</label>
+                            <div>
+
+                                <textarea name="message" id="" cols="30" rows="10" class="l form-control-lg" placeholder="Type your message here" style="width:100%;min-height:120px"></textarea>
+                            </div>
+                            
+                        </div>
+                        <div class="form-group text-end text-right">
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
 

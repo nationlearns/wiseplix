@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\OtpController;
 use App\Http\Controllers\Api\LeadsController;
 use App\Http\Controllers\Api\TransactionController;
+use App\Http\Controllers\AssociateMessageController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -52,7 +53,17 @@ Route::group(['middleware' => 'auth:sanctum'],function(){
     Route::post('/update-business/{id}',[BusinessesController::class,'UpdateBusiness']);
     Route::get('/profile-visit/{leadId}', [LeadsController::class, 'getProfileVisitByLeadId']);
 
+    // Show All Message of Associate
+    Route::get('/get/all/associate-message/{associate_id}', [AssociateMessageController::class, 'getAssociateMessage']);
+
+    // Show One Message
+    Route::get('/get/message/{id}', [AssociateMessageController::class, 'getMessage']);
+
+
+
 });
+
+Route::post('/associate-message/store', [AssociateMessageController::class, 'store'])->name('associate-message.store');
 
 Route::get('/get-all-category', [CategoriesController::class, 'getAllCategory']);
 Route::post('/get-subcategory/{id}', [CategoriesController::class, 'getSubCategory']);

@@ -69,13 +69,20 @@ class UserController extends Controller
         return view('all_category',  compact('data'));
     }
 
-    public function CategoryView($slug)
-    {
+    public function CategoryView($slug){
+        
         $slug = Categories::where('slug', $slug)->first();
+
         $id = $slug->id;
+
         $profile = DB::table('associate_profile')->select('*')->where('category_id', $id)->get();
+
+        // return $profile;
+        
         $count = $profile->count();
+        
         $data = DB::table('sub_categories')->select('*')->where('category_id', $id)->where('status', 1)->get();
+        
         return view('category_deatil', compact('slug', 'data', 'profile', 'count'));
     }
 

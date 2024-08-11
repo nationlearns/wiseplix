@@ -147,31 +147,48 @@
                         <div class="row">
                             <!--BLock 1-->
                             @if ($count > 0)
-                            @foreach ($profile as $item)
-                            <div class="col-md-6">
-                                <div class="sf-vender-list-wrap">
-                                    <div class="sf-vender-list-box d-flex">
-                                        <div class="sf-vender-list-pic" style="background-image:url({{asset('frontend/assets/images/categories/pic1.jpg')}})">
-                                            <a class="sf-vender-pic-link" href="{{route('associate.profile',$item->id)}}"></a>
-                                        </div>
-                                        <div class="sf-vender-list-info">
-                                            <h4 class="sf-venders-title"><a href="{{route('associate.profile',$item->id)}}">{{$item->full_name}}</a></h4>
-                                            <span class="sf-venders-address"><i class="fa fa-map-marker"></i>{{$item->address}}</span>
-                                            <div class="sf-ow-pro-rating">
-                                                <span class="fa fa-star"></span>
-                                                <span class="fa fa-star"></span>
-                                                <span class="fa fa-star"></span>
-                                                <span class="fa fa-star"></span>
-                                                <span class="fa fa-star text-gray"></span>
+                                @foreach ($profile as $item)
+
+                                    {{-- <div class="col-md-9 my-4">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-4 my-1">
+                                                        <img src="{{asset('frontend/assets/images/categories/pic1.jpg')}}" class="mw-100" alt="">
+                                                    </div>
+                                                    <div class="col-md-8 my-1">
+                                                        {{$item->full_name}}
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <p>{{ substr($item->about_company, 0, 90) }}.....</p>
+                                        </div>
+                                    </div> --}}
+
+
+                                    <div class="col-md-6">
+                                        <div class="sf-vender-list-wrap">
+                                            <div class="sf-vender-list-box d-flex">
+                                                <div class="sf-vender-list-pic" style="background-image:url({{asset('frontend/assets/images/categories/pic1.jpg')}})">
+                                                    <a class="sf-vender-pic-link" href="{{route('associate.profile',$item->id)}}"></a>
+                                                </div>
+                                                <div class="sf-vender-list-info">
+                                                    <h4 class="sf-venders-title"><a href="{{route('associate.profile',$item->id)}}">{{$item->full_name}}</a></h4>
+                                                    <span class="sf-venders-address"><i class="fa fa-map-marker"></i>{{$item->address}}</span>
+                                                    <div class="sf-ow-pro-rating">
+                                                        <span class="fa fa-star"></span>
+                                                        <span class="fa fa-star"></span>
+                                                        <span class="fa fa-star"></span>
+                                                        <span class="fa fa-star"></span>
+                                                        <span class="fa fa-star text-gray"></span>
+                                                    </div>
+                                                    <p>{{ substr($item->about_company, 0, 90) }}.....</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            @endforeach
+                                @endforeach
                             @else
-                            <h4 class="text-danger m-4">No Profile Found</h4>
+                                <h4 class="text-danger m-4">No Profile Found</h4>
                             @endif
                             <!--Pagination Start-->
                             <div class="site-pagination s-p-center">
