@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesdesign" name="author" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
 
@@ -40,9 +41,50 @@
     <!-- Responsive datatable examples -->
     <link href="{{ asset('backend/assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}"
         rel="stylesheet" type="text/css" />
+
+        <style>
+            .category-list{
+                z-index: 1000;
+                box-shadow: 0 5px 8px 0 rgba(0, 0, 0, .05);
+                box-sizing: border-box;
+                border-bottom-left-radius: 5px;
+                border-bottom-right-radius: 5px;
+                background-color: white;
+                color: black;
+                list-style-type: none;
+                margin: 0;
+                padding: 10px
+            }
+
+            .category-list #search-list{
+                padding-top: 8px;
+                padding-bottom: 8px;
+                border-bottom: 1px solid lightgray;
+                cursor: pointer;
+
+            }
+
+            .category-list #search-list:hover{
+                background: #252b3b;
+                color: #fff;
+            }
+
+        </style>
 </head>
 
 <body data-topbar="dark">
+
+    <div class="container">
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="position: absolute;top:4rem; right:4rem; z-index:999">
+                {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+    </div>
+
 
     <!-- <body data-layout="horizontal" data-topbar="dark"> -->
 

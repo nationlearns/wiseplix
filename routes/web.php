@@ -6,6 +6,10 @@ use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\AssociateUserController;
+use App\Http\Controllers\Admin\WalletController;
+use App\Http\Controllers\Admin\AssociateProfileController;
+
 use App\Models\Blogs;
 use App\Models\Categories;
 
@@ -172,5 +176,24 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         Route::get('all/leads','AllLeads')->name('all.leads');
         Route::get('add/leads','AddLeads')->name('add.leads');
     });
+
+    Route::controller(AssociateUserController::class)->group(function(){
+
+        Route::get('/associate', 'index')->name('admin.associate.index');
+        Route::get('/associate/create', 'create')->name('admin.associate.create');
+        Route::get('/associate/{id}/show', 'show')->name('admin.associate.show');
+        Route::post('/associate/store', 'store')->name('admin.associate.store');
+        Route::get('/associate/get-associate-data/{id}', 'getAssociateData')->name('admin.associate.data');
+        Route::patch('/associate/{id}/update', 'update')->name('admin.associate.update');
+        Route::delete('/associate/{id}/delete', 'delete')->name('admin.associate.delete');
+    });
+
+
+    Route::controller(WalletController::class)->group(function(){
+        Route::post('/wallet/store', 'store')->name('wallet.store');
+    });
+
+
+    Route::post('/associate/{id}/associate-profile/store', [AssociateProfileController::class, 'store'])->name('associate-profile.store');
 });
 require __DIR__ . '/auth.php';

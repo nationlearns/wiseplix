@@ -60,7 +60,7 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('admin.all.users') }}" class=" waves-effect">
+            <a href="{{ route('admin.associate.index') }}" class=" waves-effect">
                 <i class="ri-calendar-2-line"></i>
                 <span>Associate Profile</span>
             </a>

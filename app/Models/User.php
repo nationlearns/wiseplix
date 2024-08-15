@@ -59,4 +59,19 @@ class User extends Authenticatable
     public function associate(){
         return $this->hasOne('App\Models\AssociateProfile', 'user_id');
     }
+
+    public function getLocation(){
+        return $this->belongsTo('App\Models\Location', 'location_id');
+    }
+
+    public function getWallet(){
+        return $this->hasMany('App\Models\Wallet', 'user_id')->orderBy('created_at', 'Desc');
+
+    }
+
+    // Method to calculate the total wallet amount
+    public function getTotalWalletAmount()
+    {
+        return $this->getWallet->sum('amount');
+    }
 }
