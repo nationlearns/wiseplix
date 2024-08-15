@@ -25,7 +25,7 @@
 				</div>
 				<input type="hidden" id="subcategoryId" value="" name="subcategoryId">
 
-				<h3 style="" class="text-center text-black mb-3">Select the Services you want?</h3>
+				<h3 style="" class="text-center text-black mb-3" id="head-title">Select the Services you want?</h3>
 				<form id="titleForm" style="display:none; margin-top: 5px; ">
 					<!-- The radio buttons will be inserted here -->
 
@@ -51,16 +51,16 @@
 
 				{{-- User Information Form --}}
 				<form id="detail-form" style="display: none;">
-					<h3 class="text-dark text-center">Please tell us your name:</h3>
-					<div class="form-group">
+					<h3 class="text-dark pb-2">Please tell us your name:</h3>
+					<div class="form-group border-0 p-0" style="margin-bottom:16px !important">
 						<label style="font-weight: 700;">Your Name</label>
 						<input type="text" class="form-control" id="userName" aria-describedby="emailHelp" placeholder="Full Name" required>
 					</div>
-					<div class="form-group">
+					<div class="form-group border-0 p-0" style="margin-bottom:16px !important">
 						<label style="font-weight: 700;">Email ID</label>
 						<input type="email" class="form-control" id="userEmail" placeholder="Email" required>
 					</div>
-					<div class="form-group">
+					<div class="form-group border-0 p-0" style="margin-bottom:16px !important">
 						<label style="font-weight: 700;">Gender</label>
 						<select id="userGender" class="form-control">
 							<option value="">Select Gender</option>
@@ -100,9 +100,9 @@
 							<div class="card p-2 text-center" id="validateOtp">
 								<h4 class="success" style="color:green" id="success1"></h4>
 								<h6>Please enter the one time password <br> to verify your account</h6>
-								<div><span>A code has been sent to</span>
+								{{-- <div><span>A code has been sent to</span>
 									<small id="mobileNumber"></small>
-								</div>
+								</div> --}}
 								<div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
 									<input type="text" class="m-1 text-center form-control rounded numberonly bx-input" id="first" name="firstBx" maxlength="1" oninput='digitValidate(this)' onkeyup='tabChange(1)' required>
 									<input type="text" class="m-1 text-center form-control rounded numberonly bx-input" id="second" name="secondBx" maxlength="1" oninput='digitValidate(this)' onkeyup='tabChange(2)' required>
@@ -112,9 +112,14 @@
 									<input type="text" class="m-1 text-center form-control rounded numberonly bx-input" id="sixth" name="sixBx" maxlength="1" oninput='digitValidate(this)' onkeyup='tabChange(6)' required>
 								</div>
 								<button class="btn" id="edit_mobile">Edit Mobile</button>
-								<div class="mt-4" style="display:inline">
-									<button type="button" class="modal-btn" id="ResendOtp">Resend OTP</button>
-									<button class="modal-btn px-4 validate" id="validate">Validate</button>
+				
+
+								<div class="mt-4 text-center" >
+									<div>
+										<button class="btn btn-dark px-4 validate" id="validate">Validate</button>
+									</div>
+									
+									<button type="button" style="background: transparent;font-size:12px" class="border-0 my-3" id="ResendOtp"><u>Resend OTP</u></button>
 								</div>
 							</div>
 							<div class="card p-2 text-center" style="display: none;" id="validateSuccess">
@@ -144,3 +149,52 @@
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="modal fade" id="thankYouMdl" data-backdrop="static" data-keyboard="false" tabindex="-1"
+	aria-labelledby="thankYouMdlLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<div class="modal-body">
+				
+				<p style="font-size: 19px;font-weight: 600;font-family: sans-serif;color: #333; margin-top: 26px;" id="leadReqSuccessMsg"></p>
+				
+				<h3 style="/* line-height: 1px; */ color: #098209;
+				font-size: 26px;
+				margin-top: 30px;
+				font-family: cursive;">Thank You!</h3>
+			
+				<div style="
+				display: flex;
+				justify-content: end;
+				margin-bottom: 5px;
+				margin-right: 10px;
+			">
+					<p style="
+					font-size: small;
+					font-family: cursive;
+					color: white;
+					background: black;
+					display: inline;
+					padding: 2px;
+					margin-bottom: 5px;
+				">Powered By Wiseplix</p>
+				</div>
+				
+			</div>
+
+			<div class="modal-footer">
+
+				<button type="button" class="btn btn-secondary btn-lg" style="background-color: #00bcd4;border-color: white;" data-dismiss="modal">Okey!</button>
+
+			</div>
+		</div>
+	</div>
+</div>

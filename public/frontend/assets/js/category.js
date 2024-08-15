@@ -56,6 +56,7 @@ let userDetail = [];
 let pincode = '';
 $("#selectTitle").click(function() {
     var query = $("#subcategoryId").val();
+    $("#head-title").hide();
     if (query != '') {
         questionsData = []; // Reset questions data
         currentQuestionIndex = 0;
@@ -99,6 +100,7 @@ function displayQuestion() {
         $('#question-text').css('display', 'none');
         $("#next-button").css('display', 'none');
         $("#header-menu").css('display', 'block');
+        
     } else {
         const currentQuestion = questionsData[currentQuestionIndex];
         $("#question-text").text(currentQuestion.question);
@@ -258,7 +260,9 @@ $('#validate').click(function() {
     let fourth = $('#fourth').val();
     let fifth = $('#fifth').val();
     let sixth = $('#sixth').val();
+    
     let otp = first + second + third + fourth + fifth + sixth;
+
     const start = Date.now();
     $.ajax({
         url: "/api/validate-otp",
@@ -282,6 +286,8 @@ $('#validate').click(function() {
                 // $('#submit-button2').css('display','block');
                 // $('#submit-button2').attr('disabled',false);
                 $("#detail-form").css('display', 'block');
+                $('#submitData').removeAttr('disabled');
+                $("#head-title").hide();
                 $("#submitData").css('display', 'block');
             }
         }
@@ -373,9 +379,32 @@ function saveLeads() {
         success: function(res) {
             if (res) {
                 var query = res.subcategory_id;
+                // $('#validateSuccess').css('display', 'none');
+                // $('#thanks').css('display', 'block');
+
+                // $('#submitData').css('display', 'none');
+
+
                 $('#validateSuccess').css('display', 'none');
-                $('#thanks').css('display', 'block');
-                window.location.href = '/';
+                $('#submitData').css('display', 'none');
+                
+                //$('#thanks').css('display', 'block');
+
+                $('#myModal').modal('hide');
+                
+                $('.modal.fade.show, .modal-backdrop.fade.show').hide();
+
+                $('#leadReqSuccessMsg').html(res.success_msg);
+
+                console.log(res.success_msg);
+                console.log(res);
+                
+
+                $('#thankYouMdl').modal('show');
+
+
+
+                // window.location.href = '/';
             } else {
                 $('#submitData').attr('disabled', false);
             }
@@ -409,7 +438,7 @@ let digitValidate = function(ele) {
 let tabChange = function(val) {
     let ele = document.querySelectorAll('.bx-input');
     if (ele[val - 1].value != '') {
-        ele[val].focus()
+        ele[val].focus();
     } else if (ele[val - 1].value == '') {
         ele[val - 2].focus()
     }

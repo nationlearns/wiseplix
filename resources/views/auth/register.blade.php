@@ -76,16 +76,13 @@
 
 
 
-    <div class="content">
+    <div class="content py-5">
         <div class="container">
             <div class="row justify-content-center">
-                <!-- <div class="col-md-6 order-md-2">
-          <img src="images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid">
-        </div> -->
                 <div class="col-md-6 contents">
                     <div class="row justify-content-center">
                         <a href="https://wiseplix.com/" class="text-center">
-                            <img src="https://wiseplix.com/images/logo/wiseplix-logo.png" alt="WisePlix" height="50px" width="200px" class="mb-4">
+                            <img src="{{asset('images/logo/wiseplix-logo.png')}}" alt="WisePlix" width="200px" class="mb-4">
                           </a>
                         <div class="col-md-12">
                             <div class="form-block">
@@ -158,7 +155,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
             </div>

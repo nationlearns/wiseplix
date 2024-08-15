@@ -428,7 +428,11 @@ function saveLeads() {
                 $('#validateSuccess').css('display', 'none');
                 $('#thanks').css('display', 'block');
                 $('#submitData').css('display', 'none');
-                window.location.href = '/';
+                
+                setTimeout(function() {
+                    window.location.href = '/';
+                }, 4000);
+
             } else {
                 $('#submitData').attr('disabled', false);
             }

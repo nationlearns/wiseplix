@@ -316,6 +316,7 @@
             padding: 5px;
             margin: 10px;
             border-radius: 15px;
+            /* margin-bottom: 18px !important; */
         }
 
         #questionandans > .form-check-label{
@@ -1208,17 +1209,17 @@
                         </form>
 
                         <form id="detail-form" style="display: none;">
-                            <div class="form-group">
+                            <div class="form-group border-0 p-0" style="margin-bottom: 18px !important;">
                                 <label style="font-weight: 700;">Your Name</label>
                                 <input type="text" class="form-control" value="" id="userName"
                                     aria-describedby="emailHelp" placeholder="Enter Your Name" required>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group border-0 p-0" style="margin-bottom: 18px !important;">
                                 <label style="font-weight: 700;">Email ID</label>
                                 <input type="email" class="form-control" value="" id="userEmail"
                                     placeholder="Enter Your Email" required>
                             </div>
-                            <div class="form-check-gender">
+                            <div class="form-check-gender border-0 p-0">
                                 <label style="font-weight: 700;">Select Your Gender</label>
                                 <select id="userGender" value="" class="form-control">
                                     <option value="">Select Gender</option>
@@ -1294,10 +1295,14 @@
                                             experience we look forward to serving you better, Go ahead post your
                                             requirement.</p>
                                     </div>
-                                    <div class="card p-2 text-center" style="display: none;" id="thanks">
-                                        <h2>Your request is submitted successfully.</h2>
-                                        <h6>our service partners will reach out to you soon kindly provide them your
+                                    <div class="card p-2 text-center my-4" style="display: none;" id="thanks">
+                                        <div class="card-body">
+
+                                        <h3 style="font-weight: 600;" class="my-3">Your request is submitted successfully.</h3>
+                                        <h6 class="" style="font-weight: 500; line-height:1.2">Our service partners will reach out to you soon kindly provide them your
                                             compelte requirement they will give you the best service in good budget</h6>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
