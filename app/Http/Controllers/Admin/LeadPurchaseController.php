@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\PurchaseLeadDetails;
+
+
+class LeadPurchaseController extends Controller
+{
+    function index() {
+        $data = PurchaseLeadDetails::orderBy('created_at', 'DESC')->with('lead')->get();
+        // return $data;
+        return view('admin.lead-purchase.index', \compact('data'));
+    }
+}

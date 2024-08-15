@@ -71,5 +71,12 @@
                 <span>Leads</span>
             </a>
         </li>
+
+        <li>
+            <a href="{{route('admin.lead-purchase.index')}}" class=" waves-effect">
+                <i class="ri-calendar-2-line"></i>
+                <span>Lead Purchased</span>
+            </a>
+        </li>
     </ul>
 </div>

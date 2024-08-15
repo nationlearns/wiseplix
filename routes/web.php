@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\AssociateUserController;
 use App\Http\Controllers\Admin\WalletController;
 use App\Http\Controllers\Admin\AssociateProfileController;
+use App\Http\Controllers\Admin\LeadPurchaseController;
 
 use App\Models\Blogs;
 use App\Models\Categories;
@@ -193,7 +194,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         Route::post('/wallet/store', 'store')->name('wallet.store');
     });
 
-
     Route::post('/associate/{id}/associate-profile/store', [AssociateProfileController::class, 'store'])->name('associate-profile.store');
+    Route::get('/lead-purchase', [LeadPurchaseController::class, 'index'])->name('admin.lead-purchase.index');
 });
 require __DIR__ . '/auth.php';

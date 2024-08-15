@@ -14,4 +14,8 @@ class PurchaseLeadDetails extends Model
     public function user(){
         return $this->belongsTo('App\Models\User', 'user_id');
     }
+
+    public function lead(){
+        return $this->belongsTo('App\Models\Leads', 'lead_id');
+    }
 }

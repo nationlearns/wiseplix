@@ -25,4 +25,9 @@ class Leads extends Model
     public function getPurchaseDetails(){
         return $this->hasMany(PurchaseLeadDetails::class, 'lead_id');
     }
+
+    public function user(){
+        return $this->belongsTo(User::class,'user_id');
+
+    }
 }
