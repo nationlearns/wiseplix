@@ -254,7 +254,7 @@
                 <div class="modal-body p">
                     <form action="{{route('associate-message.store')}}" method="POST" class="my-4" enctype="multipart/form-data">
                         @csrf
-                        <input type="text" name="associate_id" id="" value="{{$id->id}}">
+                        <input type="hidden" name="associate_id" id="" value="{{$id->id}}">
                         <div class="form-group" style="min-height:100px">
                             <label for="message">Message</label>
                             <div>
@@ -264,7 +264,7 @@
                             
                         </div>
                         <div class="form-group text-end text-right">
-                            <button class="btn btn-primary" type="submit">Submit</button>
+                            <button class="btn btn-dark" type="submit">Submit</button>
                         </div>
                     </form>
                 </div>

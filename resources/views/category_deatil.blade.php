@@ -72,7 +72,7 @@
 
 <body>
     <!-- LOADING AREA START ===== -->
-    <div class="loading-area">
+    {{-- <div class="loading-area">
         <div class="loading-box"></div>
         <div class="loading-pic">
             <div class="windows8">
@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- LOADING AREA  END ====== -->
 	<div class="page-wraper">        <!-- HEADER START -->
      @include('header')
@@ -143,49 +143,52 @@
                 <div class="container">
 
                     <div class="section-content">
-                        <h3 class="text-info m-3">Profile Listing</h3>
+                        <h3 class="text-info my-3">Profile Listing</h3>
                         <div class="row">
                             <!--BLock 1-->
                             @if ($count > 0)
                                 @foreach ($profile as $item)
 
-                                    {{-- <div class="col-md-9 my-4">
+                                    <div class="col-md-9 my-4">
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-md-4 my-1">
-                                                        <img src="{{asset('frontend/assets/images/categories/pic1.jpg')}}" class="mw-100" alt="">
-                                                    </div>
-                                                    <div class="col-md-8 my-1">
-                                                        {{$item->full_name}}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> --}}
+                                                    <div class="col-md-3 my-1">
+                                                        
+                                                        <figure class="mb-0" 
+                                                            style="
+                                                            padding-top: 100%;  /* 450px/800px = 0.5625 */
+                                                            background-image: url(https://wiseplix.com/images/user/1720096596.jpg);
+                                                            background-size: cover;
+                                                            -moz-background-size: cover;  /* Firefox 3.6 */
+                                                            background-position: center;  /* Internet Explorer 7/8 */
+                                                            border-radius: 8px;
+                                                            ">
+                                                        </figure>
 
-
-                                    <div class="col-md-6">
-                                        <div class="sf-vender-list-wrap">
-                                            <div class="sf-vender-list-box d-flex">
-                                                <div class="sf-vender-list-pic" style="background-image:url({{asset('frontend/assets/images/categories/pic1.jpg')}})">
-                                                    <a class="sf-vender-pic-link" href="{{route('associate.profile',$item->id)}}"></a>
-                                                </div>
-                                                <div class="sf-vender-list-info">
-                                                    <h4 class="sf-venders-title"><a href="{{route('associate.profile',$item->id)}}">{{$item->full_name}}</a></h4>
-                                                    <span class="sf-venders-address"><i class="fa fa-map-marker"></i>{{$item->address}}</span>
-                                                    <div class="sf-ow-pro-rating">
-                                                        <span class="fa fa-star"></span>
-                                                        <span class="fa fa-star"></span>
-                                                        <span class="fa fa-star"></span>
-                                                        <span class="fa fa-star"></span>
-                                                        <span class="fa fa-star text-gray"></span>
+                                                        {{-- <img src="{{asset('frontend/assets/images/categories/pic1.jpg')}}" class="mw-100" alt=""> --}}
                                                     </div>
-                                                    <p>{{ substr($item->about_company, 0, 90) }}.....</p>
+                                                    <div class="col-md-9 my-1">
+                                                        <h3>{{$item->full_name}}</h3>
+                                                        <p> {{$item->about_company}}</p>
+
+                                                        <div class="d-flex gap-4 flex-wrap" style="gap: .5rem">
+                                                            @foreach ($item->subcategories as $subcategory)
+                                                                <span class="badge bg-info text-white">{{ $subcategory['slug'] }}</span>
+                                                            @endforeach
+                                                        </div>
+
+                                                        <p class="mt-2"><img src="https://akam.cdn.jdmagicbox.com/images/icontent/newwap/web2022/results_locat_icon.svg" alt="" width="16px" style="position: relative;top:-1.25px"> {{$item->area_of_service}}</p>
+
+                                                        <a href="{{route('associate.profile',$item->id)}}" class="btn btn-dark">View Details</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+
+                                    
                                 @endforeach
                             @else
                                 <h4 class="text-danger m-4">No Profile Found</h4>

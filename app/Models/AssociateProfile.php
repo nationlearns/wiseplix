@@ -17,4 +17,8 @@ class AssociateProfile extends Model
     public function category(){
         return $this->belongsTo(Categories::class,'category_id','id');
     }
+
+    public function subCategory(){
+        return $this->belongsTo(Subcategory::class,'subcategory_id','id');
+    }
 }

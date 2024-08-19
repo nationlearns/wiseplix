@@ -11,6 +11,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\AssociateProfile;
+use App\Models\Subcategory;
 
 class UserController extends Controller
 {
@@ -75,9 +77,30 @@ class UserController extends Controller
 
         $id = $slug->id;
 
-        $profile = DB::table('associate_profile')->select('*')->where('category_id', $id)->get();
+        $profile = AssociateProfile::where('category_id', $id)->get();
 
         // return $profile;
+
+        // foreach ($profile as $user_profile) {
+        //     // Decode the JSON array of subcategory IDs
+        //     $subcategoryIds = json_decode($user_profile->subcategory_id);
+
+        //     // Fetch the subcategory names
+        //     $user_profile->subcategories = Subcategory::whereIn('id', $subcategoryIds)->get();
+        // }
+
+        foreach ($profile as $user_profile) {
+            // Decode the JSON array of subcategory IDs if it's valid
+            $subcategoryIds = json_decode($user_profile->subcategory_id, true);
+
+            if (is_array($subcategoryIds)) {
+                // Fetch the subcategory names
+                $user_profile->subcategories = Subcategory::whereIn('id', $subcategoryIds)->get();
+            } else {
+                $user_profile->subcategories = collect(); // Return an empty collection if invalid
+            }
+        }
+
         
         $count = $profile->count();
         
