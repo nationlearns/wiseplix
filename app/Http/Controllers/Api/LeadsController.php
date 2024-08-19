@@ -19,8 +19,9 @@ use App\Models\AssociateProfile;
 use App\Models\ProfileVisit;
 use DB;
 use  Carbon\Carbon;
-
 use App\Jobs\SendLeadNotificationEmail;
+use App\Jobs\SendLeadConfirmationEmail;
+
 class LeadsController extends Controller
 {
     public function createUser(array $data)
@@ -242,6 +243,9 @@ class LeadsController extends Controller
             foreach ($partners as $partner) {
                 dispatch(new SendLeadNotificationEmail($lead, $partner));
             }
+
+            // Send Notification to the User Who Posted the lead
+            dispatch(new SendLeadConfirmationEmail($lead, $user));
 
             return response()->json([
                 'status' => 200, 
