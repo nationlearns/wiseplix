@@ -424,11 +424,27 @@ function saveLeads() {
         },
         success: function(res) {
             if (res) {
-                var query = res.subcategory_id;
-                $('#validateSuccess').css('display', 'none');
-                $('#thanks').css('display', 'block');
-                $('#submitData').css('display', 'none');
+                // var query = res.subcategory_id;
+                // $('#validateSuccess').css('display', 'none');
+                // $('#thanks').css('display', 'block');
+                // $('#submitData').css('display', 'none');
                 
+                // setTimeout(function() {
+                //     // window.location.href = '/';
+                // }, 4000);
+
+
+                $('#validateSuccess').css('display', 'none');
+                $('#submitData').css('display', 'none');
+
+                $('#questionModal').modal('hide');
+                
+                $('.modal.fade.show, .modal-backdrop.fade.show').hide();
+
+                $('#leadReqSuccessMsg').html(res.success_msg);                
+
+                $('#thankYouMdl').modal('show');
+
                 setTimeout(function() {
                     window.location.href = '/';
                 }, 4000);

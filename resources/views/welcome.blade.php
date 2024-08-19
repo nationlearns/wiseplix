@@ -1329,6 +1329,55 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="thankYouMdl" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="thankYouMdlLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    
+                    <p style="font-size: 19px;font-weight: 600;font-family: sans-serif;color: #333; margin-top: 26px;" id="leadReqSuccessMsg"></p>
+                    
+                    <h3 style="/* line-height: 1px; */ color: #098209;
+                    font-size: 26px;
+                    margin-top: 30px;
+                    font-family: cursive;">Thank You!</h3>
+                
+                    <div style="
+                    display: flex;
+                    justify-content: end;
+                    margin-bottom: 5px;
+                    margin-right: 10px;
+                ">
+                        <p style="
+                        font-size: small;
+                        font-family: cursive;
+                        color: white;
+                        background: black;
+                        display: inline;
+                        padding: 2px;
+                        margin-bottom: 5px;
+                    ">Powered By Wiseplix</p>
+                    </div>
+                    
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary btn-lg" style="background-color: #00bcd4;border-color: white;" data-dismiss="modal">Okey!</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- close Popup Modal -->
     <!-- JAVASCRIPT  FILES ========================================= -->
     <script src="{{ asset('frontend/assets/js/script.js') }}"></script>
