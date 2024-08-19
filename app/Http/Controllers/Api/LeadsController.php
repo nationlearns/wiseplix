@@ -19,6 +19,8 @@ use App\Models\AssociateProfile;
 use App\Models\ProfileVisit;
 use DB;
 use  Carbon\Carbon;
+
+use App\Jobs\SendLeadNotificationEmail;
 class LeadsController extends Controller
 {
     public function createUser(array $data)
@@ -221,6 +223,26 @@ class LeadsController extends Controller
                 ? 'Welcome to Wiseplix ' . $data['name'] . '</br><br> Your request has been submitted our professional or service provider will contact you soon! </br><br> In the meanwhile you can also download the Wiseplix app and request for any services on the go </br><br> Here is the list of service providers in your city for the product your looking for.'
                 : 'Welcome back ' . $data['name'] . '</br><br> We are happy to see you back. Your request has been submitted and our top-quality service provider or professional will reach out to you shortly. Kindly discuss the requirement and set up an appointment to meet.</br><br>Download the Wiseplix app and request any service on the go. In the meantime, check out the top service providers in your city.';
 
+
+            // Retrieve all partners who match the category, subcategory, and city
+            $partners = User::where('role', 'pro')
+                            ->whereHas('associate', function ($query) use ($category_id, $data) {
+                                $query->where('category_id', $category_id)
+                                    ->orWhere('subcategory_id', $data['subcategory_id'])
+                                    ->orWhere('area_of_service', $data['disticName']);
+                            })->get();
+
+            // $partners = AssociateProfile::where('category_id', $category_id)
+            //                 ->orWhere('subcategory_id', $data['subcategory_id'])
+            //                 ->orWhere('area_of_service', $data['disticName'])
+            //                 ->get();
+
+
+            // Send the notification email to each partner
+            foreach ($partners as $partner) {
+                dispatch(new SendLeadNotificationEmail($lead, $partner));
+            }
+
             return response()->json([
                 'status' => 200, 
                 'success' => 'Lead Created Successfully', 
@@ -228,6 +250,7 @@ class LeadsController extends Controller
                 'success_msg' => $welcomeMessage,
                 'new_user' => $isNewUser ? $user : null,
                 'old_user' => !$isNewUser ? $user : null,
+                'partner' => $partners
             ]);
         }
     }
@@ -592,27 +615,28 @@ class LeadsController extends Controller
         return response()->json(['followUps' => $followUps, 'success' => true, 'message'=> 'Record Found'], 200);
     }
 
-    public function storeFilter(Request $request)
-{
-    $user = Auth::user();
+    public function storeFilter(Request $request){
+        $user = Auth::user();
 
-    if (!$user) {
-        return response()->json(['success' => false, 'message' => 'User not authenticated'], 200);
+        if (!$user) {        
+            return response()->json(['success' => false, 'message' => 'User not authenticated'], 200);
+        }
+
+        $filterData = FilterData::updateOrCreate(
+            
+            ['created_by' => $user->id],
+            [
+                'filter_pincode' => isset($request->filter_pincode) ? $request->filter_pincode : null,
+                'filter_category_id' => isset($request->filter_category_id) ? $request->filter_category_id : null,
+                'filter_sub_category_id' => json_encode($request->filter_sub_category_id),
+                'filter_state' => isset($request->filter_state) ? $request->filter_state : null,
+                'filter_district' => json_encode($request->filter_district),
+            ]
+
+        );
+
+        return response()->json(['success' => true, 'message' => 'Filter data updated successfully'], 200);
     }
-
-    $filterData = FilterData::updateOrCreate(
-        ['created_by' => $user->id],
-        [
-            'filter_pincode' => isset($request->filter_pincode) ? $request->filter_pincode : null,
-            'filter_category_id' => isset($request->filter_category_id) ? $request->filter_category_id : null,
-            'filter_sub_category_id' => json_encode($request->filter_sub_category_id),
-            'filter_state' => isset($request->filter_state) ? $request->filter_state : null,
-            'filter_district' => json_encode($request->filter_district),
-        ]
-    );
-
-    return response()->json(['success' => true, 'message' => 'Filter data updated successfully'], 200);
-}
 
     public function getFilterData()
     {

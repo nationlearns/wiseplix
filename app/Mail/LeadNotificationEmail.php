@@ -9,17 +9,22 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class WelcomeEmail extends Mailable implements ShouldQueue
+class LeadNotificationEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    /**
+     * Create a new message instance.
+     */
 
+    public $lead;
+    public $partner;
 
- protected $user;
-
-    public function __construct($user)
+    public function __construct($lead, $partner)
     {
-        $this->user = $user;
+        $this->lead = $lead;
+        $this->partner = $partner;
+
     }
 
     /**
@@ -28,7 +33,7 @@ class WelcomeEmail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Welcome to Wiseplix',            
+            subject: 'A New Lead Available',
         );
     }
 
@@ -38,11 +43,12 @@ class WelcomeEmail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.user.welcome',
+            markdown: 'emails.lead-notification',
             with: [
-                'first_name' => explode(' ', $this->user->name)[0], 
-                'url' => config('app.url')
-            ],
+                'partner' => $this->partner,
+                'lead' => $this->lead,
+                'url' => config('app.url').'api/lead-details/'.$this->lead->id
+            ]
         );
     }
 
