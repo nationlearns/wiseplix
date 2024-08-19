@@ -110,20 +110,49 @@
                     <div class="sf-overlay-main" style="opacity:0;"></div>
                     <div class="sf-banner-job-heading-wrap">
                         <div class="sf-banner-job-heading-area">
-                            <div class="sf-banner-job-logo-pic"><img
-                                    src="{{ asset('frontend/assets/images/job4.jpg') }}" alt=""></div>
+                            <div class="sf-banner-job-logo-pic">
+
+                                
+                                <img src="https://wiseplix.com/images/user/1720096596.jpg" alt="">
+                            
+                            </div>
                             <div class="sf-banner-job-heading-large">{{ $id->full_name }}</div>
                             <ul class="sf-banner-job-dutation mb-4">
-                                <li><i class="fa fa-envelope"></i> G-mail: <span class="jobs-timing">{{$id->email}}</span></li>
-                                <li><i class="fa fa-phone"></i> Phone Number : <span class="jobs-date-label">{{$id->phone}}</span></li>
+                                <li><i class="fa fa-envelope"></i> E-Mail: <span class="jobs-timing">
+                                    @guest
+                                        @obfuscateEmail($id->email)
+                                    @else
+                                        {{$id->email}}
+                                    @endguest
+
+                                    
+
+                                </span></li>
+                                <li>
+                                    <i class="fa fa-phone"></i> Phone Number : <span class="jobs-date-label">
+                                        {{-- {{$id->phone}} --}}
+
+                                        @guest
+                                            @obfuscatePhone($id->phone)
+                                        @else
+                                            {{$id->phone}}
+                                        @endguest
+
+                                    </span></li>
                                 <li><i class="fa fa-list-alt"></i> Category Name : <span class="jobs-date-label">{{$cat_name}}</span></li>
                             </ul>
                             <div class="text-center py-3">
 
+                                @auth
+                                    
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
                                         Connect with associate
                                     </button>
+
+                                    @else
+                                    <a href="{{route('login')}}" class="btn btn-dark" > Connect with associate</a>
+                                @endauth
 
                             </div>
                         </div>
@@ -173,12 +202,6 @@
                                                 class="mfp-link job-gallery-link"></a>
                                         </div>
                                     </li>
-                                    <li>
-                                        <div class="job-gallery-pic"
-                                            style="background-image:url({{ asset('frontend/assets/images/job-gallery/pic4.jpg')}})">
-                                            <a href="#" class="job-gallery-link">24+</a>
-                                        </div>
-                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -189,18 +212,31 @@
 
                             <aside class="sf-jobdetail-sidebar">
                                 <div class="sf-jobdetail-blocks">
-                                    <div class="sf-related-jobs">
+                                    <div class="sf-related-jobs text-left">
                                         <div class="sf-related-job-pic">
-                                            <h4 class="sf-title">Location</h4>
+                                            <h4 class="sf-title">More Details</h4>
+                                        </div>
+                                        <div class="sf-related-job-location mb-2">
+                                            <i class="feather-map-pin"></i> Location: {{ $id->address }}
+                                        </div>
+                                        <div class="sf-related-job-location mb-2">
+                                            <i class="fa fa-envelope"></i> E-mail : 
+                                            
+                                            @guest
+                                                @obfuscateEmail($id->email)
+                                            @else
+                                                {{$id->email}}
+                                            @endguest
+
                                         </div>
                                         <div class="sf-related-job-location">
-                                            <i class="feather-map-pin"></i> {{ $id->address }}
-                                        </div>
-                                        <div class="sf-related-job-location">
-                                            <i class="fa fa-envelope"></i> G-mail : {{ $id->email }}
-                                        </div>
-                                        <div class="sf-related-job-location">
-                                            <i class="fa fa-phone"></i> Phone Number : <span class="jobs-date-label">{{$id->phone}}</span>
+                                            <i class="fa fa-phone"></i> Phone Number : <span class="jobs-date-label">
+                                                @guest
+                                                    @obfuscatePhone($id->phone)
+                                                @else
+                                                    {{$id->phone}}
+                                                @endguest
+                                            </span>
                                         </div>
 
                                     </div>
