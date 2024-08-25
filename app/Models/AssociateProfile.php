@@ -26,4 +26,19 @@ class AssociateProfile extends Model
         return $this->belongsTo(Location::class,'location_id','id');
 
     }
+
+    public function profileReview(){
+        return $this->hasMany('App\Models\AssociateReview', 'associate_id');
+    }
+
+    public function getAverageRatingAttribute()
+    {
+        $reviews = $this->profileReview;
+
+        if ($reviews->count() > 0) {
+            return $reviews->sum('star') / $reviews->count();
+        }
+
+        return 0; // Default value if there are no reviews
+    }
 }

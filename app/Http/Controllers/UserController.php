@@ -110,6 +110,45 @@ class UserController extends Controller
         return view('category_deatil', compact('slug', 'data', 'profile', 'count'));
     }
 
+
+    public function profileListing($slug){
+        $slug = Categories::where('slug', $slug)->first();
+
+        $id = $slug->id;
+
+        $profile = AssociateProfile::where('category_id', $id)->get();
+
+        // return $profile;
+
+        // foreach ($profile as $user_profile) {
+        //     // Decode the JSON array of subcategory IDs
+        //     $subcategoryIds = json_decode($user_profile->subcategory_id);
+
+        //     // Fetch the subcategory names
+        //     $user_profile->subcategories = Subcategory::whereIn('id', $subcategoryIds)->get();
+        // }
+
+        foreach ($profile as $user_profile) {
+            // Decode the JSON array of subcategory IDs if it's valid
+            $subcategoryIds = json_decode($user_profile->subcategory_id, true);
+
+            if (is_array($subcategoryIds)) {
+                // Fetch the subcategory names
+                $user_profile->subcategories = Subcategory::whereIn('id', $subcategoryIds)->get();
+            } else {
+                $user_profile->subcategories = collect(); // Return an empty collection if invalid
+            }
+        }
+
+        
+        $count = $profile->count();
+        
+        $data = DB::table('sub_categories')->select('*')->where('category_id', $id)->where('status', 1)->get();
+        
+        return view('category-profile-listing', compact('slug', 'data', 'profile', 'count')) ;
+    }
+
+
     public function AssProfile($id)
     {
         $avg = 0;

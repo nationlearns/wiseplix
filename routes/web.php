@@ -95,6 +95,7 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/blogs', 'Blogs')->name('blogs');
     Route::get('/all-category','AllCategory')->name('all.category');
     Route::get('category/{slug}','CategoryView')->name('category.view');
+    Route::get('category/profile-listing/{slug}','profileListing')->name('category.profile-listing');
     Route::get('associate/profile/{id}','AssProfile')->name('associate.profile');
     Route::get('blos/details/{slug}','BlogsDetails')->name('blos.details');
     Route::get('listing/{id}','Listing')->name('listing');

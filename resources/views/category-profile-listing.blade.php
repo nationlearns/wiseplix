@@ -101,50 +101,22 @@
     
         <!-- Content -->
         <div class="page-content">
-        <input type="hidden" id="category_id" value="{{$slug->id}}" name="category_id">
+            <input type="hidden" id="category_id" value="{{$slug->id}}" name="category_id">
 
-            <div class="section-content sf-allCaty-info-wrap">
-                <div class="container">
-                    <!--Category Detail Section Start-->
-                    <div class="row">
-                        <!--Category Detail Left-->
-                        <div class="col-md-6">
-                            <div class="sf-caty-pic" style="background-image: url('https://wiseplix-prod.s3.ap-south-1.amazonaws.com/Images/category_image/{{ $slug->upload_category_image }}');" alt="{{ $slug->alt_name}}">
-                            </div>
-                        </div>
-                        <!--Category Detail Right-->
-                        <div class="col-md-6">
-                            <div class="sf-caty-info">
-                                <h3>{{ str_replace('-', ' ', $slug->slug) }}</h3>
-                                <div class="sf-caty-text">
-                                    <p>{{$slug->description}}.</p>
-                                </div>
-                            </div>
-
-                            <div class="widget  widget_tag_cloud rounded-sidebar-widget">
-                                <div class="text-left m-b30">
-                                    <h3 class="widget-title text-success">Sub Categories</h3>
-                                    
-                                </div>  
-                                                                  
-                                <div class="tagcloud">
-                                    @foreach ($data as $item)
-                                    <a href="javascript:void(0);">{{ ucwords($item->slug) }}</a>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Category Detail Section End-->
-                </div>
-            </div>
             
-            <div class="section-content sf-caty-listResult-wrap">
+            <div class="section-content sf-caty-listResult-wrap py-4">
                 <div class="container">
 
                     <div class="section-content">
-                        <h3 class="text-info my-3">Profile Listing</h3>
+                        <h2 class="text-black">{{ $slug['alt_name'] }} Profile Listing</h2>
                         <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="my-3">
+                                    
+                                </div>
+                            </div>
+
                             <!--BLock 1-->
                             @if ($count > 0)
                                 @foreach ($profile as $item)
@@ -253,7 +225,7 @@
     @include('loginmodel')
     <!-- Login Sign Up Modal --> 
     
-    @include('categorymodal')
+    {{-- @include('categorymodal') --}}
     
     
 <!-- JAVASCRIPT  FILES ========================================= --> 
