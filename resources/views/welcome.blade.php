@@ -333,6 +333,9 @@
         .numberonly{
 			background: rgb(0 0 0 / 7%) !important;
 		}
+        .header-style-1 .header-nav .nav>li>a {
+            color: #000;
+        }
     </style>
 </head>
 
@@ -366,8 +369,8 @@
 
         <!-- HEADER START -->
         <header class="site-header header-style-1 mobile-sider-drawer-menu header-full-width">
-            <div class="sticky-header main-bar-wraper  navbar-expand-lg">
-                <div class="main-bar">
+            <div class="sticky-header main-bar-wraper  navbar-expand-lg" >
+                <div class="main-bar" style="background: white; border-bottom:1px solid lightgray">
 
                     <div class="container clearfix">
                         <!--Logo section start-->
@@ -405,13 +408,13 @@
                                         <li><a href="{{ url('category') }}">All Category</a></li>
                                     </ul>
                                 </li>
-                                <li class="has-child"><a href="{{ route('blogs') }}">Blog</a>
+                                <li class="has-child text-black"><a href="{{ route('blogs') }}">Blog</a>
                                 </li>
-                                <li class="has-child"><a href="{{ url('about-us') }}">About Us</a>
+                                <li class="has-child text-black"><a href="{{ url('about-us') }}">About Us</a>
                                 </li>
-                                <li class="has-child"><a href="{{ url('contact-us') }}">Contact Us</a>
+                                <li class="has-child text-black"><a href="{{ url('contact-us') }}">Contact Us</a>
                                 </li>
-                                <li class="has-child"><a href="{{route ('dashboard')}}">Business professional</a>
+                                <li class="has-child text-black"><a href="{{route ('dashboard')}}">Business professional</a>
                                 </li>
                             </ul>
                         </div>
