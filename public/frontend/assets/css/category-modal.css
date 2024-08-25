@@ -118,8 +118,9 @@ border-bottom: 1px solid #d9d9d9 !important;
 }
 
 .modal-header {
-    background-image: url('https://as1.ftcdn.net/v2/jpg/01/21/99/80/1000_F_121998032_kLc38p2V6FknaB8i1NCXT61CU0sugVsG.jpg');
-    background-size: cover;
+    background: rgba(0,188,212, .75) !important;
+    /* background-image: url('https://as1.ftcdn.net/v2/jpg/01/21/99/80/1000_F_121998032_kLc38p2V6FknaB8i1NCXT61CU0sugVsG.jpg');
+    background-size: cover; */
 }
 
 .form-check .form-check-input {

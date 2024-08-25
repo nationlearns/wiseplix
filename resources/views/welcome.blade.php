@@ -209,10 +209,10 @@
             background-color: #117EFE;
         }
 
-        .modal-header {
+        /* .modal-header {
             background-image: url(https://nl-prod-bucket.s3.ap-south-1.amazonaws.com/images/conn.jpg);
             background-size: cover;
-        }
+        } */
 
         .form-check .form-check-input {
             width: 15px;
@@ -335,6 +335,13 @@
 		}
         .header-style-1 .header-nav .nav>li>a {
             color: #000;
+        }
+
+        .modal-header {
+                background: rgba(0,188,212, .75) !important;
+
+            /* background-image: url('https://as1.ftcdn.net/v2/jpg/01/21/99/80/1000_F_121998032_kLc38p2V6FknaB8i1NCXT61CU0sugVsG.jpg');
+            background-size: cover; */
         }
     </style>
 </head>
@@ -1177,7 +1184,7 @@
         data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header py-4" style="background-image: url('https://as1.ftcdn.net/v2/jpg/01/21/99/80/1000_F_121998032_kLc38p2V6FknaB8i1NCXT61CU0sugVsG.jpg');">
+                <div class="modal-header py-4">
                     <button type="button" class="close" id="closeButton" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
