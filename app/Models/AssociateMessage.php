@@ -22,4 +22,11 @@ class AssociateMessage extends Model
         return $this->belongsTo(User::class,'user_id');
     }
 
+
+    public function associate(){
+        return $this->belongsTo(AssociateProfile::class,'associate_id');
+    }
+
+    
+
 }

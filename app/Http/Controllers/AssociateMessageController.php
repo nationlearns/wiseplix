@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AssociateMessage;
-
+use App\Jobs\SendEmailToAssociate;
+use App\Models\User;
 class AssociateMessageController extends Controller
 {
     //
@@ -27,6 +28,9 @@ class AssociateMessageController extends Controller
             'user_id' => auth()->user()->id,
             'message' => $request['message'],
         ]);
+
+
+        \dispatch(new SendEmailToAssociate($data));
 
         return redirect()->back()->with('success', 'Message Saved');
 
