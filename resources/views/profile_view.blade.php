@@ -285,14 +285,12 @@
 
                             </aside>
                             @auth
-                                
+
                                 @php
-                                    
                                     $data =  App\Models\AssociateReview::where([
                                         ['associate_id', $id->id],
                                         ['user_id', auth()->user()->id],
                                     ])->first();
-
                                 @endphp    
 
                                 @if (!isset($data))
@@ -331,10 +329,48 @@
                                             </form>
                                         </div>
                                     </div>
-                                {{-- @else
-                                    <p>Review Submitted</p> --}}
+
+                                {{-- @else --}}
+                                    
+                                    {{-- <p>Review Submitted</p> --}}
+                                    
+                                    
+
                                 @endif
 
+                                @if (count($reviews) > 0)
+                                    
+                                    <div class="card my-4" style="border-radius: 12px">
+                                        <div class="card-header">
+                                            Reviews
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="block">
+                                                <div class="rating">
+                                                    <input type="radio" id="star5" name="star" value="5" disabled {{ $avg == 5 ? 'checked' : ''}}   />
+                                                    <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                                    <input type="radio" id="star4" name="star" value="4" disabled {{ $avg == 4 ? 'checked' : ''}}/>
+                                                    <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                                    <input type="radio" id="star3" name="star" value="3" disabled {{ $avg == 3 ? 'checked' : ''}}/>
+                                                    <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                                    <input type="radio" id="star2" name="star" value="2" disabled {{ $avg == 2 ? 'checked' : ''}}/>
+                                                    <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                                    <input type="radio" id="star1" name="star" value="1" disabled {{ $avg == 1 ? 'checked' : ''}}/>
+                                                    <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+                                                </div>
+                                            </div>
+
+                                            <br><br><br>
+
+                                            <div>
+                                                @foreach ($reviews as $review)
+                                                    <p class="pb-2 mb-2" style="border-bottom: 1px solid lightgray"><b>{{$review->user->name ?? 'Anonymous User'}}</b>: {{$review['review']}}</p>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                                
                             @endauth
 
                         </div>

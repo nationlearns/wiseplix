@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\AssociateProfile;
 use App\Models\Subcategory;
+use App\Models\AssociateReview;
 
 class UserController extends Controller
 {
@@ -111,12 +112,22 @@ class UserController extends Controller
 
     public function AssProfile($id)
     {
+        $avg = 0;
+
         $id = DB::table('associate_profile')->select('*')->where('id', $id)->first();
         // dd($id);
         $cat_id = $id->category_id;
+
         $cat_name = Categories::where('id', $cat_id)->value('slug');
+
+        $reviews = AssociateReview::where('associate_id', $id->id)->get();
+
+        if(count($reviews) > 0){
+            $avg = floor($reviews->sum('star')/count($reviews));
+        }
+
         // dd($cat_name);
-        return view('profile_view', compact('id', 'cat_name'));
+        return view('profile_view', compact('id', 'cat_name', 'reviews', 'avg'));
     }
 
     public function BlogsDetails($slug)
