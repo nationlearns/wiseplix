@@ -385,6 +385,17 @@ function saveLeads() {
                 // $('#submitData').css('display', 'none');
 
 
+                // Get the current URL
+                const currentUrl = window.location.href;
+
+                // Split the URL by '/'
+                const parts = currentUrl.split('/');
+
+                // Get the last part after the last '/'
+                const lastPart = parts[parts.length - 1];
+
+
+
                 $('#validateSuccess').css('display', 'none');
                 $('#submitData').css('display', 'none');
                 
@@ -402,9 +413,10 @@ function saveLeads() {
 
                 $('#thankYouMdl').modal('show');
 
-
-
-                // window.location.href = '/';
+                setTimeout(function() {
+                    window.location.href = '/category/profile-listing/' + lastPart;
+                }, 2500);
+                
             } else {
                 $('#submitData').attr('disabled', false);
             }

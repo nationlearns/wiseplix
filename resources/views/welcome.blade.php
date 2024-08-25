@@ -329,6 +329,10 @@
         #questionandans:hover {
             border-color: #00bcd4;
         }
+
+        .numberonly{
+			background: rgb(0 0 0 / 7%) !important;
+		}
     </style>
 </head>
 
@@ -1210,17 +1214,17 @@
 
                         <form id="detail-form" style="display: none;">
                             <div class="form-group border-0 p-0" style="margin-bottom: 18px !important;">
-                                <label style="font-weight: 700;">Your Name</label>
+                                {{-- <label style="font-weight: 700;">Your Name</label> --}}
                                 <input type="text" class="form-control" value="" id="userName"
                                     aria-describedby="emailHelp" placeholder="Enter Your Name" required>
                             </div>
                             <div class="form-group border-0 p-0" style="margin-bottom: 18px !important;">
-                                <label style="font-weight: 700;">Email ID</label>
+                                {{-- <label style="font-weight: 700;">Email ID</label> --}}
                                 <input type="email" class="form-control" value="" id="userEmail"
                                     placeholder="Enter Your Email" required>
                             </div>
                             <div class="form-check-gender border-0 p-0">
-                                <label style="font-weight: 700;">Select Your Gender</label>
+                                {{-- <label style="font-weight: 700;">Select Your Gender</label> --}}
                                 <select id="userGender" value="" class="form-control">
                                     <option value="">Select Gender</option>
                                     <option value="Male">Male</option>
@@ -1230,8 +1234,7 @@
                             </div>
                         </form>
                         <form id="verifyMobile" style="display: none;">
-                            <h3 class="text-dark text-center" style="">Your number is safe
-                                with us.</h3>
+                            <h3 class="text-dark text-center" style="">Your number is safe with us.</h3>
                             <p class="text-dark fs-4 text-center" style="font-family:gorditamedium">Some matches
                                 prefer to provide quotes over the phone to get more details.</p>
 
@@ -1240,6 +1243,7 @@
                                 <input type="text" class="form-control" id="mobileNumber"
                                     placeholder="+91-9999999999">
                             </div>
+                            <small>Please enter 10 digit mobile no.</small>
                         </form>
                         <div id="submitOtp" style="display: none;">
                             <div class="container otp height-100 d-flex justify-content-center align-items-center">

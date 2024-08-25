@@ -2,7 +2,9 @@
 
 	<style>
 
-
+		.numberonly{
+			background: rgb(0 0 0 / 7%) !important;
+		}
 
 	</style>
 	
@@ -51,17 +53,17 @@
 
 				{{-- User Information Form --}}
 				<form id="detail-form" style="display: none;">
-					<h3 class="text-dark pb-2">Please tell us your name:</h3>
+					<h3 class="text-dark pb-2 px-3">Please tell us about yourself</h3>
 					<div class="form-group border-0 p-0" style="margin-bottom:16px !important">
-						<label style="font-weight: 700;">Your Name</label>
+						{{-- <label style="font-weight: 700;">Your Name</label> --}}
 						<input type="text" class="form-control" id="userName" aria-describedby="emailHelp" placeholder="Full Name" required>
 					</div>
 					<div class="form-group border-0 p-0" style="margin-bottom:16px !important">
-						<label style="font-weight: 700;">Email ID</label>
+						{{-- <label style="font-weight: 700;">Email ID</label> --}}
 						<input type="email" class="form-control" id="userEmail" placeholder="Email" required>
 					</div>
 					<div class="form-group border-0 p-0" style="margin-bottom:16px !important">
-						<label style="font-weight: 700;">Gender</label>
+						{{-- <label style="font-weight: 700;">Gender</label> --}}
 						<select id="userGender" class="form-control">
 							<option value="">Select Gender</option>
 							<option value="male">Male</option>
@@ -87,12 +89,13 @@
 
 
 				<form id="verifyMobile" style="display: none;">
-					<h3 class="text-dark text-center" style="">Your number is safe with us.</h3>
+					<h3 class="text-dark text-center" style=""></h3>
 					<p class="text-dark fs-4 text-center" style="font-family:gorditamedium">Some matches prefer to provide quotes over the phone to get more details.</p>
 					<div class="form-group">
 						{{-- <label style="font-weight: 700;">Mobile Number</label> --}}
 						<input type="text" class="form-control" id="mobileNumber" placeholder="Mobile Number">
 					</div>
+					<small>Please enter 10 digit mobile no.</small>
 				</form>
 				<div id="submitOtp" style="display: none;">
 					<div class="container otp height-100 d-flex justify-content-center align-items-center">
