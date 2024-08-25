@@ -6,6 +6,8 @@ use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AssociateReviewController;
+
 use App\Http\Controllers\Admin\AssociateUserController;
 use App\Http\Controllers\Admin\WalletController;
 use App\Http\Controllers\Admin\AssociateProfileController;
@@ -198,4 +200,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/lead-purchase', [LeadPurchaseController::class, 'index'])->name('admin.lead-purchase.index');
     Route::get('/lead-purchase/show/{id}', [LeadPurchaseController::class, 'show'])->name('admin.lead-purchase.show');
 });
+
+Route::post('/associate-profile-review/store', [AssociateReviewController::class, 'store'])->name('associate-review.store');
+
 require __DIR__ . '/auth.php';

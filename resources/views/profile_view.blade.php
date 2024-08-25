@@ -57,6 +57,44 @@
     <!-- Main STyle Sheet -->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/assets/css/style.css') }}">
 
+    <style>
+
+        .rating {
+            /* margin-top: 40px; */
+            border: none;
+            float: left;
+        }
+
+        .rating > label {
+            color: #90A0A3;
+            float: right;
+        }
+
+        .rating > label:before {
+            margin: 5px;
+            font-size: 2em;
+            font-family: FontAwesome;
+            content: "\f005";
+            display: inline-block;
+        }
+
+        .rating > input {
+            display: none;
+        }
+
+        .rating > input:checked ~ label,
+        .rating:not(:checked) > label:hover,
+        .rating:not(:checked) > label:hover ~ label {
+            color: #F79426;
+        }
+
+        .rating > input:checked + label:hover,
+        .rating > input:checked ~ label:hover,
+        .rating > label:hover ~ input:checked ~ label,
+        .rating > input:checked ~ label:hover ~ label {
+            color: #FECE31;
+        }   
+    </style>
 
 </head>
 
@@ -154,6 +192,8 @@
                                     <a href="{{route('login')}}" class="btn btn-dark" > Connect with associate</a>
                                 @endauth
 
+                                
+
                             </div>
                         </div>
                         
@@ -243,9 +283,63 @@
                                 </div>
 
 
+                            </aside>
+                            @auth
+                                
+                                @php
+                                    
+                                    $data =  App\Models\AssociateReview::where([
+                                        ['associate_id', $id->id],
+                                        ['user_id', auth()->user()->id],
+                                    ])->first();
+
+                                @endphp    
+
+                                @if (!isset($data))
+                                    
+                                    <div class="card my-4">
+                                        <div class="card-header">
+                                            <h5 class="mb-0">Add a Review</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            
+                                            <form action="{{route('associate-review.store')}}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="hidden" name="associate_id" value="{{$id->id}}" id="">
+                                                <div class="form-group mb-3">
+                                                    <div class="rating">
+                                                        <input type="radio" id="star5" name="star" value="5" />
+                                                        <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                                        <input type="radio" id="star4" name="star" value="4" />
+                                                        <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                                        <input type="radio" id="star3" name="star" value="3" />
+                                                        <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star2" name="star" value="2" />
+                                                        <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star1" name="star" value="1" />
+                                                        <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    {{-- <label for="review">Review</label> --}}
+                                                    <textarea name="review" id="" cols="30" rows="10" class="form-control form-control-lg" style="min-height: 100px;border:1px solid lightgray !important"></textarea>
+                                                </div>
+                                                <div class="form-group my-3">
+                                                    <button class="btn btn-info" type="submit">Submit</button>
+                                                </div>
+                                                
+                                            </form>
+                                        </div>
+                                    </div>
+                                {{-- @else
+                                    <p>Review Submitted</p> --}}
+                                @endif
+
+                            @endauth
+
                         </div>
 
-                        </aside>
+
 
                     </div>
                     <!-- Side bar END -->
