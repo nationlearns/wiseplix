@@ -74,4 +74,9 @@ class User extends Authenticatable
     {
         return $this->getWallet->sum('amount');
     }
+
+    public function leadPurchased(){
+        return $this->hasMany('App\Models\PurchaseLeadDetails', 'user_id');
+    }
+
 }

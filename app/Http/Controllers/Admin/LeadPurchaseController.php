@@ -14,4 +14,9 @@ class LeadPurchaseController extends Controller
         // return $data;
         return view('admin.lead-purchase.index', \compact('data'));
     }
+
+    function show($id){
+        $data = PurchaseLeadDetails::where('id', $id)->with('lead')->first();
+        return view('admin.lead-purchase.show', \compact('data'));
+    }
 }

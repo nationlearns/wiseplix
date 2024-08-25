@@ -61,7 +61,9 @@ class AssociateUserController extends Controller
 
         $cat = Categories::get();
 
-        $user = User::where([['role', 'pro'], ['id', $id]])->first();
+        $user = User::where([['role', 'pro'], ['id', $id]])->with('leadPurchased')->first();
+
+
         return view('admin.associates.show', compact('user', 'cat'));
     }
 

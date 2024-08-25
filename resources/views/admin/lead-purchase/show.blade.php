@@ -7,14 +7,14 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Lead Purchased</h4>
+                        <h4 class="mb-sm-0">Lead Details</h4>
 
-                        <div class="page-title-right">
+                        {{-- <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Lead Purchased</a></li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Lead Details</a></li>
                                 <li class="breadcrumb-item active">Lead Purchased</li>
                             </ol>
-                        </div>
+                        </div> --}}
 
                     </div>
                 </div>
@@ -30,64 +30,56 @@
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th>Leads Posted By</th>
-                                        <th>Purchased By</th>
-                                        <th>Purchased At</th>
-                                        <th>Action</th>
+                                        <th>Leads Details</th>
+                                        <th>Q/A</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data as $key => $item)
-                                        <tr style="border-bottom:1px solid">
-                                            {{-- <td>{{$item}}</td> --}}
-                                            <td style="border:1px solid lightgray">
-                                                Name: {{$item->lead->name ?? '-'}} <br>
-                                                Email: {{$item->lead->email ?? '-'}} <br>
-                                                Category: {{$item->lead->category['alt_name'] ?? '-'}} <br>
-                                                Sub-Category: {{$item->lead->subcategory['slug'] ?? '-'}} <br> <br>
+                                    <tr style="border-bottom:1px solid">
+                                        {{-- <td>{{$item}}</td> --}}
+                                        <td style="border:1px solid lightgray">
+                                            Name: {{$data->lead->name ?? '-'}} <br>
+                                            Email: {{$data->lead->email ?? '-'}} <br>
+                                            Category: {{$data->lead->category['alt_name'] ?? '-'}} <br>
+                                            Sub-Category: {{$data->lead->subcategory['slug'] ?? '-'}} <br> <br>
+                                            
+                                            <p class="mb-0">Gender: {{$item->lead['gender'] ?? '-'}}</p>
+                                            <p class="mb-0">Lead Status: {{$data->lead['lead_status'] ?? '-'}}</p>
+                                            <p class="mb-0">Area: {{$data->lead['area_name'] ?? '-'}}</p>
+                                            <p class="mb-0">Disctrict: {{$data->lead['district_name'] ?? '-'}}</p>
+                                            <p class="mb-0">State: {{$data->lead['state'] ?? '-'}}</p>
+                                            <p class="mb-0">Bought Time: {{$data->lead['bought_times'] ?? '-'}}</p>
+                                        </td>
+                                        <td style="border:1px solid lightgray">
+                                            @if ($data->lead && $data->lead->answers)
 
-                                                {{-- @if ($item->lead && $item->lead->answers)
-
-                                                    @php
-                                                        $answers = json_decode($item->lead->answers, true);
-                                                    @endphp
-                                                
-                                                    @if ($answers && is_array($answers))
-                                                        <ul>
-                                                            @foreach ($answers as $answer)
-                                                                <li>
-                                                                    Question: {{ $answer['question'] ?? '-' }} <br>
-                                                                    Answer: {{ $answer['answer'] ?? '-' }}
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    @else                                                        
-                                                        -
-                                                    @endif
-                                                    
-                                                @else
+                                                @php
+                                                    $answers = json_decode($data->lead->answers, true);
+                                                @endphp
+                                            
+                                                @if ($answers && is_array($answers))
+                                                    <ul>
+                                                        @foreach ($answers as $answer)
+                                                            <li>
+                                                                Question: {{ $answer['question'] ?? '-' }} <br>
+                                                                Answer: {{ $answer['answer'] ?? '-' }}
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                @else                                                        
                                                     -
                                                 @endif
-                                                    
                                                 
-                                                <p class="mb-0">Gender: {{$item->lead['gender'] ?? '-'}}</p>
-                                                <p class="mb-0">Lead Status: {{$item->lead['lead_status'] ?? '-'}}</p>
-                                                <p class="mb-0">Area: {{$item->lead['area_name'] ?? '-'}}</p>
-                                                <p class="mb-0">Disctrict: {{$item->lead['district_name'] ?? '-'}}</p>
-                                                <p class="mb-0">State: {{$item->lead['state'] ?? '-'}}</p> --}}
-                                                {{-- <p class="mb-0">Bought Time: {{$item->lead['bought_times'] ?? '-'}}</p> --}}
-                                            </td>
-                                            <td style="border:1px solid lightgray">
-                                                Name: {{$item->user['name'] ?? 'N/A'}} <br>
-                                                Email: {{$item->user['email'] ?? 'N/A'}} <br>
-                                                Phone: {{$item->user['mobile'] ?? 'N/A'}} <br>
-                                            </td>
-                                            <td style="border:1px solid lightgray">{{date('d M, Y', strtotime($item->created_at)); }}</td>
-                                            <td style="border:1px solid lightgray">
-                                                <a href="{{route('admin.lead-purchase.show', $item->id)}}" class="btn btn-info btn-sm">View Lead</a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        {{-- <td style="border:1px solid lightgray">{{date('d M, Y', strtotime($item->created_at)); }}</td>
+                                        <td style="border:1px solid lightgray">
+                                            <a href="{{route('admin.lead-purchase.show', $item->id)}}" class="btn btn-info btn-sm">View Lead</a>
+                                        </td> --}}
+                                    </tr>
+                                        
                                 </tbody>
                             </table>
 

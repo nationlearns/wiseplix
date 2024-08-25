@@ -36,7 +36,11 @@
                             <h5 class="mb-0">Associate User</h5>
                         </div>
                         <div class="card-body">
-                            {{$user}}
+                            {{-- {{$user}} --}}
+                            <p><b>Name:</b> {{$user['name']}}</p>
+                            <p><b>Email:</b> {{$user['email']}}</p>
+                            <p><b>Phone:</b> {{$user['mobile']}}</p>
+                            <p><b>Gender:</b> {{$user['gender']}}</p>
                         </div>
                     </div>
 
@@ -54,6 +58,25 @@
 
                             @if ($user->associate()->exists())
                             
+                                <div class="mb-2">
+                                    @if ($user->associate['profile_image'] != null)                                    
+                                        <img src="{{asset($user->associate['profile_image'])}}" width="100px" alt="">
+                                    @endif
+                                </div>
+                                <p><b>Category:</b> {{$user->associate->category['alt_name'] ?? '-'}}</p>
+                                <p><b>Name:</b> {{$user->associate['full_name'] ?? '-'}}</p>
+                                <p><b>Email:</b> {{$user->associate['email'] ?? '-'}}</p>
+                                <p><b>Phone:</b> {{$user->associate['phone'] ?? '-'}}</p>
+                                <p><b>Business Name:</b> {{$user->associate['about_company'] ?? '-'}}</p>
+                                <p><b>About:</b> {{$user->associate['business_name'] ?? '-'}}</p>
+                                @if ($user->associate->location()->exists())                                
+                                    <p><b>Location:</b> {{$user->associate->location['name']}}, {{$user->associate->location['district_name']}}, {{$user->associate->location['state_name']}}, {{$user->associate->location['pincode']}}</p>
+                                @else
+                                    <p><b>Location</b> -</p>
+                                @endif
+                                <p><b>Address:</b> {{$user->associate['address'] ?? '-'}}</p>
+                                <p><b>Area Of Service:</b> {{$user->associate['area_of_service'] ?? '-'}}</p>
+
                             @else
 
                                 <form action="{{route('associate-profile.store', $user['id'])}}" id="associate-profile-id" method="post">
@@ -145,12 +168,14 @@
 
                             @endif
                             
-                            {{$user->associate}}
+
+
+                            {{-- {{$user->associate}} --}}
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card">
+                    <div class="card mb-4">
                         <div class="card-header">
                             <h5 class="mb-0">Wallet Points</h5>
                         </div>
@@ -180,6 +205,43 @@
                             </table>
                         </div>
                     </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Lead Purchased</h5>
+                        </div>
+                        <div class="card-body">
+
+                            <table id="datatable" class="table table-bordered dt-responsive nowrap"
+                                style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="border: 1px solid lightgray">Leads Details</th>
+                                        <th style="border: 1px solid lightgray">Action</th>
+                                    </tr>
+                                </thead>
+
+                                @foreach ($user->leadPurchased as $data)
+                                    
+                                    <tr>
+                                        <td style="border: 1px solid lightgray">
+                                            Name: {{$data->lead->name ?? '-'}} <br>
+                                            Email: {{$data->lead->email ?? '-'}} <br>
+                                            Category: {{$data->lead->category['alt_name'] ?? '-'}} <br>
+                                            Sub-Category: {{$data->lead->subcategory['slug'] ?? '-'}} <br> <br>
+                                        </td>
+                                        <td>
+                                            <a href="{{route('admin.lead-purchase.show', $data->id)}}" class="btn btn-info btn-sm">View Lead</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </table>
+
+                            
+                            {{-- {{$user->leadPurchased}} --}}
+                        </div>
+                    </div>
+
                 </div>
 
             </div> <!-- end row -->

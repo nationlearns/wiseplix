@@ -73,7 +73,7 @@
 
 <body>
     <!-- LOADING AREA START ===== -->
-    <div class="loading-area">
+    {{-- <div class="loading-area">
         <div class="loading-box"></div>
         <div class="loading-pic">
             <div class="windows8">
@@ -94,7 +94,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- LOADING AREA  END ====== -->
     <div class="page-wraper"> <!-- HEADER START -->
         @include('header')
@@ -136,18 +136,12 @@
                             </div>
                             <div class="sf-provi-social">
                                 <ul class="share-social-bx">
-                                    <li class="fb"><a href="javascript:;"> <i class="fa fa-facebook"></i> Share
-                                        </a></li>
-                                    <li class="tw"><a href="javascript:;"> <i class="fa fa-twitter"></i> Share
-                                        </a></li>
-                                    <li class="lin"><a href="javascript:;"> <i class="fa fa-linkedin"></i> Share
-                                        </a></li>
-                                    <li class="pin"><a href="javascript:;"> <i class="fa fa-pinterest"></i> Share
-                                        </a></li>
-                                    <li class="gp"><a href="javascript:;"> <i class="fa fa-google-plus"></i>
-                                            Share </a></li>
-                                    <li class="dig"><a href="javascript:;"> <i class="fa fa-digg"></i> Share </a>
-                                    </li>
+                                    <li class="fb"><a href="javascript:;"> <i class="fa fa-facebook"></i> Share </a></li>
+                                    <li class="tw"><a href="javascript:;"> <i class="fa fa-twitter"></i> Share </a></li>
+                                    <li class="lin"><a href="javascript:;"> <i class="fa fa-linkedin"></i> Share </a></li>
+                                    <li class="pin"><a href="javascript:;"> <i class="fa fa-pinterest"></i> Share </a></li>
+                                    <li class="gp"><a href="javascript:;"> <i class="fa fa-google-plus"></i> Share </a></li>
+                                    <li class="dig"><a href="javascript:;"> <i class="fa fa-digg"></i> Share </a> </li>
                                 </ul>
                             </div>
 
@@ -178,7 +172,7 @@
                 <div class="row">
 
                     <!--Left Section-->
-                    <div class="col-lg-4 col-md-12">
+                    {{-- <div class="col-lg-4 col-md-12">
 
                         <aside class="sf-sidebar-left">
 
@@ -214,14 +208,14 @@
 
                         </aside>
 
-                    </div>
+                    </div> --}}
                     <!--Left Section End-->
 
                     <!-- right part start -->
-                    <div class="col-lg-8 col-md-12">
+                    <div class="col-lg-12 col-md-12">
                         <!-- Services Detail-->
                         <div class="sf-provi-bio-box m-b50">
-                            <h3 class="sf-provi-title">About</h3>
+                            {{-- <h3 class="sf-provi-title">About</h3>
                             <div class="sf-divider-line"></div>
                             <div class="sf-provi-cat"><strong>Categories:</strong> Packers and Movers</div>
                             <div class="sf-provi-bio-text">
@@ -232,7 +226,7 @@
                                     solutions, we can help knowledge to help you increase your presence you transform
                                     your business, maximize performance and surpass the competition.</p>
 
-                            </div>
+                            </div> --}}
 
 
                             <div class="social-share-icon social-share-icon2">
@@ -265,29 +259,102 @@
 
                                         <div class="sf-provi-service-top">
                                             <div class="sf-provi-service-left">
-                                                <h4 class="sf-provi-service-ttle"><span
-                                                        class="sf-provi-toggle-btn">+</span>{{$item->name}}
-                                                    <span>Offer</span></h4>
-                                                <div class="sf-provi-service-price">RS124.00</div>
                                                 
-                                                <p>Status: 
+                                                <h4 class="sf-provi-service-ttle"><span class="sf-provi-toggle-btn">+</span>
+                                                    {{$item->name}} {{-- <span>Offer</span> --}}
+                                                </h4>
+                                                {{-- {{$item['answers']}} --}}
+
+                                                <div class="card my-3">
+                                                    <div class="card-header">
+                                                        <h6 class="mb-0" style="font-weight: 600">Lead Details</h6>
+                                                    </div>
+
+                                                    <div class="card-body">
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Category</th>
+                                                                    <th scope="col">Sub-Category</th>
+                                                                    <th scope="col">Q/A</th>
+                                                                    <th scope="col">Status</th>
+                                                                    <th scope="col">PinCode</th>
+                                                                    <th scope="col">Area</th>
+                                                                    <th scope="col">District</th>
+                                                                    <th scope="col">State</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th scope="row">{{$item->category['alt_name']}}</th>
+                                                                    <td>
+                                                                        {{$item->subcategory_id}}
+                                                                
+                                                                    </td>
+                                                                    <td>
+                                                                        @if ($item && $item->answers)
+                                                                            @php
+                                                                                $answers = json_decode($item->answers, true);
+                                                                            @endphp
+                                                                        
+                                                                            @if ($answers && is_array($answers))
+                                                                                
+
+                                                                                    @foreach ($answers as $answer)
+                                                                                        Question: {{ $answer['question'] ?? '-' }}  <br>
+                                                                                        Answer: {{ $answer['answer'] ?? '-' }} <br> <br>
+                                                                                    @endforeach
+                                                                            
+                                                                            @else                                                        
+                                                                                -
+                                                                            @endif
+                                                                            
+                                                                        @else
+                                                                            NA
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+
+                                                                        @if ($item->status == 1)
+                                                                            <span class="badge bg-info text-light">Open</span>
+                                                                        @else
+                                                                            <span class="badge bg-danger text-light">Closed</span>
+                                                                        @endif
+
+                                                                    </td>
+                                                                    <td>{{$item->pin_code}}</td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+
+                                                
+
+                                                {{-- <div class="sf-provi-service-price">RS124.00</div> --}}
+                                                
+                                                <p>
                                                     
-                                                    @if ($item->status == 1)
-                                                        <span class="badge bg-info text-light">Open</span>
-                                                    @else
-                                                        <span class="badge bg-danger text-light">Closed</span>
-                                                    @endif
+                                                    Status: 
+                                                    
+                                                    
+
                                                 </p>
                                                 
-                                                <div class="sf-provi-service-hour"><i class="fa fa-clock-o"></i>{{date('d M, Y', strtotime($item->created_at)); }}</div>
+                                                <div class="sf-provi-service-hour"><i class="fa fa-clock-o"></i>{{date('d M, Y', strtotime($item->created_at)) }}</div>
+                                            
                                             </div>
 
                                             
 
                                         </div>
                                         <div class="sf-provi-service-bottom">
-                                            <div class="sf-provi-descriptio">Mobile : {{$item->mobile}}.</div>
-                                            <div class="sf-provi-descriptio">Email : {{$item->email}}.</div>
+                                            <div class="sf-provi-descriptio">Mobile : {{$item->mobile}}</div>
+                                            <div class="sf-provi-descriptio">Email : {{$item->email}}</div>
                                             <div class="sf-provi-descriptio">
                                                 <div class="card my-3">
                                                     <div class="card-header">

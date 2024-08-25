@@ -189,11 +189,12 @@ class LeadsController extends Controller
                             ->whereBetween('created_at', [now()->subDay(), now()])
                             ->count();
 
-        if ($requestCount >= 3) {
-            return response()->json([
-                'message' => 'Error!! You have reached the maximum number of requests for this category and city.'
-            ], 429);
-        } else {
+        // if ($requestCount >= 3) {
+        //     return response()->json([
+        //         'message' => 'Error!! You have reached the maximum number of requests for this category and city.'
+        //     ], 429);
+        // } else {
+
             $lead = Leads::create([
                 'user_id' => $userId,
                 'category_id' => $category_id,
@@ -256,7 +257,8 @@ class LeadsController extends Controller
                 'old_user' => !$isNewUser ? $user : null,
                 'partner' => $partners
             ]);
-        }
+
+        // }
     }
 
 

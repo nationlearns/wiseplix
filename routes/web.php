@@ -196,5 +196,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
     Route::post('/associate/{id}/associate-profile/store', [AssociateProfileController::class, 'store'])->name('associate-profile.store');
     Route::get('/lead-purchase', [LeadPurchaseController::class, 'index'])->name('admin.lead-purchase.index');
+    Route::get('/lead-purchase/show/{id}', [LeadPurchaseController::class, 'show'])->name('admin.lead-purchase.show');
 });
 require __DIR__ . '/auth.php';

@@ -58,8 +58,7 @@ Route::group(['middleware' => 'auth:sanctum'],function(){
 
     // Show One Message
     Route::get('/get/message/{id}', [AssociateMessageController::class, 'getMessage']);
-
-
+    
 
 });
 
