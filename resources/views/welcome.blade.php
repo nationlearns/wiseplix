@@ -458,7 +458,7 @@
                 <div class="aon-banner-outer sf-overlay-wrapper">
                     <div class="aon-banner-pic">
                         <div class="aon-curve-area"></div>
-                        <div class="aon-overlay-main" style="opacity:0.85; background-color:#022278;"></div>
+                        <div class="aon-overlay-main" style="opacity:0.85; background-color:rgb(1, 58, 1);"></div>
                         <img src="{{ asset('frontend/assets/images/banner/bnr-pic.jpg') }}" width="1919"
                             height="176" alt="">
                     </div>
