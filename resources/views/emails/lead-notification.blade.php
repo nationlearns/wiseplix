@@ -1,10 +1,34 @@
 <x-mail::message>
-# Hello {{$partner['name']}},
 
-A new lead available. 
+# {{$lead['name']}} is looking for {{$lead->category['alt_name']}}
+# {{$lead['pin_code']}}, {{$lead->location['district_name']}}
+
+<b>Lead Details</b>
+
+@if ($lead && $lead['answers'])
+@php
+$answers = json_decode($lead->answers, true);
+@endphp
+
+@if ($answers && is_array($answers))
+@foreach ($answers as $answer)
+
+Question: {{ $answer['question'] ?? '-' }}             
+Answer: {{ $answer['answer'] ?? '-' }}
+
+@endforeach
+@else                                                        
+-
+@endif
+
+@else
+-
+@endif
+
+
 
 <x-mail::button url="{{$url}}">
-    Check Lead Now
+    Contact {{$lead['name']}}
 </x-mail::button>
 
 Thanks,<br>

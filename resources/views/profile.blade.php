@@ -108,9 +108,11 @@
                 <div class="container sf-proBnr-container">
                     <div class="sf-proBnr-row row">
                         <div class="col-md-12 sf-proBnr-left text-center">
-                            <div class="sf-provi-pic"><img src="{{ asset('frontend/assets/images/pro-pic.jpg') }}"
-                                    alt="" /></div>
-                            <h3 class="sf-provi-name">{{ $user_id->name }}</h3>
+                            <div class="sf-provi-pic mb-2">
+                                <img src="{{asset('images/profile-user.png')}}" style="width:150px;height:150px"
+                                    alt="" />
+                                </div>
+                            <h3 class="">{{ $user_id->name }}</h3>
                             <div class="sf-provi-tagline">{{ $user_id->email }}</div>
                             <div class="sf-provi-tagline">{{ $user_id->mobille }}</div>
                             <div class="sf-provi-gallery">
@@ -125,16 +127,8 @@
                                 <a class="elem pic-long"
                                     href="{{ asset('frontend/assets/images/profile/pic6.jpg') }}"></a>
                             </div>
-                            <div class="sf-provi-rating">
-                                <div class="sf-ow-pro-rating">
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star text-gray"></span>
-                                </div>
-                            </div>
-                            <div class="sf-provi-social">
+                            
+                            {{-- <div class="sf-provi-social">
                                 <ul class="share-social-bx">
                                     <li class="fb"><a href="javascript:;"> <i class="fa fa-facebook"></i> Share </a></li>
                                     <li class="tw"><a href="javascript:;"> <i class="fa fa-twitter"></i> Share </a></li>
@@ -143,7 +137,7 @@
                                     <li class="gp"><a href="javascript:;"> <i class="fa fa-google-plus"></i> Share </a></li>
                                     <li class="dig"><a href="javascript:;"> <i class="fa fa-digg"></i> Share </a> </li>
                                 </ul>
-                            </div>
+                            </div> --}}
 
                         </div>
                     </div>
@@ -156,10 +150,9 @@
                 <div class="container">
                     <div class="sf-page-scroll-nav clearfix">
                         <ul class="clearfix">
-                            <li><a href="#aon-provider-info">About</a></li>
-                            <li><a href="#aon-provider-services">Requests</a></li>
+                            <li><a href="#aon-provider-info">My Profile</a></li>
+                            <li><a href="#aon-provider-services">Lead Requests</a></li>
                             <li><a href="#aon-provider-coInfo">Contact Info</a></li>
-                            <li><a href="#aon-provider-review">Review</a></li>
                         </ul>
                     </div>
                 </div>

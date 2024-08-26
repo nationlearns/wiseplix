@@ -33,7 +33,8 @@ class LeadNotificationEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'A New Lead Available',
+            subject: 'New Lead Alert ! WisePlix Pro.
+',
         );
     }
 

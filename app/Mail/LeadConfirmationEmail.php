@@ -29,7 +29,7 @@ class LeadConfirmationEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Lead Confirmation Email',
+            subject: 'New Request Received | '.$this->user['name'],
         );
     }
 

@@ -1,12 +1,19 @@
 <x-mail::message>
-# {{$first_name}}, welcome to Wiseplix
+# Dear {{$first_name}}
 
-Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam consequatur aperiam, amet suscipit atque tempora nam quibusdam sapiente, maiores eaque quis voluptatem voluptatibus sequi. Ducimus dolor atque voluptas ratione dolorum?
+On behalf of the entire Wiseplix team, I want to extend a warm welcome to you! We’re thrilled to have you with us and excited to be part of your journey.
 
-<x-mail::button :url="''">
-Button Text
+At Wiseplix, we help you connect with service providers and professionals across more than 400 categories—from Packers & Movers to Photographers, Carpenters to Chartered Accountants, Event & Wedding Planners to Lawyers, Interior Designers, and much more. Whatever you need, we’re here to find the perfect match within your city and budget, and in no time.
+
+Next time you need a service, you know where to come! We would also appreciate it if you could recommend Wiseplix to your friends and family, so they too can connect with top service providers in just 5 minutes. Don't forget to download the Wiseplix app and follow us on social media for updates!
+
+Thank you for choosing Wiseplix!
+
+<x-mail::button url="{{route('home')}}">
+Visit Now
 </x-mail::button>
 
-Thanks,<br>
-{{ config('app.name') }}
+Best regards,
+Dr. Mohammed Haseeb
+CEO, Wiseplix
 </x-mail::message>
