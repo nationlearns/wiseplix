@@ -1,12 +1,10 @@
 <x-mail::message>
 # Hello {{$name}}
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda, omnis, delectus nemo quidem inventore vel odio maiores facilis, deserunt consectetur error sunt eius. At, vel. Eligendi enim nulla repellendus sit.
+On behalf of the entire Wiseplix team, I want to extend a warm welcome to you! We’re thrilled to have you with us and excited to be part of your journey.
 
-<x-mail::button :url="''">
-Button Text
-</x-mail::button>
 
-Thanks,<br>
-{{ config('app.name') }}
+Best regards,
+Dr. Mohammed Haseeb
+CEO, Wiseplix
 </x-mail::message>
