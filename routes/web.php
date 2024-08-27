@@ -7,11 +7,14 @@ use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AssociateReviewController;
+// use App\Http\Controllers\LeadPurchaseController;
 
 use App\Http\Controllers\Admin\AssociateUserController;
 use App\Http\Controllers\Admin\WalletController;
 use App\Http\Controllers\Admin\AssociateProfileController;
 use App\Http\Controllers\Admin\LeadPurchaseController;
+use App\Http\Controllers\Api\LeadsController;
+
 
 use App\Models\Blogs;
 use App\Models\Categories;
@@ -203,5 +206,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 });
 
 Route::post('/associate-profile-review/store', [AssociateReviewController::class, 'store'])->name('associate-review.store');
+Route::patch('/lead-status-update/{id}/update', [LeadPurchaseController::class, 'updateStatus'])->name('lead-purchase.update');
+Route::patch('/lead-update/{id}/update', [LeadsController::class, 'updateLeadStatus'])->name('lead-status.update');
 
 require __DIR__ . '/auth.php';

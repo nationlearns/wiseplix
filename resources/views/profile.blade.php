@@ -222,7 +222,7 @@
                             </div> --}}
 
 
-                            <div class="social-share-icon social-share-icon2">
+                            {{-- <div class="social-share-icon social-share-icon2">
                                 <div class="social-share-cell">
                                     <strong>Explore Us On Social Media</strong>
                                 </div>
@@ -239,7 +239,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> --}}
 
                         </div>
                         <!-- Services -->
@@ -272,16 +272,18 @@
                                                                     <th scope="col">Q/A</th>
                                                                     <th scope="col">Status</th>
                                                                     <th scope="col">PinCode</th>
-                                                                    <th scope="col">Area</th>
+                                                                    <th scope="col">Action</th>
+
+                                                                    {{-- <th scope="col">Area</th>
                                                                     <th scope="col">District</th>
-                                                                    <th scope="col">State</th>
+                                                                    <th scope="col">State</th> --}}
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr>
                                                                     <th scope="row">{{$item->category['alt_name']}}</th>
                                                                     <td>
-                                                                        {{$item->subcategory_id}}
+                                                                        {{$item->subcategory->slug}}
                                                                 
                                                                     </td>
                                                                     <td>
@@ -316,9 +318,39 @@
 
                                                                     </td>
                                                                     <td>{{$item->pin_code}}</td>
+                                                                    <td>
+
+                                                                        <form id="statusForm-{{$item->id}}" action="{{route('lead-status.update', $item->id)}}" method="POST" style="display:none;">
+                                                                            @csrf
+                                                                            @method('patch')
+                                                                            <input type="hidden" name="status" id="statusInput-{{$item->id}}" value="{{ $item->status == 1 ? 0 : 1 }}">
+                                                                        </form>
+
+                                                                        <button onclick="toggleStatus({{$item->id}})" class="btn btn-warning btn-sm">
+
+                                                                            @if ($item->status == 1)
+                                                                                Close
+                                                                            @elseif ($item->status == 0)
+                                                                                Re-Open
+                                                                            @endif
+
+                                                                        </button>
+
+                                                                        <script>
+                                                                            function toggleStatus(id) {
+                                                                                const form = document.getElementById('statusForm-' + id);
+                                                                                // const statusInput = document.getElementById('statusInput-' + id);
+                                                                                // statusInput.value = statusInput.value === 1 ? 0 : 1;
+                                                                                form.submit();
+                                                                            }
+                                                                        </script>
+
+                                                                        {{-- <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#statusUpdateModal" data-id="{{$item->id}}">Update Status</button> --}}
+                                                                    </td>
+
+                                                                    {{-- <td></td>
                                                                     <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
+                                                                    <td></td> --}}
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -330,13 +362,7 @@
 
                                                 {{-- <div class="sf-provi-service-price">RS124.00</div> --}}
                                                 
-                                                <p>
-                                                    
-                                                    Status: 
-                                                    
-                                                    
-
-                                                </p>
+                                               
                                                 
                                                 <div class="sf-provi-service-hour"><i class="fa fa-clock-o"></i>{{date('d M, Y', strtotime($item->created_at)) }}</div>
                                             
@@ -362,7 +388,7 @@
                                                                     <th scope="col">Associate Profile</th>
                                                                     <th scope="col">Status</th>
                                                                     <th scope="col">Message</th>
-                                                                    <th scope="col">Action</th>
+                                                                    <th scope="col"></th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -371,14 +397,13 @@
                                                                     <tr>
                                                                         <th scope="row">{{$associate->user['name']}}</th>
                                                                         <td>
-                                                                            @if ($associate->user->associate()->exists())
-                                                                                
-                                                                            <a class="btn btn-sm btn-dark" href="{{route('associate.profile', $associate->user->associate->id)}}">View Profile</a>
+                                                                            @if ($associate->user->associate()->exists())                                                                                
+                                                                                <a class="btn btn-sm btn-dark" href="{{route('associate.profile', $associate->user->associate->id)}}">View Profile</a>
                                                                             @endif
                                                                   
                                                                         </td>
                                                                         <td>
-
+                                                                            {{-- {{$associate}} --}}
                                                                             @if ($associate['status'] == 'pending')
                                                                                 <span class="badge bg-info text-light">Pending</span>
 
@@ -390,8 +415,11 @@
 
                                                                         </td>
                                                                         <td>{{$associate['message']}}</td>
+                                                                        
                                                                         <td>
-                                                                            <a href="#" class="btn btn-warning btn-sm">Update</a>
+                                                                            @if ($associate['status'] == 'pending')                                                                            
+                                                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#updateStatusModal" data-id="{{$associate->id}}">Update</button>
+                                                                            @endif
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach
@@ -748,13 +776,51 @@
         <!-- BUTTON TOP START -->
         <button class="scroltop"><span class="fa fa-angle-up  relative" id="btn-vibrate"></span></button>
 
+        <!-- Modal -->
+        
+        statusUpdateModal
+
+        <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateStatusModalLabel">Update Status</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="#" enctype="multipart/form-data">
+                            @csrf
+                            @method('patch')
+
+                            <div class="my-3">
+                                <label for="status">Status</label>
+                                <select name="status" id="" class="form-control" style="border: 1px solid lightgray !important">
+                                    <option value="approved">Approve</option>
+                                    <option value="rejected">Reject</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message">Message</label>
+                                <textarea name="message" id="" cols="30" rows="10"  class="form-control" style="min-height: 100px;border: 1px solid lightgray !important"></textarea>
+
+                            </div>
+                            <div class="mb-4">
+                                <button class="btn btn-dark" type="submit">Update</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-
+    
 
     @include('loginmodel')
 
-
+    
 
 
     <!-- JAVASCRIPT  FILES ========================================= -->
@@ -783,6 +849,62 @@
     <script src="{{ asset('frontend/assets/js/custom.js') }}"></script><!-- CUSTOM FUCTIONS  -->
     <script src="{{ asset('frontend/assets/js/lc_lightbox.lite.js') }}"></script><!-- IMAGE POPUP -->
     <script src="{{ asset('frontend/assets/js/bootstrap-slider.min.js') }}"></script><!-- Form js -->
+
+    <script type="text/javascript">
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     var statusModal = document.getElementById('updateStatusModal');
+
+        //     statusModal.addEventListener('show.bs.modal', function (event) {
+        //         // Button that triggered the modal
+        //         var button = event.relatedTarget;
+        //         // Extract info from data-bs-* attributes
+        //         var id = button.getAttribute('data-id');
+
+        //         console.log(id);
+                
+
+        //         // Update the modal's content.
+        //         // var modalTitle = editModal.querySelector('.modal-title');
+        //         var modalForm = editModal.querySelector('.modal-body form');
+        //         modalForm.action = '/lead-status-update/' + id + '/update';
+        //         // var modalBodyInput = editModal.querySelector('.modal-body input[name="title"]');
+
+        //         // // AJAX request to fetch option details
+        //         // fetch(`/admin/option/${id}`)
+        //         //     .then(response => response.json())
+        //         //     .then(data => {
+        //         //         modalTitle.textContent = 'Update Option ID: ' + id;
+        //         //         modalBodyInput.value = data.title;
+        //         //         modalForm.action = `/admin/option/${id}/update`;
+        //         //     })
+        //         //     .catch(error => console.error('Error fetching option details:', error));
+        //     });
+        // });
+
+        $('#updateStatusModal').on('show.bs.modal', function (event) {
+            console.log('Hello Worl');
+        
+            var statusModal = document.getElementById('updateStatusModal');
+
+
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id') // Extract info from data-* attributes
+           
+            var modalForm = statusModal.querySelector('.modal-body form');
+            modalForm.action = '/lead-status-update/' + id + '/update';
+
+
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            // var modal = $(this)
+            // modal.find('.modal-title').text('New message to ' + recipient)
+            // modal.find('.modal-body input').val(recipient)
+
+            console.log('hello');
+            
+        })
+    </script>
+    
 
 </body>
 </html>

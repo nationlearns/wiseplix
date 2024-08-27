@@ -682,4 +682,21 @@ class LeadsController extends Controller
 
     return response()->json(['profileVisit' => [], 'success' => false, 'message' => 'No profile visit data found'], 404);
 }
+
+
+
+
+
+
+    public function updateLeadStatus(Request $request, $id){
+
+        $data = Leads::where('id', $id)->first();
+
+        $data->update([
+            'status' => $request->status,
+        ]);
+
+        return redirect()->back()->with('status', 'Status Updated Successfully');
+
+    }
 }

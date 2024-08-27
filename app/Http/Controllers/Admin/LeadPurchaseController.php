@@ -19,4 +19,19 @@ class LeadPurchaseController extends Controller
         $data = PurchaseLeadDetails::where('id', $id)->with('lead')->first();
         return view('admin.lead-purchase.show', \compact('data'));
     }
+
+
+    public function updateStatus(Request $request, $id){
+
+        $data = PurchaseLeadDetails::where('id', $id)->first();
+
+        $data->update([
+            'status' => $request->status,
+            'message' => $request->message,
+        ]);
+
+
+        return redirect()->back()->with('status', 'Status Updated Successfully');
+
+    }
 }
