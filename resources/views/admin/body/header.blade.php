@@ -1,4 +1,4 @@
-<header id="page-topbar">
+<header id="page-topbar" style="background: #fff;color: #000 !important">
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
@@ -8,7 +8,7 @@
                         <img src="{{asset('backend/assets/images/logo-sm.png')}}" alt="logo-sm" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{asset('backend/assets/images/logoweise.jpeg')}}" alt="logo-dark" height="40">
+                        <img src="{{asset('images/logo/wiseplix-logo.png')}}" alt="logo-dark" height="40">
                     </span>
                 </a>
 
@@ -17,13 +17,13 @@
                         <img src="{{asset('backend/assets/images/logo-sm.png')}}" alt="logo-sm-light" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{asset('backend/assets/images/logoweise.jpeg')}}" alt="logo-light" height="40">
+                        <img src="{{asset('images/logo/wiseplix-logo.png')}}" alt="logo-light" height="40">
                     </span>
                 </a>
             </div>
 
             <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
-                <i class="ri-menu-2-line align-middle"></i>
+                <i class="ri-menu-2-line align-middle text-dark"></i>
             </button>
 
             <!-- App Search-->
@@ -34,7 +34,7 @@
 
             <div class="dropdown d-none d-lg-inline-block ms-1">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-toggle="fullscreen">
-                    <i class="ri-fullscreen-line"></i>
+                    <i class="ri-fullscreen-line text-dark"></i>
                 </button>
             </div>
             <div class="dropdown d-inline-block user-dropdown">
@@ -42,8 +42,8 @@
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="rounded-circle header-profile-user" src="{{asset('backend/assets/images/users/user.png')}}"
                         alt="Header Avatar">
-                    <span class="d-none d-xl-inline-block ms-1">{{Auth::user()->name}}</span>
-                    <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                    <span class="d-none d-xl-inline-block ms-1 text-dark">{{Auth::user()->name}}</span>
+                    <i class="mdi mdi-chevron-down d-none d-xl-inline-block text-dark"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
