@@ -49,7 +49,11 @@ Route::get('/', function () {
 
         foreach($cat as $category){
             $data = json_decode($category->title, true); 
-            $category->slug = Str::slug($data['en'], '-');
+            
+            // echo Str::slug($category['alt_name']);
+
+            $category->slug = Str::slug($category['alt_name']);
+
             $category->update();
         }
 

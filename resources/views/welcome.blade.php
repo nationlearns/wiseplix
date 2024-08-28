@@ -559,6 +559,7 @@
                         <div class="owl-carousel categories-carousel-owl aon-owl-arrow">
                             <!-- COLUMNS 1 -->
                             @foreach ($data as $item)
+                            {{-- {{$item->slug}} --}}
                                 <div class="item">
                                     <div class="aon-cat-item">
                                         <div class="aon-cat-pic media-bg-animate shine-hover">
