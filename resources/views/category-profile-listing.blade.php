@@ -130,7 +130,7 @@
                                                         <figure class="mb-0" 
                                                             style="
                                                             padding-top: 100%;  /* 450px/800px = 0.5625 */
-                                                            background-image: url(https://wiseplix.com/images/user/1720096596.jpg);
+                                                            background-image: url({{ asset($item->profile_image) }});
                                                             background-size: cover;
                                                             -moz-background-size: cover;  /* Firefox 3.6 */
                                                             background-position: center;  /* Internet Explorer 7/8 */

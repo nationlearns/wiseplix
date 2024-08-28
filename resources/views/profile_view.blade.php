@@ -151,7 +151,7 @@
                             <div class="sf-banner-job-logo-pic">
 
                                 
-                                <img src="https://wiseplix.com/images/user/1720096596.jpg" alt="">
+                                <img src="{{ asset($id->profile_image) }}" alt="">
                             
                             </div>
                             <div class="sf-banner-job-heading-large">{{ $id->full_name }}</div>
