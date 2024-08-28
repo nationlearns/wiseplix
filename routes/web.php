@@ -48,10 +48,8 @@ Route::get('/', function () {
     $cat = Categories::all();
 
         foreach($cat as $category){
-            // $data = json_decode($category->title, true); 
-            
-            
-            $category->cat_image = Str::slug($category->slug).'.jpeg';
+            $data = json_decode($category->title, true); 
+            $category->slug = Str::slug($data['en'], '-');
             $category->update();
         }
 
