@@ -183,7 +183,7 @@ class LoginController extends Controller
 
             // Send Welcome Email To The Associate
             
-            dispatch(new SendWelcomeEmailToAssociate($user));
+            // dispatch(new SendWelcomeEmailToAssociate($user));
 
             $userData = User::where('id', $user->id)->first();
 
