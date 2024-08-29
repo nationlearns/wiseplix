@@ -221,7 +221,7 @@ class LeadsController extends Controller{
         
         $categoryId = AssociateProfile::select('category_id')->where('user_id', $userId)->first();
         
-        $leadsId = PurchaseLeadDetails::select('purchage_lead_details.lead_id')->where('user_id', $userId)->get();
+        $leadsId = PurchaseLeadDetails::select('lead_id')->where('user_id', $userId)->get();
         
         foreach ($leadsId as $lead) {
             $leadId[] = $lead->lead_id;
@@ -273,7 +273,7 @@ class LeadsController extends Controller{
             
                 $answer = $lead->answers;
             
-                $answerData = json_decode($answer);
+                $answerData = json_decode($answer, true);
             
                 $answerId = !empty($answerData) && is_array($answerData) ? $answerData[0] : null;
             
