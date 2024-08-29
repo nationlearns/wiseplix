@@ -227,7 +227,7 @@ class LeadsController extends Controller{
             $leadId[] = $lead->lead_id;
         }
         
-        $query = Leads::select('leads.*', 'sub_categories.slug as subcategory_name', 'categories.slug as category_name', 'prices.points', 'location.pincode', 'location.district_name', 'location.state_name')
+        $query = Leads::select('leads.*', 'sub_categories.slug as subcategory_name', 'categories.alt_name as category_name', 'prices.points', 'location.pincode', 'location.district_name', 'location.state_name')
             ->leftJoin('categories', 'categories.id', '=', 'leads.category_id')
             ->leftJoin('sub_categories', 'sub_categories.id', '=', 'leads.subcategory_id')
             ->leftJoin('prices', 'prices.subcategory_id', 'leads.subcategory_id')
