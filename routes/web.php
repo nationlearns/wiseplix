@@ -52,17 +52,17 @@ Route::get('/', function () {
 
     $cat = Categories::all();
 
-    foreach($cat as $category){
-        $data = json_decode($category->title, true); 
+    // foreach($cat as $category){
+    //     $data = json_decode($category->title, true); 
         
-        // echo Str::slug($category['alt_name']);
+    //     // echo Str::slug($category['alt_name']);
 
-        $category->slug = Str::slug($category['alt_name']);
+    //     $category->slug = Str::slug($category['alt_name']);
 
-        $category->cat_image = Str::slug($category->slug).'.jpeg';
+    //     $category->cat_image = Str::slug($category->slug).'.jpeg';
 
-        $category->update();
-    }
+    //     $category->update();
+    // }
 
     $blog = Blogs::latest()->paginate(3);
     return view('welcome', compact('data','blog'));
