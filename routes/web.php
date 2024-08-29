@@ -50,17 +50,19 @@ Route::get('/', function () {
     ->where('status', 1)
     ->get();
 
-    // $cat = Categories::all();
+    $cat = Categories::all();
 
-    //     foreach($cat as $category){
-    //         $data = json_decode($category->title, true); 
-            
-    //         // echo Str::slug($category['alt_name']);
+    foreach($cat as $category){
+        $data = json_decode($category->title, true); 
+        
+        // echo Str::slug($category['alt_name']);
 
-    //         $category->slug = Str::slug($category['alt_name']);
+        $category->slug = Str::slug($category['alt_name']);
 
-    //         $category->update();
-    //     }
+        $category->cat_image = Str::slug($category->slug).'.jpeg';
+
+        $category->update();
+    }
 
     $blog = Blogs::latest()->paginate(3);
     return view('welcome', compact('data','blog'));
