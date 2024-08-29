@@ -165,6 +165,7 @@ class LoginController extends Controller
 
         // Check if the user image is being updated
         $image = $user->user_img;
+
         if ($request->hasFile('user_img')) {
             $imageFile = $request->file('user_img');
             $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
@@ -183,7 +184,8 @@ class LoginController extends Controller
 
         // Update the user profile
         User::where('id', $user->id)->update($BasicData);
-         $userData = User::where('id', $user->id)->first();
+        
+        $userData = User::where('id', $user->id)->first();
 
         // Update associated profile
         $this->UpdateAsscocProfile($request, $userData, $image);

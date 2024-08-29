@@ -18,14 +18,13 @@ use App\Models\FilterData;
 use App\Models\AssociateProfile;
 use App\Models\ProfileVisit;
 use DB;
-use  Carbon\Carbon;
+use Carbon\Carbon;
 use App\Jobs\SendLeadNotificationEmail;
 use App\Jobs\SendLeadConfirmationEmail;
 
-class LeadsController extends Controller
-{
-    public function createUser(array $data)
-    {
+class LeadsController extends Controller{
+    
+    public function createUser(array $data){
         // Check if a user with the given mobile number or email already exists
         $existingUser = User::where('mobile', $data['mobile'])
             ->orWhere('email', $data['email'])
@@ -57,99 +56,8 @@ class LeadsController extends Controller
         return $user;
     }
 
-
-
-    // public function saveUserQuestionAnswerData(Request $request)
-    // {
-    //     $data = $request->all();
-
-    //     $this->createUser($data);
-
-    //     $categoryData = Subcategory::select('sub_categories.category_id')->where('sub_categories.id', $data['subcategory_id'])->get()->toArray();
-        
-    //     $category_id = $categoryData[0]['category_id'];
-        
-    //     $answerArray = [];
-        
-    //     if (isset($data['answers']) && is_array($data['answers']) && count($data['answers']) > 0) {
-    //         foreach ($data['answers'] as $ans) {
-    //             $data['question'] = $ans['question'];
-    //             $data['answer'] = $ans['answer'];
-    //             $answerArray[]['answers'] = $data;
-    //         }
-    //     } else {
-    //         // If $data['answers'] is not set or empty, add a null entry to $answerArray
-    //         $answerArray[]['answers'] = null;
-    //     }
-
-    //     $checkUserData = User::where('mobile', $data['mobile'])->first();
-
-    //     $userId = $checkUserData->id;
-        
-    //     // Check how many requests have been made for the same product and city
-    //     $requestCount = Leads::where('user_id', $userId)
-    //                         ->where('category_id', $category_id)
-    //                         // ->where('subcategory_id', $data['subcategory_id'])
-    //                         ->where('district_name', $data['disticName'])
-    //                         ->whereBetween('created_at', [now()->subDay(), now()])
-    //                         ->count();
-
-    //     if ($requestCount >= 3) {
-    //         return response()->json([
-    //             'message' => 'Error!! You have reached the maximum number of requests for this category and city.'
-    //         ], 429);
-    //     }
-    //     else{
-    //         $user = Leads::create([
-    //             'user_id' => $userId,
-    //             'category_id' => $category_id,
-    //             'subcategory_id' => $data['subcategory_id'],
-    //             'answers' => !empty($data['answers']) ? json_encode($data['answers']) : null,
-    //             'name' =>  $data['name'],
-    //             'email' => $data['email'],
-    //             'mobile' => $data['mobile'],
-    //             'gender' => $data['gender'],
-    //             'lead_status' => 'NotSold',
-    //             'status' => '1',
-    //             'added_by' => $checkUserData->id,
-    //             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
-    //             'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
-    //             'bought_times' => '0',
-    //             'other_query' => $data['comment'],
-    //             'location_id' => $data['location_id'],
-    //             'pin_code'  => $data['pinCodeValue'],
-    //             'district_name' =>  $data['disticName'],
-    //             'state' =>   $data['stateName'],
-    //             'area_name' => $data['areaName'],
-    
-    
-    //         ]);
-    //         $subcategory_id = $data['subcategory_id'];
-
-    //         $this->notificationOfLeads($userId, $category_id, $data);
-            
-
-            
-
-    //         return response()->json([
-    //             'status' => 200, 
-    //             'success' => 'Leads Created Successfully', 
-    //             'subcategory_id' => $subcategory_id,    
-                
-    //             'success_msg' => 'Welcome back '.$data['name'] .'</br><br> We are happy to see you back your request is been submtted and our top quality service provider or professional will reach out to you shortly, kindly discuss the requirement and set up and appointment to meet.
-    //                 </br><br>
-    //                 Download the Wiseplix app and request any service on the go In the meanwhile check out the the top service providers in your city',
-
-    //             'new_user' =>  $crated_user,
-    //             'old_user' =>  $checkUserData ,
-
-            
-    //         ]);
-    //     }
-    // }
-
-
     public function saveUserQuestionAnswerData(Request $request){
+        
         $data = $request->all();
 
         // Check if a user with the given mobile number or email already exists
@@ -164,6 +72,7 @@ class LeadsController extends Controller
         $user = $this->createUser($data);
 
         $categoryData = Subcategory::select('sub_categories.category_id')->where('sub_categories.id', $data['subcategory_id'])->get()->toArray();
+        
         $category_id = $categoryData[0]['category_id'];
 
         $answerArray = [];
@@ -181,84 +90,63 @@ class LeadsController extends Controller
 
         $userId = $user->id;
 
-        // Check how many requests have been made for the same product and city
-        $requestCount = Leads::where('user_id', $userId)
-                            ->where('category_id', $category_id)
-                            // ->where('subcategory_id', $data['subcategory_id'])
-                            ->where('district_name', $data['disticName'])
-                            ->whereBetween('created_at', [now()->subDay(), now()])
-                            ->count();
+        $lead = Leads::create([
+            'user_id' => $userId,
+            'category_id' => $category_id,
+            'subcategory_id' => $data['subcategory_id'],
+            'answers' => !empty($data['answers']) ? json_encode($data['answers']) : null,
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'mobile' => $data['mobile'],
+            'gender' => $data['gender'],
+            'lead_status' => 'NotSold',
+            'status' => '1',
+            'added_by' => $userId,
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'bought_times' => '0',
+            'other_query' => $data['comment'],
+            'location_id' => $data['location_id'],
+            'pin_code' => $data['pinCodeValue'],
+            'district_name' => $data['disticName'],
+            'state' => $data['stateName'],
+            'area_name' => $data['areaName'],
+        ]);
 
-        // if ($requestCount >= 3) {
-        //     return response()->json([
-        //         'message' => 'Error!! You have reached the maximum number of requests for this category and city.'
-        //     ], 429);
-        // } else {
+        $this->notificationOfLeads($userId, $category_id, $data);
 
-            $lead = Leads::create([
-                'user_id' => $userId,
-                'category_id' => $category_id,
-                'subcategory_id' => $data['subcategory_id'],
-                'answers' => !empty($data['answers']) ? json_encode($data['answers']) : null,
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'mobile' => $data['mobile'],
-                'gender' => $data['gender'],
-                'lead_status' => 'NotSold',
-                'status' => '1',
-                'added_by' => $userId,
-                'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
-                'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
-                'bought_times' => '0',
-                'other_query' => $data['comment'],
-                'location_id' => $data['location_id'],
-                'pin_code' => $data['pinCodeValue'],
-                'district_name' => $data['disticName'],
-                'state' => $data['stateName'],
-                'area_name' => $data['areaName'],
-            ]);
-
-            $this->notificationOfLeads($userId, $category_id, $data);
-
-            // Determine the message based on whether the user is new or existing
-            $welcomeMessage = $isNewUser 
-                ? 'Welcome to Wiseplix ' . $data['name'] . '</br><br> Your request has been submitted our professional or service provider will contact you soon! </br><br> In the meanwhile you can also download the Wiseplix app and request for any services on the go </br><br> Here is the list of service providers in your city for the product your looking for.'
-                : 'Welcome back ' . $data['name'] . '</br><br> We are happy to see you back. Your request has been submitted and our top-quality service provider or professional will reach out to you shortly. Kindly discuss the requirement and set up an appointment to meet.</br><br>Download the Wiseplix app and request any service on the go. In the meantime, check out the top service providers in your city.';
+        // Determine the message based on whether the user is new or existing
+        $welcomeMessage = $isNewUser 
+            ? 'Welcome to Wiseplix ' . $data['name'] . '</br><br> Your request has been submitted our professional or service provider will contact you soon! </br><br> In the meanwhile you can also download the Wiseplix app and request for any services on the go </br><br> Here is the list of service providers in your city for the product your looking for.'
+            : 'Welcome back ' . $data['name'] . '</br><br> We are happy to see you back. Your request has been submitted and our top-quality service provider or professional will reach out to you shortly. Kindly discuss the requirement and set up an appointment to meet.</br><br>Download the Wiseplix app and request any service on the go. In the meantime, check out the top service providers in your city.';
 
 
-            // Retrieve all partners who match the category, subcategory, and city
-            $partners = User::where('role', 'pro')
-                            ->whereHas('associate', function ($query) use ($category_id, $data) {
-                                $query->where('category_id', $category_id)
-                                    ->orWhere('subcategory_id', $data['subcategory_id'])
-                                    ->orWhere('area_of_service', $data['disticName']);
-                            })->get();
+        // Retrieve all partners who match the category, subcategory, and city
+        $partners = User::where('role', 'pro')
+                        ->whereHas('associate', function ($query) use ($category_id, $data) {
+                            $query->where('category_id', $category_id)
+                                ->orWhere('subcategory_id', $data['subcategory_id'])
+                                ->orWhere('area_of_service', $data['disticName']);
+                        })->get();
 
-            // $partners = AssociateProfile::where('category_id', $category_id)
-            //                 ->orWhere('subcategory_id', $data['subcategory_id'])
-            //                 ->orWhere('area_of_service', $data['disticName'])
-            //                 ->get();
+        // Send the notification email to each partner
+        foreach ($partners as $partner) {
+            dispatch(new SendLeadNotificationEmail($lead, $partner));
+        }
 
+        // Send Notification to the User Who Posted the lead
+        dispatch(new SendLeadConfirmationEmail($lead, $user));
 
-            // Send the notification email to each partner
-            foreach ($partners as $partner) {
-                dispatch(new SendLeadNotificationEmail($lead, $partner));
-            }
+        return response()->json([
+            'status' => 200, 
+            'success' => 'Lead Created Successfully', 
+            'subcategory_id' => $data['subcategory_id'],
+            'success_msg' => $welcomeMessage,
+            'new_user' => $isNewUser ? $user : null,
+            'old_user' => !$isNewUser ? $user : null,
+            'partner' => $partners
+        ]);
 
-            // Send Notification to the User Who Posted the lead
-            dispatch(new SendLeadConfirmationEmail($lead, $user));
-
-            return response()->json([
-                'status' => 200, 
-                'success' => 'Lead Created Successfully', 
-                'subcategory_id' => $data['subcategory_id'],
-                'success_msg' => $welcomeMessage,
-                'new_user' => $isNewUser ? $user : null,
-                'old_user' => !$isNewUser ? $user : null,
-                'partner' => $partners
-            ]);
-
-        // }
     }
 
 
@@ -321,25 +209,38 @@ class LeadsController extends Controller
     }
 
 
-    public function getAllLeadList(Request $request)
-    {
+    public function getAllLeadList(Request $request){
+
         $userData = Auth::user();
+        
         $userId = $userData->id;
+        
         $leads_list = [];
+        
         $leadId = [];
+        
         $categoryId = AssociateProfile::select('category_id')->where('user_id', $userId)->first();
+        
         $leadsId = PurchaseLeadDetails::select('purchage_lead_details.lead_id')->where('user_id', $userId)->get();
+        
         foreach ($leadsId as $lead) {
             $leadId[] = $lead->lead_id;
         }
+        
         $query = Leads::select('leads.*', 'sub_categories.slug as subcategory_name', 'categories.slug as category_name', 'prices.points', 'location.pincode', 'location.district_name', 'location.state_name')
             ->leftJoin('categories', 'categories.id', '=', 'leads.category_id')
             ->leftJoin('sub_categories', 'sub_categories.id', '=', 'leads.subcategory_id')
             ->leftJoin('prices', 'prices.subcategory_id', 'leads.subcategory_id')
             ->leftJoin('location', 'location.id', 'leads.location_id')
             ->where(['leads.lead_status' => 'NotSold', 'leads.status' => 1])
-            ->whereNotIn('leads.id', $leadId)
-            ->where('leads.category_id', $categoryId['category_id']);
+            ->whereNotIn('leads.id', $leadId);
+        
+        if ($categoryId) {
+            
+            $query->where('leads.category_id', $categoryId['category_id']);
+            
+        }
+            
 
         if (isset($request->pincode)) {
             $pincode = $request->pincode;
@@ -365,11 +266,17 @@ class LeadsController extends Controller
         }
 
         $leadData = $query->orderBy('leads.created_at', 'DESC')->get();
+
         if ($leadData) {
+
             foreach ($leadData as $lead) {
+            
                 $answer = $lead->answers;
+            
                 $answerData = json_decode($answer);
+            
                 $answerId = !empty($answerData) && is_array($answerData) ? $answerData[0] : null;
+            
                 $leads_list[] = [
                     'id' => $lead->id,
                     'name' => $lead->name,
@@ -387,15 +294,20 @@ class LeadsController extends Controller
                     'answerData' => $answerId,
                     'bought_times' => $lead->bought_times
                 ];
+
             }
+
             return response()->json(['status'=> true,'leadData' => $leads_list, 'Message' => 'Data Found'], 200);
+        
         }
+
         return response()->json(['status'=> true,'leadData' => 0, 'message' => 'No data found'], 200);
+    
     }
 
 
-    public function LeadDetails($id)
-    {
+    public function LeadDetails($id){
+
         $leadData = Leads::select('leads.*', 'sub_categories.slug as subcategory_name', 'categories.slug as category_name', 'prices.points', 'prices.subcategory_id')
             ->leftJoin('categories', 'categories.id', '=', 'leads.category_id')
             ->leftJoin('sub_categories', 'sub_categories.id', '=', 'leads.subcategory_id')
@@ -405,7 +317,7 @@ class LeadsController extends Controller
             ->get();
 
 
-        if ($leadData) {
+        if ($leadData->count() > 0) {
             $profileVisit = DB::table('profile_visit')->where('lead_id', $id)->first();
             if (!$profileVisit) {
                 DB::table('profile_visit')->insert([
@@ -420,7 +332,7 @@ class LeadsController extends Controller
             }
         }
 
-        if ($leadData) {
+        if ($leadData->count() > 0) {
             foreach ($leadData as $lead) {
 
                 $answer = $lead->answers;
@@ -624,12 +536,11 @@ class LeadsController extends Controller
     public function storeFilter(Request $request){
         $user = Auth::user();
 
-        if (!$user) {        
+        if (!$user) {
             return response()->json(['success' => false, 'message' => 'User not authenticated'], 200);
         }
 
         $filterData = FilterData::updateOrCreate(
-            
             ['created_by' => $user->id],
             [
                 'filter_pincode' => isset($request->filter_pincode) ? $request->filter_pincode : null,
@@ -638,7 +549,6 @@ class LeadsController extends Controller
                 'filter_state' => isset($request->filter_state) ? $request->filter_state : null,
                 'filter_district' => json_encode($request->filter_district),
             ]
-
         );
 
         return response()->json(['success' => true, 'message' => 'Filter data updated successfully'], 200);
