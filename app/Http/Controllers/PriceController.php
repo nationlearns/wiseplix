@@ -10,6 +10,7 @@ use App\Models\Location;
 use App\Models\QuestionOptions;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PriceController extends Controller
@@ -22,7 +23,7 @@ class PriceController extends Controller
 
     public function AddPrice()
     {
-        $cat = Categories::get();
+        $cat = Categories::where('status', '1')->get();
         return view('admin.price.addprice', compact('cat'));
     }
     public function GetSubCategory($category_id)
@@ -80,10 +81,54 @@ class PriceController extends Controller
     }
 
     public function AddLeads(){
-        $cat = Categories::get();
+        $cat = Categories::where('status',1)->get();
         $qtn = Questions::get();
-        // $location = Location::get();
-        // dd($location);
-        return view('admin.lead.add_lead',compact('cat','qtn'));
+        $state = Location::distinct('state_name')->get('state_name');
+        //dd($location);
+        return view('admin.lead.add_lead',compact('cat','qtn','state'));
+    }
+
+    public function getDistricts($stateName)
+    {
+        $districts = Location::where('state_name', $stateName)
+                         ->distinct('district_name')
+                         ->get(['district_name']);
+        return response()->json($districts);
+    }
+    public function getAreaName($district_name)
+    {
+        $districts = Location::where('district_name', $district_name)
+                         ->distinct('name')
+                         ->get(['name']);
+        return response()->json($districts);
+    }
+
+    public function StoreLead(Request $request){
+        $request->validate([
+            'category_id' => 'required',
+            'subcategory_id' => 'required',
+            'answers' => 'required',
+            'name' => 'required',
+            'email' => 'required',
+            'mobile' => 'required',
+            'gender' => 'required',
+            'pin_code' => 'required',
+            'area_name' => 'required',
+            'district_name' => 'required',
+            'state' => 'required'
+        ],[
+           'category_id.required' => 'Please select Category',
+           'subcategory_id.required' => 'Please select Sub Category',
+           'name.required' => 'Please Enter Your Name',
+           'email.required' => 'Please Enter Your Email Address',
+           'mobile.required' => 'Please Enter Mobile Number',
+        ]);
+        $user_id = Auth::user()->id;
+        Leads::insert([
+            'user_id' => $user_id,
+            'category_id' => $request->category_id,
+            'subcategory_id' => $request->subcategory_id,
+
+        ]);
     }
 }

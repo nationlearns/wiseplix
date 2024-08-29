@@ -14,7 +14,6 @@ use File;
 use Image;
 use App\Models\AssociateProfile;
 use App\Models\Wallet;
-use App\Jobs\SendWelcomeEmailToAssociate;
 
 class LoginController extends Controller
 {
@@ -24,7 +23,8 @@ class LoginController extends Controller
      * @return User 
      */
 
-    public function createUser(Request $request){
+    public function createUser(Request $request)
+    {
         try {
             //Validated
             $validateUser = Validator::make($request->all(), 
@@ -63,7 +63,8 @@ class LoginController extends Controller
     }
 
 
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         $request->validate([
             'mobile' => 'required|string|unique:users',
             'otp' => 'required|string',
@@ -103,40 +104,41 @@ class LoginController extends Controller
      * @return User
      */
 
-    public function login(Request $request){
-        // Validate the request
-        $request->validate([
-            'mobile' => 'required|string|exists:users,mobile',
-            'otp' => 'required|string',
-        ]);
+     public function login(Request $request)
+{
+    // Validate the request
+    $request->validate([
+        'mobile' => 'required|string|exists:users,mobile',
+        'otp' => 'required|string',
+    ]);
 
-        // Find the user by mobile number
-        $user = User::where('mobile', $request->mobile)->firstOrFail();
+    // Find the user by mobile number
+    $user = User::where('mobile', $request->mobile)->firstOrFail();
 
-        // Check if the provided OTP matches the one stored in the database
-        $otp = UserOtp::where('mobile', $request->mobile)
-            ->where('otp', $request->otp)
-            ->first();
+    // Check if the provided OTP matches the one stored in the database
+    $otp = UserOtp::where('mobile', $request->mobile)
+        ->where('otp', $request->otp)
+        ->first();
 
-        // If the provided OTP matches the one in the database, proceed with login
-        if ($otp || ($request->mobile === '9898912345' && $request->otp === '123456')) {
-            // Delete the OTP record
-            if ($otp) {
-                $otp->delete();
-            }
-
-            // Generate token for the user
-            $token = $user->createToken("API TOKEN")->plainTextToken;
-
-            return response()->json(['token' => $token, 'status' => true, 'message' => "Login successfully!"], 200);
-        } else {
-            // If the OTP is invalid, return error response
-            return response()->json(['message' => 'Invalid OTP', 'status' => false], 200);
+    // If the provided OTP matches the one in the database, proceed with login
+    if ($otp || ($request->mobile === '9898912345' && $request->otp === '123456')) {
+        // Delete the OTP record
+        if ($otp) {
+            $otp->delete();
         }
+
+        // Generate token for the user
+        $token = $user->createToken("API TOKEN")->plainTextToken;
+
+        return response()->json(['token' => $token, 'status' => true, 'message' => "Login successfully!"], 200);
+    } else {
+        // If the OTP is invalid, return error response
+        return response()->json(['message' => 'Invalid OTP', 'status' => false], 200);
     }
+}
 
 
-    public function UserDetail(){
+     public function UserDetail(){
         $user = Auth::User();
         $profileData = User::select('users.*','associate_profile.*', 'sub_categories.slug as subcategory_name','categories.slug as category_name', 'wallet_amount.amount','location.pincode','location.district_name', 'location.state_name' ,'location.name as area_name')
         ->leftJoin('associate_profile', 'associate_profile.user_id', 'users.id')
@@ -150,82 +152,78 @@ class LoginController extends Controller
     }
 
 
-    public function UpdateProfile(Request $request){
-        $user = Auth::user();
+    public function UpdateProfile(Request $request)
+{
+    $user = Auth::user();
 
-        if ($user) {
-            $name = isset($request->name) ? $request->name : $user->name;
-            $email = isset($request->email) ? $request->email : $user->email;
-            $gender = isset($request->gender) ? $request->gender : $user->gender;
-            $location_id = isset($request->location_id) ? $request->location_id : $user->location_id;
-            $firebase_token = isset($request->firebase_token) ? $request->firebase_token : $user->firebase_token;
+    if ($user) {
+        $name = isset($request->name) ? $request->name : $user->name;
+        $email = isset($request->email) ? $request->email : $user->email;
+        $gender = isset($request->gender) ? $request->gender : $user->gender;
+        $location_id = isset($request->location_id) ? $request->location_id : $user->location_id;
+        $firebase_token = isset($request->firebase_token) ? $request->firebase_token : $user->firebase_token;
 
-            // Check if the user image is being updated
-            $image = $user->user_img;
-            if ($request->hasFile('user_img')) {
-                $imageFile = $request->file('user_img');
-                $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
-                $imageFile->move(public_path('images/user'), $imageName);
-                $image = 'images/user/' . $imageName;
-            }
+        // Check if the user image is being updated
+        $image = $user->user_img;
+        if ($request->hasFile('user_img')) {
+            $imageFile = $request->file('user_img');
+            $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
+            $imageFile->move(public_path('images/user'), $imageName);
+            $image = 'images/user/' . $imageName;
+        }
 
-            $BasicData = [
-                'name' => $name,
-                'email' => $email,
-                'location_id' => $location_id,
-                'gender' => $gender,
-                'firebase_token' => $firebase_token,
-                'user_img' => $image
-            ];
+        $BasicData = [
+            'name' => $name,
+            'email' => $email,
+            'location_id' => $location_id,
+            'gender' => $gender,
+            'firebase_token' => $firebase_token,
+            'user_img' => $image
+        ];
 
-            // Update the user profile
-            User::where('id', $user->id)->update($BasicData);
+        // Update the user profile
+        User::where('id', $user->id)->update($BasicData);
+         $userData = User::where('id', $user->id)->first();
 
-            // Send Welcome Email To The Associate
-            
-            // dispatch(new SendWelcomeEmailToAssociate($user));
+        // Update associated profile
+        $this->UpdateAsscocProfile($request, $userData, $image);
 
-            $userData = User::where('id', $user->id)->first();
+        return response()->json(['user' => 1, 'message' => 'User Profile Updated Successfully', 'status' => true], 200);
+    } else {
+        return response()->json(['message' => 'User Not Found', 'status' =>false], 404);
+    }
+}
 
-            // Update associated profile
-            $this->UpdateAsscocProfile($request, $userData, $image);
+public function UpdateAsscocProfile($request, $userData, $image)
+{
+    if ($userData) {
+        $associateProfile = AssociateProfile::where('user_id', $userData->id)->first();
 
-            return response()->json(['user' => 1, 'message' => 'User Profile Updated Successfully', 'status' => true], 200);
+        $userDatas = [
+            'full_name' => isset($request->name) ? $request->name : $userData->full_name,
+            'email' => isset($request->email) ? $request->email : $userData->email,
+            'phone' => $userData->mobile,
+            'category_id' => isset($request->category_id) ? $request->category_id : null,
+            'subcategory_id' => isset($request->subcategory_id) ? $request->subcategory_id : null,
+            'area_of_service' => isset($request->area_of_service) ? $request->area_of_service : null,
+            'location_id' => isset($request->location_id) ? $request->location_id : null,
+            'other_subcat' => isset($request->other_subcat) ? $request->other_subcat : null,
+            'profile_image' => $image ?: $associateProfile->profile_image,
+            'business_name' =>isset($request->business_name) ? $request->business_name : null,
+        ];
+
+        // Check if the user's profile exists in the associate_profile table
+
+        if ($associateProfile) {
+            // Update the existing profile
+            $associateProfile->update($userDatas);
         } else {
-            return response()->json(['message' => 'User Not Found', 'status' =>false], 404);
+            // Create a new profile
+            $userDatas['user_id'] = $userData->id; // Add user_id to the data
+            AssociateProfile::create($userDatas);
         }
     }
-
-    public function UpdateAsscocProfile($request, $userData, $image){
-        if ($userData) {
-            
-            $associateProfile = AssociateProfile::where('user_id', $userData->id)->first();
-
-            $userDatas = [
-                'full_name' => isset($request->name) ? $request->name : $userData->full_name,
-                'email' => isset($request->email) ? $request->email : $userData->email,
-                'phone' => $userData->mobile,
-                'category_id' => isset($request->category_id) ? $request->category_id : null,
-                'subcategory_id' => isset($request->subcategory_id) ? $request->subcategory_id : null,
-                'area_of_service' => isset($request->area_of_service) ? $request->area_of_service : null,
-                'location_id' => isset($request->location_id) ? $request->location_id : null,
-                'other_subcat' => isset($request->other_subcat) ? $request->other_subcat : null,
-                'profile_image' => $image ?: $associateProfile->profile_image,
-                'business_name' =>isset($request->business_name) ? $request->business_name : null,
-            ];
-
-            // Check if the user's profile exists in the associate_profile table
-
-            if ($associateProfile) {
-                // Update the existing profile
-                $associateProfile->update($userDatas);
-            } else {
-                // Create a new profile
-                $userDatas['user_id'] = $userData->id; // Add user_id to the data
-                AssociateProfile::create($userDatas);
-            }
-        }
-    }
+}
 
   
 

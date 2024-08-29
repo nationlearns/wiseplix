@@ -36,17 +36,28 @@ class BusinessesController extends Controller
         // ]);
 
         $usei_id = Auth::user()->id;
-        $banner_image = $request->file('banner_image');
-        $banner_image_name_gen = hexdec(uniqid()) . '.' . $banner_image->getClientOriginalExtension();
-        $save_path = 'uploads/business/banner_image/';
-        $banner_image->move($save_path, $banner_image_name_gen);
-        $banner_image_save_url = $save_path . $banner_image_name_gen;
+        $profile_image_save_url = null;
+        $banner_image_save_url = null;
 
-        $profile_image = $request->file('profile_image');
-        $profile_image_name_gen = hexdec(uniqid()) . '.' . $profile_image->getClientOriginalExtension();
-        $save_path = 'uploads/business/profile_image/';
-        $profile_image->move($save_path, $profile_image_name_gen);
-        $profile_image_save_url = $save_path . $profile_image_name_gen;
+        if ($request->hasFile('banner_image')) {
+            
+            $banner_image = $request->file('banner_image');
+            $banner_image_name_gen = hexdec(uniqid()) . '.' . $banner_image->getClientOriginalExtension();
+            $save_path = 'uploads/business/banner_image/';
+            $banner_image->move($save_path, $banner_image_name_gen);
+            $banner_image_save_url = $save_path . $banner_image_name_gen;
+
+        }
+
+        if ($request->hasFile('profile_image')) {
+            
+            $profile_image = $request->file('profile_image');
+            $profile_image_name_gen = hexdec(uniqid()) . '.' . $profile_image->getClientOriginalExtension();
+            $save_path = 'uploads/business/profile_image/';
+            $profile_image->move($save_path, $profile_image_name_gen);
+            $profile_image_save_url = $save_path . $profile_image_name_gen;
+
+        }
 
         $business = Business::insert([
             'user_id' => $usei_id,
@@ -70,6 +81,7 @@ class BusinessesController extends Controller
             'area_of_service' => $request->area_of_service,
             'created_at' => Carbon::now()
         ]);
+
         return response()->json(['business'=>'Business Created Successfully','status'=>true]);
     }
 

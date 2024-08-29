@@ -21,6 +21,11 @@ use App\Models\Categories;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\RedirectIfAuthenticated;
+
+
+use App\Http\Controllers\PartnerController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -136,6 +141,9 @@ Route::middleware(['auth','role:user'])->group(function () {
 Route::get('/subcategory/ajax/{category_id}' , [PriceController::class,'GetSubCategory']);
 Route::get('/question/ajax/{subcategory_id}' , [PriceController::class,'GetQuestion']);
 Route::get('/questionotion/ajax/{question_id}' , [PriceController::class,'GetQuestionOtion']);
+Route::get('/district_name/ajax/{stateName}', [PriceController::class, 'getDistricts']);
+Route::get('/area_name/ajax/{district_name}', [PriceController::class, 'getAreaName']);
+
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
@@ -206,6 +214,29 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/lead-purchase', [LeadPurchaseController::class, 'index'])->name('admin.lead-purchase.index');
     Route::get('/lead-purchase/show/{id}', [LeadPurchaseController::class, 'show'])->name('admin.lead-purchase.show');
 });
+
+
+Route::get('/partner/login', [PartnerController::class, 'PartnerLogin'])->name('partner.login')->middleware(RedirectIfAuthenticated::class);
+Route::get('/partner/register', [PartnerController::class, 'PartnerRegister'])->name('partner.register');
+Route::post('/store/partner/register', [PartnerController::class, 'StorePartnerRegister'])->name('store.partner.register');
+
+Route::middleware(['auth', 'role:pro'])->group(function () {
+
+    Route::get('/partner/dashboard', [PartnerController::class, 'PartnerDashboard'])->name('partner.dashboard');
+    Route::get('/partner/logout', [PartnerController::class, 'PartnerLogout'])->name('partner.logout');
+    Route::get('/partner/profile', [PartnerController::class, 'PartnerProfile'])->name('partner.profile');
+    Route::get('/partner/edit/profile',  [PartnerController::class, 'PartnerProfileEdit'])->name('partner.edit.profile');
+    Route::post('/partner/profile/store', [PartnerController::class, 'PartnerStoreProfile'])->name('partner.profile.store');
+    Route::get('/partner/change/password', [PartnerController::class, 'PartnerChangePassword'])->name('partner.change.password');
+    Route::post('/partner/update/password', [PartnerController::class, 'PartnerUpdatePassword'])->name('partner.update.password');
+    Route::get('/partner/all/leads', [PartnerController::class, 'AllLeads'])->name('partner.all.leads');
+    Route::get('/partner/contact-us', [PartnerController::class, 'ContactUs'])->name('partner.contact-us');
+    Route::post('/partner/store/contact-us',[PartnerController::class,'StoreContactUs'])->name('partner.store.contact-us');
+    Route::get('/partner/terms-and-condition', [PartnerController::class, 'PartnerTermsAndCondition'])->name('partner.terms-and-condition');
+    Route::get('/partner/add-business',[PartnerController::class,'AddBusiness'])->name('partner.add-business');
+    Route::post('/partner/store-business',[PartnerController::class,'StoreBusiness'])->name('partner.store-business');
+}); // End Group Agent Middleware
+
 
 Route::post('/associate-profile-review/store', [AssociateReviewController::class, 'store'])->name('associate-review.store');
 Route::patch('/lead-status-update/{id}/update', [LeadPurchaseController::class, 'updateStatus'])->name('lead-purchase.update');
