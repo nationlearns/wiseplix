@@ -30,7 +30,7 @@ class AssociateMessageController extends Controller
         ]);
 
 
-        \dispatch(new SendEmailToAssociate($data));
+        // \dispatch(new SendEmailToAssociate($data));
 
         return redirect()->back()->with('success', 'Message Saved');
 
