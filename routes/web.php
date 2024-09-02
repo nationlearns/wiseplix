@@ -26,6 +26,9 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 
 use App\Http\Controllers\PartnerController;
 
+use App\Mail\TestMail;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +72,15 @@ Route::get('/', function () {
 
 
 })->name('home');
+
+
+Route::get('/send-test-email', function(){
+
+Mail::to('aquib_j@yahoo.com')->send(new TestMail);
+    
+    return 'Mail Sent';
+
+});
 
 
 
