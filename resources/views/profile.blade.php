@@ -438,7 +438,7 @@
                         </div>
 
                         <!-- Cotact Information-->
-                        <div class="sf-provi-coInfo-box m-b50" id="aon-provider-coInfo">
+                        {{-- <div class="sf-provi-coInfo-box m-b50" id="aon-provider-coInfo">
                             <h3 class="sf-provi-title">Contact Information</h3>
                             <div class="sf-divider-line"></div>
                             <div class="row">
@@ -482,7 +482,7 @@
                                 </div>
 
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- Customer Reviews-->
                         {{-- <div class="sf-provi-articles-box m-b50" id="aon-provider-review">
                             <h3 class="sf-provi-title"> Customer Reviews</h3>
