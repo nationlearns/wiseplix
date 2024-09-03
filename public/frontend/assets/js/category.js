@@ -394,7 +394,7 @@ function saveLeads() {
                 // Get the last part after the last '/'
                 const lastPart = parts[parts.length - 1];
 
-
+                let location = $('#location_id').val();
 
                 $('#validateSuccess').css('display', 'none');
                 $('#submitData').css('display', 'none');
@@ -414,7 +414,7 @@ function saveLeads() {
                 $('#thankYouMdl').modal('show');
 
                 setTimeout(function() {
-                    window.location.href = '/category/profile-listing/' + lastPart;
+                    window.location.href = '/category/profile-listing/' + lastPart + '?location_id='+ location  +'&subcategory_id='+query+'&min_rating=';
                 }, 2500);
                 
             } else {
