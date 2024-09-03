@@ -157,11 +157,8 @@
                             <div class="sf-banner-job-heading-large">{{ $id->full_name }}</div>
                             <ul class="sf-banner-job-dutation mb-4">
                                 <li><i class="fa fa-envelope"></i> E-Mail: <span class="jobs-timing">
-                                    @guest
-                                        @obfuscateEmail($id->email)
-                                    @else
-                                        {{$id->email}}
-                                    @endguest
+                                    
+                                    @obfuscateEmail($id->email)
 
                                     
 
@@ -170,11 +167,7 @@
                                     <i class="fa fa-phone"></i> Phone Number : <span class="jobs-date-label">
                                         {{-- {{$id->phone}} --}}
 
-                                        @guest
-                                            @obfuscatePhone($id->phone)
-                                        @else
-                                            {{$id->phone}}
-                                        @endguest
+                                        @obfuscatePhone($id->phone)
 
                                     </span></li>
                                 <li><i class="fa fa-list-alt"></i> Category Name : <span class="jobs-date-label">{{$cat_name}}</span></li>
@@ -262,20 +255,12 @@
                                         <div class="sf-related-job-location mb-2">
                                             <i class="fa fa-envelope"></i> E-mail : 
                                             
-                                            @guest
-                                                @obfuscateEmail($id->email)
-                                            @else
-                                                {{$id->email}}
-                                            @endguest
+                                            @obfuscateEmail($id->email)
 
                                         </div>
                                         <div class="sf-related-job-location">
                                             <i class="fa fa-phone"></i> Phone Number : <span class="jobs-date-label">
-                                                @guest
-                                                    @obfuscatePhone($id->phone)
-                                                @else
-                                                    {{$id->phone}}
-                                                @endguest
+                                                @obfuscatePhone($id->phone)
                                             </span>
                                         </div>
 
