@@ -133,5 +133,10 @@ class CategoriesController extends Controller
         return response()->json(['status' => true, 'data' => $uniqueDistricts]);
 
     }
+
+    public function getCategory($id){
+       $category = Categories::where('id', $id)->first();
+       return response()->json($category, 200); 
+    }
    
 }

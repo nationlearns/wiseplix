@@ -78,6 +78,7 @@ Route::get('/blogs',[BlogController::class,'Blogs']);
 Route::get('/blogs-deatils/{id}',[BlogController::class,'BlogsDetails']);
 Route::get('/faqs',[BlogController::class,'Faqs']);
 Route::get('/faqs-details/{id}',[BlogController::class,'FaqsDetails']);
+Route::get('/get-category-detail/{id}', [CategoriesController::class, 'getCategory']);
 
 Route::get('/getAllStates', [CategoriesController::class, 'getUniqueStates']);
 Route::post('/getDistrictByState', [CategoriesController::class, 'getUniqueDistrictsByState']);
