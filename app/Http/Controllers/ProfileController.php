@@ -57,4 +57,27 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function updateProfile(Request $request){
+
+        $user =  Auth::user();
+
+        $user->name = $request->name;
+        $user->mobile = $request->mobile;
+        $user->gender = $request->gender;
+
+        if ($request->file('user_img')) {
+            $file = $request->file('user_img');
+
+            $filename = date('YmdHi') . $file->getClientOriginalName();
+            $file->move(public_path('images/user'), $filename);
+            $user['user_img'] = $filename;
+        }
+
+        $user->update();
+
+        return \redirect()->back()->with('status', 'Profile Updated Successfully');
+
+
+    }
 }

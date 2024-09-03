@@ -151,6 +151,7 @@ Route::middleware('auth')->group(function () {
 });
 Route::middleware(['auth','role:user'])->group(function () {
     Route::get('profile',[UserController::class,'Profile'])->name('profile');
+    Route::patch('profile',[ProfileController::class,'updateProfile'])->name('profile.update');
 });
 Route::get('/subcategory/ajax/{category_id}' , [PriceController::class,'GetSubCategory']);
 Route::get('/question/ajax/{subcategory_id}' , [PriceController::class,'GetQuestion']);

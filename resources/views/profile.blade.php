@@ -69,6 +69,23 @@
         gtag('config', 'G-21XRZX7MFP');
     </script>
 
+
+    <style>
+        label{font-weight: 700;color: #000;margin-bottom: 0.25rem}
+        .form-group{
+            margin-bottom: .8rem !important;
+        }
+        .form-control{
+            border: 1px solid #e1e1e1 !important;
+            height: 40px !important;
+            font-size: 14px !important;
+            line-height: 20px !important;
+            padding: 10px 12px !important;
+            border-radius: 5px !important;
+        }
+
+    </style>
+
 </head>
 
 <body>
@@ -108,13 +125,25 @@
                 <div class="container sf-proBnr-container">
                     <div class="sf-proBnr-row row">
                         <div class="col-md-12 sf-proBnr-left text-center">
-                            <div class="sf-provi-pic mb-2">
-                                <img src="{{asset('images/profile-user.png')}}" style="width:150px;height:150px"
-                                    alt="" />
+                            <div class=" mb-2">
+
+                                    @if (auth()->user()->user_img !=  null)
+                                        <img src="{{asset('images/user/'.auth()->user()->user_img)}}" alt=""  style="width:150px;">
+                                    @else
+                                        <img src="{{asset('images/profile-user.png')}}" style="width:150px;height:150px" alt="">
+                                    @endif
+
+
                                 </div>
                             <h3 class="">{{ $user_id->name }}</h3>
                             <div class="sf-provi-tagline">{{ $user_id->email }}</div>
                             <div class="sf-provi-tagline">{{ $user_id->mobille }}</div>
+
+                            <div class="my-3">
+                                <a href="#" type="button" data-toggle="modal" data-target="#updateProfileModal" class="btn btn-info">Edit Profile</a>
+                            </div>
+                                
+
                             <div class="sf-provi-gallery">
                                 <a class="elem pic-long"
                                     href="{{ asset('frontend/assets/images/profile/pic2.jpg') }}"></a>
@@ -146,7 +175,7 @@
             <!-- Banner End -->
 
             <!--Nav Section Start-->
-            <div class="sf-page-scroll-wrap sf-page-scroll-wrap2">
+            {{-- <div class="sf-page-scroll-wrap sf-page-scroll-wrap2">
                 <div class="container">
                     <div class="sf-page-scroll-nav clearfix">
                         <ul class="clearfix">
@@ -156,7 +185,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <!--Nav Section End-->
 
             <!-- Left & right section start -->
@@ -242,197 +271,254 @@
                             </div> --}}
 
                         </div>
+
+                        <div class="sf-provi-service-box  m-b50" id="aon-provider-info">
+{{-- 
+
+                            <h3 class="sf-provi-title">My Profile</h3>
+                            <div class="sf-divider-line"></div>
+
+                            <div class="p-a30  m-b30  bg-white sf-shadow-box sf-border-box sf-radius-10">
+                                <div class="form-quot-bx">
+                                    <form action=""
+                                        method="post">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input name="name" type="text" required class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input name="email" type="text" required class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Phone</label>
+                                            <input name="phone" type="text" required class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Message</label>
+                                            <textarea name="message" rows="8" class="form-control"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="site-button btn-block">Send
+                                                information</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div> --}}
+
+
+
                         <!-- Services -->
                         <div class="sf-provi-service-box  m-b50" id="aon-provider-services">
                             <h3 class="sf-provi-title">Lead Requests</h3>
                             <div class="sf-divider-line"></div>
-                            <ul class="sf-provi-service-list">
-                                @foreach ($myreq as $item)
-                                    <li class="sf-provi-service-box">
+                            <ul class="sf-provi-service-list border-0">
 
-                                        <div class="sf-provi-service-top">
-                                            <div class="sf-provi-service-left">
-                                                
-                                                <h4 class="sf-provi-service-ttle"><span class="sf-provi-toggle-btn">+</span>
-                                                    {{$item->name}} {{-- <span>Offer</span> --}}
-                                                </h4>
-                                                {{-- {{$item['answers']}} --}}
-
-                                                <div class="card my-3">
-                                                    <div class="card-header">
-                                                        <h6 class="mb-0" style="font-weight: 600">Lead Details</h6>
-                                                    </div>
-
-                                                    <div class="card-body">
-                                                        <table class="table table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th scope="col">Category</th>
-                                                                    <th scope="col">Sub-Category</th>
-                                                                    <th scope="col">Q/A</th>
-                                                                    <th scope="col">Status</th>
-                                                                    <th scope="col">PinCode</th>
-                                                                    <th scope="col">Action</th>
-
-                                                                    {{-- <th scope="col">Area</th>
-                                                                    <th scope="col">District</th>
-                                                                    <th scope="col">State</th> --}}
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <th scope="row">{{$item->category['alt_name']}}</th>
-                                                                    <td>
-                                                                        {{$item->subcategory->slug}}
-                                                                
-                                                                    </td>
-                                                                    <td>
-                                                                        @if ($item && $item->answers)
-                                                                            @php
-                                                                                $answers = json_decode($item->answers, true);
-                                                                            @endphp
-                                                                        
-                                                                            @if ($answers && is_array($answers))
-                                                                                
-
-                                                                                    @foreach ($answers as $answer)
-                                                                                        Question: {{ $answer['question'] ?? '-' }}  <br>
-                                                                                        Answer: {{ $answer['answer'] ?? '-' }} <br> <br>
-                                                                                    @endforeach
-                                                                            
-                                                                            @else                                                        
-                                                                                -
-                                                                            @endif
-                                                                            
-                                                                        @else
-                                                                            NA
-                                                                        @endif
-                                                                    </td>
-                                                                    <td>
-
-                                                                        @if ($item->status == 1)
-                                                                            <span class="badge bg-info text-light">Open</span>
-                                                                        @else
-                                                                            <span class="badge bg-danger text-light">Closed</span>
-                                                                        @endif
-
-                                                                    </td>
-                                                                    <td>{{$item->pin_code}}</td>
-                                                                    <td>
-
-                                                                        <form id="statusForm-{{$item->id}}" action="{{route('lead-status.update', $item->id)}}" method="POST" style="display:none;">
-                                                                            @csrf
-                                                                            @method('patch')
-                                                                            <input type="hidden" name="status" id="statusInput-{{$item->id}}" value="{{ $item->status == 1 ? 0 : 1 }}">
-                                                                        </form>
-
-                                                                        <button onclick="toggleStatus({{$item->id}})" class="btn btn-warning btn-sm">
-
-                                                                            @if ($item->status == 1)
-                                                                                Close
-                                                                            @elseif ($item->status == 0)
-                                                                                Re-Open
-                                                                            @endif
-
-                                                                        </button>
-
-                                                                        <script>
-                                                                            function toggleStatus(id) {
-                                                                                const form = document.getElementById('statusForm-' + id);
-                                                                                // const statusInput = document.getElementById('statusInput-' + id);
-                                                                                // statusInput.value = statusInput.value === 1 ? 0 : 1;
-                                                                                form.submit();
-                                                                            }
-                                                                        </script>
-
-                                                                        {{-- <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#statusUpdateModal" data-id="{{$item->id}}">Update Status</button> --}}
-                                                                    </td>
-
-                                                                    {{-- <td></td>
-                                                                    <td></td>
-                                                                    <td></td> --}}
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-
-
-                                                
-
-                                                {{-- <div class="sf-provi-service-price">RS124.00</div> --}}
-                                                
-                                               
-                                                
-                                                <div class="sf-provi-service-hour"><i class="fa fa-clock-o"></i>{{date('d M, Y', strtotime($item->created_at)) }}</div>
-                                            
-                                            </div>
-
-                                            
-
-                                        </div>
-                                        <div class="sf-provi-service-bottom">
-                                            <div class="sf-provi-descriptio">Mobile : {{$item->mobile}}</div>
-                                            <div class="sf-provi-descriptio">Email : {{$item->email}}</div>
-                                            <div class="sf-provi-descriptio">
-                                                <div class="card my-3">
-                                                    <div class="card-header">
-                                                        <h6 class="mb-0" style="font-weight: 600">Contacted By</h6>
-                                                    </div>
-
-                                                    <div class="card-body">
-                                                        <table class="table table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th scope="col">Name</th>
-                                                                    <th scope="col">Associate Profile</th>
-                                                                    <th scope="col">Status</th>
-                                                                    <th scope="col">Message</th>
-                                                                    <th scope="col"></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach ($item->getPurchaseDetails as $associate)
-                                                                    
+                                @if (count($myreq) > 0)
+    
+                                    @foreach ($myreq as $item)
+                                        <li class="sf-provi-service-box">
+    
+                                            <div class="sf-provi-service-top">
+                                                <div class="sf-provi-service-left">
+                                                    
+                                                    <h4 class="sf-provi-service-ttle"><span class="sf-provi-toggle-btn">+</span>
+                                                        {{$item->name}} {{-- <span>Offer</span> --}}
+                                                    </h4>
+                                                    {{-- {{$item['answers']}} --}}
+    
+                                                    <div class="card my-3">
+                                                        <div class="card-header">
+                                                            <h6 class="mb-0" style="font-weight: 600">Lead Details</h6>
+                                                        </div>
+    
+                                                        <div class="card-body">
+                                                            <table class="table table-bordered">
+                                                                <thead>
                                                                     <tr>
-                                                                        <th scope="row">{{$associate->user['name']}}</th>
-                                                                        <td>
-                                                                            @if ($associate->user->associate()->exists())                                                                                
-                                                                                <a class="btn btn-sm btn-dark" href="{{route('associate.profile', $associate->user->associate->id)}}">View Profile</a>
-                                                                            @endif
-                                                                  
-                                                                        </td>
-                                                                        <td>
-                                                                            {{-- {{$associate}} --}}
-                                                                            @if ($associate['status'] == 'pending')
-                                                                                <span class="badge bg-info text-light">Pending</span>
-
-                                                                            @elseif($associate['status'] == 'approved')
-                                                                                <span class="badge bg-success text-light">Approved</span>
-                                                                            @elseif($associate['status'] == 'rejected')
-                                                                                <span class="badge bg-danger text-light">Rejected</span>
-                                                                            @endif
-
-                                                                        </td>
-                                                                        <td>{{$associate['message']}}</td>
-                                                                        
-                                                                        <td>
-                                                                            @if ($associate['status'] == 'pending')                                                                            
-                                                                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#updateStatusModal" data-id="{{$associate->id}}">Update</button>
-                                                                            @endif
-                                                                        </td>
+                                                                        <th scope="col">Category</th>
+                                                                        <th scope="col">Sub-Category</th>
+                                                                        <th scope="col">Q/A</th>
+                                                                        <th scope="col">Status</th>
+                                                                        <th scope="col">PinCode</th>
+                                                                        <th scope="col">Action</th>
+    
+                                                                        {{-- <th scope="col">Area</th>
+                                                                        <th scope="col">District</th>
+                                                                        <th scope="col">State</th> --}}
                                                                     </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th scope="row">{{$item->category['alt_name']}}</th>
+                                                                        <td>
+                                                                            {{$item->subcategory->slug}}
+                                                                    
+                                                                        </td>
+                                                                        <td>
+                                                                            @if ($item && $item->answers)
+                                                                                @php
+                                                                                    $answers = json_decode($item->answers, true);
+                                                                                @endphp
+                                                                            
+                                                                                @if ($answers && is_array($answers))
+                                                                                    
+    
+                                                                                        @foreach ($answers as $answer)
+                                                                                            Question: {{ $answer['question'] ?? '-' }}  <br>
+                                                                                            Answer: {{ $answer['answer'] ?? '-' }} <br> <br>
+                                                                                        @endforeach
+                                                                                
+                                                                                @else                                                        
+                                                                                    -
+                                                                                @endif
+                                                                                
+                                                                            @else
+                                                                                NA
+                                                                            @endif
+                                                                        </td>
+                                                                        <td>
+    
+                                                                            @if ($item->status == 1)
+                                                                                <span class="badge bg-info text-light">Open</span>
+                                                                            @else
+                                                                                <span class="badge bg-danger text-light">Closed</span>
+                                                                            @endif
+    
+                                                                        </td>
+                                                                        <td>{{$item->pin_code}}</td>
+                                                                        <td>
+    
+                                                                            <form id="statusForm-{{$item->id}}" action="{{route('lead-status.update', $item->id)}}" method="POST" style="display:none;">
+                                                                                @csrf
+                                                                                @method('patch')
+                                                                                <input type="hidden" name="status" id="statusInput-{{$item->id}}" value="{{ $item->status == 1 ? 0 : 1 }}">
+                                                                            </form>
+    
+                                                                            <button onclick="toggleStatus({{$item->id}})" class="btn btn-warning btn-sm">
+    
+                                                                                @if ($item->status == 1)
+                                                                                    Close
+                                                                                @elseif ($item->status == 0)
+                                                                                    Re-Open
+                                                                                @endif
+    
+                                                                            </button>
+    
+                                                                            <script>
+                                                                                function toggleStatus(id) {
+                                                                                    const form = document.getElementById('statusForm-' + id);
+                                                                                    // const statusInput = document.getElementById('statusInput-' + id);
+                                                                                    // statusInput.value = statusInput.value === 1 ? 0 : 1;
+                                                                                    form.submit();
+                                                                                }
+                                                                            </script>
+    
+                                                                            {{-- <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#statusUpdateModal" data-id="{{$item->id}}">Update Status</button> --}}
+                                                                        </td>
+    
+                                                                        {{-- <td></td>
+                                                                        <td></td>
+                                                                        <td></td> --}}
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
+    
+    
+                                                    
+    
+                                                    {{-- <div class="sf-provi-service-price">RS124.00</div> --}}
+                                                    
+                                                    
+                                                    
+                                                    <div class="sf-provi-service-hour"><i class="fa fa-clock-o"></i>{{date('d M, Y', strtotime($item->created_at)) }}</div>
+                                                
                                                 </div>
+    
+                                                
+    
                                             </div>
-
-                                        </div>
+                                            <div class="sf-provi-service-bottom">
+                                                <div class="sf-provi-descriptio">Mobile : {{$item->mobile}}</div>
+                                                <div class="sf-provi-descriptio">Email : {{$item->email}}</div>
+                                                
+                                                @if (count($item->getPurchaseDetails) > 0)
+                                                    <div class="sf-provi-descriptio">
+                                                        <div class="card my-3">
+                                                            <div class="card-header">
+                                                                <h6 class="mb-0" style="font-weight: 600">Contacted By</h6>
+                                                            </div>
+    
+                                                            <div class="card-body">
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col">Name</th>
+                                                                            <th scope="col">Associate Profile</th>
+                                                                            <th scope="col">Status</th>
+                                                                            <th scope="col">Message</th>
+                                                                            <th scope="col"></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($item->getPurchaseDetails as $associate)
+                                                                            
+                                                                            <tr>
+                                                                                <th scope="row">{{$associate->user['name'] ?? '-'}}</th>
+                                                                                <td>
+                                                                                    
+                                                                                    @if ($associate->user->associate()->exists())                                                                                
+                                                                                        <a class="btn btn-sm btn-dark" href="{{route('associate.profile', $associate->user->associate->id)}}">View Profile</a>
+                                                                                    @endif
+                                                                        
+                                                                                </td>
+                                                                                <td>
+                                                                                    @if ($associate['status'] == 'pending')
+                                                                                        <span class="badge bg-info text-light">Pending</span>
+    
+                                                                                    @elseif($associate['status'] == 'approved')
+                                                                                        <span class="badge bg-success text-light">Approved</span>
+                                                                                    @elseif($associate['status'] == 'rejected')
+                                                                                        <span class="badge bg-danger text-light">Rejected</span>
+    
+                                                                                        @else
+                                                                                        <span class="badge bg-info text-light">Pending</span>
+    
+                                                                                    
+                                                                                    @endif
+    
+                                                                                </td>
+                                                                                <td>{{$associate['message']}}</td>
+                                                                                
+                                                                                <td>
+                                                                                    {{-- @if ($associate['status'] == 'pending')                                                                             --}}
+                                                                                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#updateStatusModal" data-id="{{$associate->id}}">Update</button>
+                                                                                    {{-- @endif --}}
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+    
+                                            </div>
+                                            
+                                        </li>
+                                    @endforeach
+                                    
+                                @else
                                         
-                                    </li>
-                                @endforeach
+                                    <h2 class="text-black font-bold mb-4" style="font-size: 2rem">You haven't placed any service request</h2>
+                                    <a href="{{route('category')}}" class="btn btn-info ">Order Now</a>
+                                        
+                                @endif
                             </ul>
 
                         </div>
@@ -777,8 +863,6 @@
         <button class="scroltop"><span class="fa fa-angle-up  relative" id="btn-vibrate"></span></button>
 
         <!-- Modal -->
-        
-        statusUpdateModal
 
         <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-sm">
@@ -819,6 +903,83 @@
     
 
     @include('loginmodel')
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="updateProfileModal" tabindex="-1" role="dialog" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateProfileModalLabel">Update Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="py-4 px-2">
+                    <form action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PATCH')
+                        <div class="form-group mb-4">
+                            <label for="name">Profile Picture</label>
+
+                            @if (auth()->user()->user_img !=  null)
+                                <div class="mb-3">
+
+                                    <img src="{{asset('images/user/'.auth()->user()->user_img)}}" alt=""  style="width:90px;">
+                                </div>
+                            @else
+                                <div class="mb-3">
+                                    <img src="{{asset('images/profile-user.png')}}" style="width920px;height:90px" alt="">
+                                
+                                </div>
+                            @endif
+
+                            <input type="file" class="form-control" name="user_img">
+                            
+
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" name="name" id="" value="{{auth()->user()->name}}">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" disabled ="" value="{{auth()->user()->email}}">
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="mobile">Phone</label>
+                            <input type="text" class="form-control" name="mobile" id="" value="{{auth()->user()->mobile}}">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="gender">Gender</label>
+                            
+                            <select name="gender" id="" class="form-control">
+                                <option value="Male" {{auth()->user()->gender == 'Male' ? 'selected' : ''}} >Male</option>
+                                <option value="female" {{auth()->user()->gender == 'female' ? 'selected' : ''}}>Female</option>
+                            </select>
+                            
+                        </div>
+
+
+
+                        <div class="form-group text-right">
+                            <button class="btn btn-dark" type="submit">Update Profile</button>
+                        </div>
+                        
+
+                    </form>
+                </div>
+            </div>
+            {{-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div> --}}
+            </div>
+        </div>
+    </div>
+    
 
     
 
