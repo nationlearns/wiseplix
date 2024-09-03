@@ -445,9 +445,26 @@ function saveLeads() {
 
                 $('#thankYouMdl').modal('show');
 
-                setTimeout(function() {
-                    window.location.href = '/';
-                }, 4000);
+                let location = $('#location_id').val();
+
+                let subcategory = $('#subcategory_id').val();
+                
+                let category = $('#category_id').val();
+
+
+                
+                $.ajax({
+                    url: '/api/get-category-detail/' + category,
+                    type: 'GET',
+                    success: function (categoryRes) {
+                        
+                        let lastPart = categoryRes.slug;
+
+                        setTimeout(function () {
+                            window.location.href = '/category/profile-listing/' + lastPart + '?location_id='+ location  +'&subcategory_id='+subcategory+'&min_rating=';
+                        }, 2500);
+                    }
+                });
 
             } else {
                 $('#submitData').attr('disabled', false);
