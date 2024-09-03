@@ -36,6 +36,36 @@ class CategoriesController extends Controller
         return response()->json($data);
     }
 
+
+    public function getLocation(Request $request){
+        
+        // Retrieve the search query from the request
+        $query = $request->input('query');
+
+        // Check if the query is not empty
+        if (!$query) {
+            return response()->json([]);
+        }
+
+        // Perform the search with a limit for better performance
+        $locations = Location::select('id', 'name') // Select only needed columns
+            ->where('name', 'like', '%' . $query . '%') // Use wildcard for partial matches
+            ->limit(10) // Limit the number of results
+            ->get();
+
+        // Format the results for Select2
+        $formattedLocations = $locations->map(function ($location) {
+            return [
+                'id' => $location->id,
+                'text' => $location->name
+            ];
+        });
+
+        // Return the results as JSON
+        return response()->json($formattedLocations);
+    }
+
+
     public function getquestionOptions(Request $request){
         $subCategory  = $request->input("subcategory_id");
 

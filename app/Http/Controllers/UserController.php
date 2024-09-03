@@ -73,12 +73,21 @@ class UserController extends Controller
     }
 
     public function CategoryView($slug){
+
+        $locations = Location::take(100)->get();
+
+        // Retrieve the category by slug
+        $category = Categories::where('slug', $slug)->first();
+
         
         $slug = Categories::where('slug', $slug)->first();
 
         $id = $slug->id;
 
         $profile = AssociateProfile::where('category_id', $id)->get();
+
+        $subcategories = Subcategory::where('category_id', $slug['id'])->get();
+
 
         // return $profile;
 
@@ -107,45 +116,99 @@ class UserController extends Controller
         
         $data = DB::table('sub_categories')->select('*')->where('category_id', $id)->where('status', 1)->get();
         
-        return view('category_deatil', compact('slug', 'data', 'profile', 'count'));
+        return view('category_deatil', compact('slug', 'data', 'profile', 'count', 'locations', 'category', 'subcategories'));
     }
 
 
-    public function profileListing($slug){
-        $slug = Categories::where('slug', $slug)->first();
+    public function profileListing(Request $request, $slug){
+        // $category = Categories::where('slug', $slug)->first();
 
-        $id = $slug->id;
-
-        $profile = AssociateProfile::where('category_id', $id)->get();
-
-        // return $profile;
+        // $profile = AssociateProfile::where('category_id', $category->id)->get();
 
         // foreach ($profile as $user_profile) {
-        //     // Decode the JSON array of subcategory IDs
-        //     $subcategoryIds = json_decode($user_profile->subcategory_id);
+        //     // Decode the JSON array of subcategory IDs if it's valid
+        //     $subcategoryIds = json_decode($user_profile->subcategory_id, true);
 
-        //     // Fetch the subcategory names
-        //     $user_profile->subcategories = Subcategory::whereIn('id', $subcategoryIds)->get();
+        //     if (is_array($subcategoryIds)) {
+        //         // Fetch the subcategory names
+        //         $user_profile->subcategories = Subcategory::whereIn('id', $subcategoryIds)->get();
+        //     } else {
+        //         $user_profile->subcategories = collect(); // Return an empty collection if invalid
+        //     }
         // }
+        // $count = $profile->count();
 
-        foreach ($profile as $user_profile) {
-            // Decode the JSON array of subcategory IDs if it's valid
-            $subcategoryIds = json_decode($user_profile->subcategory_id, true);
 
-            if (is_array($subcategoryIds)) {
-                // Fetch the subcategory names
-                $user_profile->subcategories = Subcategory::whereIn('id', $subcategoryIds)->get();
-            } else {
-                $user_profile->subcategories = collect(); // Return an empty collection if invalid
+
+
+
+
+        $locations = Location::take(100)->get();
+
+        // Retrieve the category by slug
+        $category = Categories::where('slug', $slug)->first();
+
+        if (!$category) {
+            return redirect()->back()->with('error', 'Category not found.');
+        }
+
+        $subcategories = Subcategory::where('category_id', $category['id'])->get();
+
+        // Initialize the query with the basic condition
+        $query = AssociateProfile::with('subCategory')
+            ->where('category_id', $category->id);
+
+        // Apply Location filter if provided
+        if ($request->has('location_id') && !empty($request->location_id)) {
+            $query->where('location_id',(int)$request->location_id);
+        }
+        
+
+        // Apply Subcategory filter if provided
+        if ($request->has('subcategory_id') && !empty($request->subcategory_id)) {
+            // Assuming subcategory_id is stored as a JSON array in the database
+            $query->whereJsonContains('subcategory_id', (int)$request->subcategory_id);
+        }
+
+            // Apply Reviews Filter
+        if ($request->filled('min_rating')) {
+            $minRating = (int) $request->min_rating;
+            // Ensure the minimum rating is between 1 and 5
+            if ($minRating >= 1 && $minRating <= 5) {
+                $query->whereHas('profileReview', function ($query) use ($minRating) {
+                    $query->select('associate_id')
+                        ->groupBy('associate_id')
+                        ->havingRaw('AVG(star) >= ?', [$minRating]);
+                });
             }
         }
 
+
         
+        // Execute the query and get the profiles
+        $profile = $query->get();
+
+        // Process each profile to retrieve subcategories
+        foreach ($profile as $user_profile) {
+            $subcategoryIds = json_decode($user_profile->subcategory_id, true);
+
+            if (is_array($subcategoryIds)) {
+                $user_profile->subcategories = Subcategory::whereIn('id', $subcategoryIds)->get();
+            } else {
+                $user_profile->subcategories = collect();
+            }
+        }
+
+        // return $profile;
+
         $count = $profile->count();
-        
-        $data = DB::table('sub_categories')->select('*')->where('category_id', $id)->where('status', 1)->get();
-        
-        return view('category-profile-listing', compact('slug', 'data', 'profile', 'count')) ;
+
+
+
+        return view('category-profile-listing', compact('category', 'profile', 'count', 'locations', 'subcategories')) ;
+
+
+
     }
 
 

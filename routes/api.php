@@ -67,6 +67,7 @@ Route::post('/associate-message/store', [AssociateMessageController::class, 'sto
 Route::get('/get-all-category', [CategoriesController::class, 'getAllCategory']);
 Route::post('/get-subcategory/{id}', [CategoriesController::class, 'getSubCategory']);
 Route::post('/get-location', [CategoriesController::class, 'getLocationDetails']);
+Route::post('/get-all-location', [CategoriesController::class, 'getLocation']);
 Route::post('/get-questions', [CategoriesController::class, 'getquestionOptions']);
 Route::post('/category-search', [CategoriesController::class, 'categorySearch']);
 Route::post('/request-otp', [OtpController::class, 'requestForOtpApi']);

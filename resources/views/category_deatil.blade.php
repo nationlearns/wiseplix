@@ -59,6 +59,11 @@
     <!-- Main STyle Sheet -->
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/assets/css/style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('frontend/assets/css/category-modal.css')}}">
+
+
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-21XRZX7MFP"></script>
 <script>
@@ -68,6 +73,30 @@
 
   gtag('config', 'G-21XRZX7MFP');
 </script>
+
+    <style>
+    
+    span.selection{
+        position: relative;
+        top: -1px;
+    }
+        .select2-container--default .select2-selection--single {
+            background-color: #fff;
+            border: 1px solid black;
+            border-radius: 0;
+            min-height: 49px
+        }
+        .select2-container--default .select2-selection--single .select2-selection__placeholder{
+            color: #000;
+            margin-top: 9px;
+            display: block;
+        }
+        .select2-selection__arrow{
+            display: none
+        }
+    </style>
+
+
 </head>
 
 <body>
@@ -145,6 +174,43 @@
                     <div class="section-content">
                         <h3 class="text-info my-3">Profile Listing</h3>
                         <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="div">
+
+                                    <form action="{{ route('category.profile-listing', $category->slug) }}" method="GET">
+                                        @csrf
+                                        <select id="location-select" name="location_id">
+                                            <option value="">Select Location</option>
+                                        </select>
+
+                                        <!-- Subcategory Filter -->
+                                        <select name="subcategory_id">
+                                            <option value="">Select Subcategory</option>
+                                            @foreach($subcategories as $subcategory)
+                                                <option value="{{ $subcategory->id }}" {{ old('subcategory_id', request('subcategory_id')) == $subcategory->id ? 'selected' : '' }}>
+                                                    {{ $subcategory->slug }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+                                        <!-- Reviews Filter -->
+                                        <select name="min_rating">
+                                            <option value="">Min Rating</option>
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <option value="{{ $i }}" {{ old('min_rating', request('min_rating')) == $i ? 'selected' : '' }}>
+                                                    {{ $i }}
+                                                </option>
+                                            @endfor
+                                        </select>
+
+                                        <button type="submit" class="btn btn-info btn-lg">Filter</button>
+
+                                    </form>
+
+                                </div>
+                            </div>
+
                             <!--BLock 1-->
                             @if ($count > 0)
                                 @foreach ($profile as $item)
@@ -283,6 +349,42 @@
 <script  src="{{asset('frontend/assets/js/custom.js')}}"></script><!-- CUSTOM FUCTIONS  -->
 <script src="{{asset('frontend/assets/js/lc_lightbox.lite.js')}}" ></script><!-- IMAGE POPUP -->
 <script  src="{{asset('frontend/assets/js/bootstrap-slider.min.js')}}"></script><!-- Form js -->
+
+
+<script>
+
+    $(document).ready(function() {
+
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            
+        $('#location-select').select2({
+            placeholder: 'Select Location',
+            ajax: {
+                url: '/api/get-all-location', // Your API endpoint
+                type: 'POST',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken // Include CSRF token in the request header
+                },
+                data: function(params) {
+            return {
+                query: params.term // Send the search query
+            };
+        },
+        processResults: function(data) {
+            // Return the formatted results
+            return {
+                results: data
+            };
+        },
+        cache: true
+            }
+        });
+
+
+    });
+
+</script>
 
 </body>
 

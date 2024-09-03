@@ -12,7 +12,26 @@ class Leads extends Model
 
     protected $table = 'leads';
 	
-    protected $fillable = ['user_id', 'category_id', 'subcategory_id', 'answers', 'name', 'email','mobile','gender','pin_code','lead_status','status','added_by','created_at','updated_at','district_name','state', 'location_id', 'area_name'];
+    protected $fillable = [
+        'user_id', 
+        'category_id', 
+        'subcategory_id', 
+        'answers', 
+        'name', 
+        'email',
+        'mobile',
+        'gender',
+        'pin_code',
+        'lead_status',
+        'status',
+        'added_by',
+        'created_at',
+        'updated_at',
+        'district_name',
+        'state',
+        'location_id',
+        'area_name'
+    ];
 
     public function category(){
         return $this->belongsTo(Categories::class,'category_id','id');
