@@ -138,15 +138,15 @@
                     <div class="row">
                         <!--Category Detail Left-->
                         <div class="col-md-6">
-                            <div class="sf-caty-pic" style="background-image: url('https://wiseplix-prod.s3.ap-south-1.amazonaws.com/Images/category_image/{{ $slug->upload_category_image }}');" alt="{{ $slug->alt_name}}">
+                            <div class="sf-caty-pic" style="background-image: url('{{asset('images/category-icons/'.$slug->cat_image)}}');" alt="{{ $slug->alt_name}}">
                             </div>
                         </div>
                         <!--Category Detail Right-->
                         <div class="col-md-6">
                             <div class="sf-caty-info">
-                                <h3>{{ str_replace('-', ' ', $slug->slug) }}</h3>
+                                <h3>{{ str_replace('-', ' ', $slug->alt_name) }}</h3>
                                 <div class="sf-caty-text">
-                                    <p>{{$slug->description}}.</p>
+                                    <p>{{$slug->description}}</p>
                                 </div>
                             </div>
 
