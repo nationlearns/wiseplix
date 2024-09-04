@@ -87,6 +87,9 @@ class LoginController extends Controller
             'role' => 'pro'
         ]);
 
+        // Add free credits
+        $this->addFreeCredits($user);
+
         $token = $user->createToken("API TOKEN")->plainTextToken;
 
         return response()->json(['token' => $token, 'status' => true, 'message' => "Registered successfully!"], 200);
