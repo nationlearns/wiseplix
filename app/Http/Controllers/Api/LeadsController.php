@@ -234,11 +234,22 @@ class LeadsController extends Controller{
             ->leftJoin('location', 'location.id', 'leads.location_id')
             ->where(['leads.lead_status' => 'NotSold', 'leads.status' => 1])
             ->whereNotIn('leads.id', $leadId);
+
+        // if($userData->associate()->exists()){
+        //     if($userData->associate->location_id != null){
+        //         $query->where('leads.location_id', $userData->associate->location_id);
+        //     }
+        // }
+
+        // Get Location Based Data
+        if ($userData->associate && ($userData->associate->location_id != null)) {
+            $query->where('leads.location_id', $userData->associate->location_id);
+        }
+
+
         
-        if ($categoryId) {
-            
-            $query->where('leads.category_id', $categoryId['category_id']);
-            
+        if ($categoryId) {            
+            $query->where('leads.category_id', $categoryId['category_id']);            
         }
             
 
@@ -268,7 +279,6 @@ class LeadsController extends Controller{
         $leadData = $query->orderBy('leads.created_at', 'DESC')->get();
 
         if ($leadData) {
-
             foreach ($leadData as $lead) {
             
                 $answer = $lead->answers;
@@ -296,9 +306,7 @@ class LeadsController extends Controller{
                 ];
 
             }
-
             return response()->json(['status'=> true,'leadData' => $leads_list, 'Message' => 'Data Found'], 200);
-        
         }
 
         return response()->json(['status'=> true,'leadData' => 0, 'message' => 'No data found'], 200);
@@ -365,8 +373,8 @@ class LeadsController extends Controller{
 
 
 
-    public function buyLeads($id)
-    {
+    public function buyLeads($id){
+
         $leadId = $id;
 
         $userData = Auth::user();
@@ -426,8 +434,7 @@ class LeadsController extends Controller{
     }
 
 
-    public function getLeadDetailsbyUser()
-    {
+    public function getLeadDetailsbyUser() {
         $leads_list = [];
         $userData = Auth::user();
         $userId = $userData->id;
@@ -472,8 +479,7 @@ class LeadsController extends Controller{
     }
 
 
-    public function createOrUpdateFollowUp(Request $request)
-    {
+    public function createOrUpdateFollowUp(Request $request) {
         $user = Auth::user();
         $userId = $user->id;
         $lead_id = $request->lead_id;
@@ -515,8 +521,7 @@ class LeadsController extends Controller{
         }
     }
 
-    public function getFollowUpsById($leadId)
-    {
+    public function getFollowUpsById($leadId) {
         $user = Auth::user();
         $userId = $user->id;
 
@@ -554,8 +559,7 @@ class LeadsController extends Controller{
         return response()->json(['success' => true, 'message' => 'Filter data updated successfully'], 200);
     }
 
-    public function getFilterData()
-    {
+    public function getFilterData() {
         $user = Auth::user();
 
         if (!$user) {
@@ -572,8 +576,7 @@ class LeadsController extends Controller{
     }
 
 
-    public function destroyFilter($id)
-    {
+    public function destroyFilter($id){
         $record = FilterData::find($id);
         if (!$record) {
             return response()->json(['status' =>false, 'message' => 'Record not found'], 200);
@@ -582,16 +585,15 @@ class LeadsController extends Controller{
         return response()->json(['status' =>true, 'message' => 'Record deleted successfully']);
     }
 
-    public function getProfileVisitByLeadId($leadId)
-{
-    $profileVisit = ProfileVisit::select('lead_id', 'leads_clicks')->where('lead_id', $leadId)->first();
+    public function getProfileVisitByLeadId($leadId){
+        $profileVisit = ProfileVisit::select('lead_id', 'leads_clicks')->where('lead_id', $leadId)->first();
 
-    if ($profileVisit) {
-        return response()->json(['profileVisit' => $profileVisit, 'success' => true, 'message' => 'Profile visit data found'], 200);
+        if ($profileVisit) {
+            return response()->json(['profileVisit' => $profileVisit, 'success' => true, 'message' => 'Profile visit data found'], 200);
+        }
+
+        return response()->json(['profileVisit' => [], 'success' => false, 'message' => 'No profile visit data found'], 404);
     }
-
-    return response()->json(['profileVisit' => [], 'success' => false, 'message' => 'No profile visit data found'], 404);
-}
 
 
 
