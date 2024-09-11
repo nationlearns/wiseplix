@@ -326,12 +326,10 @@ class LeadsController extends Controller{
             ->where('leads.status', 1)
             ->whereNotIn('leads.id', $leadIds);
 
-
-            // $query->where('location.pincode', "560068");
-
         // Apply location-based filter if the user has an associate profile with a location_id
         if ($userData->associate && $userData->associate->location_id) {
-            $query->where('leads.location_id', $userData->associate->location_id);
+            // $query->where('leads.location_id', $userData->associate->location_id);
+            $query->where('leads.district_name', $userData->associate->location->district_name);
         }
 
         // Filter by category if available
