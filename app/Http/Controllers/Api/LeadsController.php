@@ -209,109 +209,208 @@ class LeadsController extends Controller{
     }
 
 
-    public function getAllLeadList(Request $request){
+    // public function getAllLeadList(Request $request){
 
+    //     $userData = Auth::user();
+        
+    //     $userId = $userData->id;
+        
+    //     $leads_list = [];
+        
+    //     $leadId = [];
+        
+    //     $categoryId = AssociateProfile::select('category_id')->where('user_id', $userId)->first();
+        
+    //     $leadsId = PurchaseLeadDetails::select('lead_id')->where('user_id', $userId)->get();
+        
+    //     foreach ($leadsId as $lead) {
+    //         $leadId[] = $lead->lead_id;
+    //     }
+        
+    //     $query = Leads::select('leads.*', 'sub_categories.slug as subcategory_name', 'categories.alt_name as category_name', 'prices.points', 'location.pincode', 'location.district_name', 'location.state_name')
+    //         ->leftJoin('categories', 'categories.id', '=', 'leads.category_id')
+    //         ->leftJoin('sub_categories', 'sub_categories.id', '=', 'leads.subcategory_id')
+    //         ->leftJoin('prices', 'prices.subcategory_id', 'leads.subcategory_id')
+    //         ->leftJoin('location', 'location.id', 'leads.location_id')
+    //         ->where(['leads.lead_status' => 'NotSold', 'leads.status' => 1])
+    //         ->whereNotIn('leads.id', $leadId);
+
+    //     // Get Location Based Data
+    //     if ($userData->associate && ($userData->associate->location_id != null)) {
+    //         $query->where('leads.location_id', $userData->associate->location_id);
+    //     }
+        
+    //     if ($categoryId) {            
+    //         $query->where('leads.category_id', $categoryId['category_id']);            
+    //     }
+            
+
+    //     if (isset($request->pincode)) {
+    //         $pincode = $request->pincode;
+    //         $query->whereIn('leads.pin_code', 'like', '%' . $pincode . '%');
+    //     }
+
+    //     if (isset($request->category_id)) {
+    //         $category = $request->category_id;
+    //         $query->where('leads.category_id', '=', $category);
+    //     }
+
+    //     if (isset($request->subcategory_id)) {
+    //         $subcategory = $request->subcategory_id;
+    //         $query->whereIn('leads.subcategory_id', '=', $subcategory);
+    //     }
+    //     if (isset($request->district_name)) {
+    //         $district = $request->district_name;
+    //         $query->whereIn('leads.district_name', 'like', '%' . $district . '%');
+    //     }
+    //     if (isset($request->state_name)) {
+    //         $state = $request->state_name;
+    //         $query->where('leads.state', 'like', '%' . $state . '%');
+    //     }
+
+    //     $leadData = $query->orderBy('leads.created_at', 'DESC')->get();
+
+    //     if ($leadData) {
+    //         foreach ($leadData as $lead) {
+            
+    //             $answer = $lead->answers;
+            
+    //             $answerData = json_decode($answer, true);
+            
+    //             $answerId = !empty($answerData) && is_array($answerData) ? $answerData[0] : null;
+            
+    //             $leads_list[] = [
+    //                 'id' => $lead->id,
+    //                 'name' => $lead->name,
+    //                 'email' => "XXXXXXXX@XXXX.XXX",
+    //                 'mobile' => 'XXXXXXXXXX',
+    //                 'category' =>  $lead->category_name,
+    //                 'subcategory' => $lead->subcategory_name,
+    //                 'gender' => $lead->gender,
+    //                 'pincode' => $lead->pincode,
+    //                 'points' => empty($lead->points) ? 0 : $lead->points,
+    //                 'hot_lead' => 'Fresh',
+    //                 'lead_date' => $lead->created_at,
+    //                 'district' => $lead->district_name,
+    //                 'state' => $lead->state_name,
+    //                 'answerData' => $answerId,
+    //                 'bought_times' => $lead->bought_times
+    //             ];
+
+    //         }
+    //         return response()->json(['status'=> true,'leadData' => $leads_list, 'Message' => 'Data Found'], 200);
+    //     }
+
+    //     return response()->json(['status'=> true,'leadData' => 0, 'message' => 'No data found'], 200);
+    
+    // }
+
+
+
+    public function getAllLeadList(Request $request)
+    {
         $userData = Auth::user();
-        
         $userId = $userData->id;
-        
-        $leads_list = [];
-        
-        $leadId = [];
-        
-        $categoryId = AssociateProfile::select('category_id')->where('user_id', $userId)->first();
-        
-        $leadsId = PurchaseLeadDetails::select('lead_id')->where('user_id', $userId)->get();
-        
-        foreach ($leadsId as $lead) {
-            $leadId[] = $lead->lead_id;
-        }
-        
+
+        // Get the user's purchased lead IDs and category
+        $leadIds = PurchaseLeadDetails::where('user_id', $userId)->pluck('lead_id')->toArray();
+        $categoryId = AssociateProfile::where('user_id', $userId)->value('category_id');
+
+        // Base query for leads
         $query = Leads::select('leads.*', 'sub_categories.slug as subcategory_name', 'categories.alt_name as category_name', 'prices.points', 'location.pincode', 'location.district_name', 'location.state_name')
             ->leftJoin('categories', 'categories.id', '=', 'leads.category_id')
             ->leftJoin('sub_categories', 'sub_categories.id', '=', 'leads.subcategory_id')
-            ->leftJoin('prices', 'prices.subcategory_id', 'leads.subcategory_id')
-            ->leftJoin('location', 'location.id', 'leads.location_id')
-            ->where(['leads.lead_status' => 'NotSold', 'leads.status' => 1])
-            ->whereNotIn('leads.id', $leadId);
+            ->leftJoin('prices', 'prices.subcategory_id', '=', 'leads.subcategory_id')
+            ->leftJoin('location', 'location.id', '=', 'leads.location_id')
+            ->where('leads.lead_status', 'NotSold')
+            ->where('leads.status', 1)
+            ->whereNotIn('leads.id', $leadIds);
 
-        // if($userData->associate()->exists()){
-        //     if($userData->associate->location_id != null){
-        //         $query->where('leads.location_id', $userData->associate->location_id);
-        //     }
-        // }
 
-        // Get Location Based Data
-        if ($userData->associate && ($userData->associate->location_id != null)) {
+            // $query->where('location.pincode', "560068");
+
+        // Apply location-based filter if the user has an associate profile with a location_id
+        if ($userData->associate && $userData->associate->location_id) {
             $query->where('leads.location_id', $userData->associate->location_id);
         }
 
-
-        
-        if ($categoryId) {            
-            $query->where('leads.category_id', $categoryId['category_id']);            
-        }
-            
-
-        if (isset($request->pincode)) {
-            $pincode = $request->pincode;
-            $query->whereIn('leads.pin_code', 'like', '%' . $pincode . '%');
+        // Filter by category if available
+        if ($categoryId) {
+            $query->where('leads.category_id', $categoryId);
         }
 
-        if (isset($request->category_id)) {
-            $category = $request->category_id;
-            $query->where('leads.category_id', '=', $category);
-        }
+        // Additional filters based on request parameters
+        $this->applyFilters($query, $request);
 
-        if (isset($request->subcategory_id)) {
-            $subcategory = $request->subcategory_id;
-            $query->whereIn('leads.subcategory_id', '=', $subcategory);
-        }
-        if (isset($request->district_name)) {
-            $district = $request->district_name;
-            $query->whereIn('leads.district_name', 'like', '%' . $district . '%');
-        }
-        if (isset($request->state_name)) {
-            $state = $request->state_name;
-            $query->where('leads.state', 'like', '%' . $state . '%');
-        }
-
+        // Fetch the leads with applied filters
         $leadData = $query->orderBy('leads.created_at', 'DESC')->get();
 
-        if ($leadData) {
-            foreach ($leadData as $lead) {
-            
-                $answer = $lead->answers;
-            
-                $answerData = json_decode($answer, true);
-            
-                $answerId = !empty($answerData) && is_array($answerData) ? $answerData[0] : null;
-            
-                $leads_list[] = [
-                    'id' => $lead->id,
-                    'name' => $lead->name,
-                    'email' => "XXXXXXXX@XXXX.XXX",
-                    'mobile' => 'XXXXXXXXXX',
-                    'category' =>  $lead->category_name,
-                    'subcategory' => $lead->subcategory_name,
-                    'gender' => $lead->gender,
-                    'pincode' => $lead->pincode,
-                    'points' => empty($lead->points) ? 0 : $lead->points,
-                    'hot_lead' => 'Fresh',
-                    'lead_date' => $lead->created_at,
-                    'district' => $lead->district_name,
-                    'state' => $lead->state_name,
-                    'answerData' => $answerId,
-                    'bought_times' => $lead->bought_times
-                ];
-
-            }
-            return response()->json(['status'=> true,'leadData' => $leads_list, 'Message' => 'Data Found'], 200);
+        // Process the leads
+        if ($leadData->isNotEmpty()) {
+            $leadsList = $this->transformLeadData($leadData);
+            return response()->json(['status' => true, 'leadData' => $leadsList, 'message' => 'Data Found'], 200);
         }
 
-        return response()->json(['status'=> true,'leadData' => 0, 'message' => 'No data found'], 200);
-    
+        return response()->json(['status' => true, 'leadData' => [], 'message' => 'No data found'], 200);
     }
+
+    /**
+     * Apply filters to the leads query based on request inputs
+     */
+    protected function applyFilters($query, Request $request)
+    {
+        if ($pincode = $request->pincode) {
+            $query->where('leads.pin_code', 'like', '%' . $pincode . '%');
+        }
+
+        if ($category = $request->category_id) {
+            $query->where('leads.category_id', $category);
+        }
+
+        if ($subcategory = $request->subcategory_id) {
+            $query->where('leads.subcategory_id', $subcategory);
+        }
+
+        if ($district = $request->district_name) {
+            $query->where('leads.district_name', 'like', '%' . $district . '%');
+        }
+
+        if ($state = $request->state_name) {
+            $query->where('leads.state_name', 'like', '%' . $state . '%');
+        }
+    }
+
+    /**
+     * Transform lead data to return as response
+     */
+    protected function transformLeadData($leadData)
+    {
+        return $leadData->map(function ($lead) {
+            $answerData = json_decode($lead->answers, true);
+            $answerId = is_array($answerData) && !empty($answerData) ? $answerData[0] : null;
+
+            return [
+                'id' => $lead->id,
+                'name' => $lead->name,
+                'email' => "XXXXXXXX@XXXX.XXX",
+                'mobile' => 'XXXXXXXXXX',
+                'category' => $lead->category_name,
+                'subcategory' => $lead->subcategory_name,
+                'gender' => $lead->gender,
+                'pincode' => $lead->pincode,
+                'points' => $lead->points ?? 0,
+                'hot_lead' => 'Fresh',
+                'lead_date' => $lead->created_at,
+                'district' => $lead->district_name,
+                'state' => $lead->state_name,
+                'answerData' => $answerId,
+                'bought_times' => $lead->bought_times
+            ];
+        })->toArray();
+    }
+
+
+
 
 
     public function LeadDetails($id){
