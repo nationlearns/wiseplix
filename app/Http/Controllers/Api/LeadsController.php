@@ -130,12 +130,12 @@ class LeadsController extends Controller{
                         })->get();
 
         // Send the notification email to each partner
-        // foreach ($partners as $partner) {
-        //     dispatch(new SendLeadNotificationEmail($lead, $partner));
-        // }
+        foreach ($partners as $partner) {
+            dispatch(new SendLeadNotificationEmail($lead, $partner));
+        }
 
         // // Send Notification to the User Who Posted the lead
-        // dispatch(new SendLeadConfirmationEmail($lead, $user));
+        dispatch(new SendLeadConfirmationEmail($lead, $user));
 
         return response()->json([
             'status' => 200, 
