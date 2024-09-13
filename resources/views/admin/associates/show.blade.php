@@ -51,31 +51,153 @@
 
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex align-items-center justify-content-between">
                             <h5 class="mb-0">Associate Profile</h5>
+                            
+                            @if ($user->associate()->exists())
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAssociateProfile">
+                                    Edit Profile
+                                </button>
+                            @endif
+
                         </div>
                         <div class="card-body">
 
                             @if ($user->associate()->exists())
-                            
+
+
+                                
+                
                                 <div class="mb-2">
                                     @if ($user->associate['profile_image'] != null)                                    
                                         <img src="{{asset($user->associate['profile_image'])}}" width="100px" alt="">
                                     @endif
                                 </div>
                                 <p><b>Category:</b> {{$user->associate->category['alt_name'] ?? '-'}}</p>
+                                <p><b>Sub-Category:</b> {{$user->associate->subCategory['slug1'] ?? '-'}}</p>
                                 <p><b>Name:</b> {{$user->associate['full_name'] ?? '-'}}</p>
                                 <p><b>Email:</b> {{$user->associate['email'] ?? '-'}}</p>
                                 <p><b>Phone:</b> {{$user->associate['phone'] ?? '-'}}</p>
-                                <p><b>Business Name:</b> {{$user->associate['about_company'] ?? '-'}}</p>
-                                <p><b>About:</b> {{$user->associate['business_name'] ?? '-'}}</p>
+                                <p><b>Business Name:</b> {{$user->associate['business_name'] ?? '-'}}</p>
+                                <p><b>About:</b> {{$user->associate['about_company'] ?? '-'}}</p>
                                 @if ($user->associate->location()->exists())                                
                                     <p><b>Location:</b> {{$user->associate->location['name']}}, {{$user->associate->location['district_name']}}, {{$user->associate->location['state_name']}}, {{$user->associate->location['pincode']}}</p>
                                 @else
                                     <p><b>Location</b> -</p>
                                 @endif
                                 <p><b>Address:</b> {{$user->associate['address'] ?? '-'}}</p>
+                                <p><b>Area:</b> {{$user->associate['area'] ?? '-'}}</p>
+
                                 <p><b>Area Of Service:</b> {{$user->associate['area_of_service'] ?? '-'}}</p>
+
+                               
+
+                                  <!-- Modal -->
+                                <div class="modal fade" id="editAssociateProfile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit Associate Profile</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{route('associate-profile.update', $user->associate['id'])}}" id="associate-profile-id" method="POST">
+                                                                    
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="user_id" value="{{$user['id']}}">
+
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-4">
+                                                            <label class="form-label">Select Category</label>
+                                                            <select class="form-control select2-search-disable" name="category_id">
+                                                                <option>Select Category</option>
+                                                                @foreach ($cat as $item)
+                                                                    <option value="{{ $item->id }}" 
+                                                                        {{ (isset($user->associate->category_id) && $user->associate->category_id == $item->id) ? 'selected' : '' }}>
+                                                                        {{ $item->alt_name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Select Category</label>
+                                                            <select class="form-control select2-search-disable" name="subcategory_id">
+                                                                <option>Select SubCategory</option>
+                                                                <option value="{{$user->associate->subcategory_id}}" selected>{{$user->associate->subCategory->slug1}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="mb-3">
+                                                    <label>Full Name</label>
+                                                    <input type="text" class="form-control" name="full_name" placeholder="Enter Full Name" value="{{$user->associate['full_name']}}" required>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label>Email</label>
+                                                    <input type="email" class="form-control" name="email" value="{{$user->associate['email']}}" placeholder="Enter Email" required>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label>Phone</label>
+                                                    <input type="text" class="form-control" name="phone" value="{{$user->associate['phone']}}" placeholder="Enter Phone" required>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label>Business Name</label>
+                                                    <input type="text" class="form-control" name="business_name" value="{{$user->associate['business_name']}}" placeholder="Enter Business Name" required>
+                                                </div>
+
+
+                                                <div class="mb-3">
+                                                    <label>About Company</label>
+                                                    <textarea name="about_company" id="" class="form-control"  cols="30" rows="5">{{$user->associate['about_company']}}</textarea>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label>Address</label>
+                                                    <input type="text" class="form-control" name="address" placeholder="Enter Address" value="{{$user->associate['address']}}">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label>Area Of Service</label>
+                                                    <input type="text" class="form-control" name="area_of_service" placeholder="Enter Area of Service" value="{{$user->associate['area_of_service']}}">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label>Area </label>
+                                                    <input type="text" class="form-control" name="area" placeholder="Area" value="{{$user->associate['area']}}">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label>Location </label>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" placeholder="Pin Code" id="numberInput" />
+                                                        <input type="hidden" name="location_id" id="location_id" value="">
+                                                        <input type="hidden" id="pinCodeValue" value="">
+                                                        <input type="hidden" id="disticName" value="">
+                                                        <input type="hidden" id="stateName" value="">
+                                                        <input type="hidden" id="areaName" value="">
+                                                        <ul class="category-list" id="addressSuggestions"></ul>
+                                                    </div>
+                                                </div>
+
+                                                <input type="submit" value="Save" class="btn btn-dark mt-4">
+                                            </form>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
 
                             @else
 
@@ -182,7 +304,7 @@
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between">
 
-                                <h4 class="mb-2">Total Wallet Amount: {{ $user->getTotalWalletAmount() }}</h4>
+                                <h4 class="mb-2">Current Wallet Amount: {{ $user->getTotalWalletAmount() }}</h4>
                                 <a href="" data-bs-toggle="modal" data-bs-target="#addWalletPoint" class="mb-2 btn btn-dark btn-md">Add Wallet Point</a>
                             </div>
 
@@ -271,6 +393,15 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+  
+
+  
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript">

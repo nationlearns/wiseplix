@@ -17,6 +17,7 @@ class AssociateProfile extends Model
         'subcategory_id',
         'full_name',
         'profile_image',
+        'business_name',
         'email',
         'phone',
         'company_name',
