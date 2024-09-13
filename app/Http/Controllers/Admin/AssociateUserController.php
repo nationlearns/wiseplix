@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
 class AssociateUserController extends Controller
 {
     function index() {
-        $associates = User::where('role', 'pro')->with('getLocation')->get();
+        $associates = User::where('role', 'pro')->with('getLocation')->orderBy('created_at', 'DESC')->get();
         // return $associates;
         return view('admin.associates.index', compact('associates'));
 
