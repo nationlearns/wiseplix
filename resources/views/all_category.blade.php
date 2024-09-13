@@ -65,6 +65,12 @@
         .whole-category-card:hover{
             transform: translateY(-3px)
         }
+
+        .dropdown .show{
+            height: 400px;
+            overflow: hidden;
+            overflow-y: scroll;
+        }
     </style>
 
 <!-- Google tag (gtag.js) -->
@@ -131,6 +137,25 @@
             <div class="aon-page-jobs-wrap">
                 <div class="container">
                     <div class="row">
+
+                        <div class="col-md-12">
+
+                            <div class="mb-5 ">
+                                <div class="dropdown">
+                                    <a class="btn btn-info dropdown-toggle btn-lg" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                                        Filter Category
+                                    </a>
+
+                                    <div class="dropdown-menu">
+                                        @foreach ($categories as $category)                                        
+                                            <li><a class="dropdown-item" href="{{route('category.view', $category->slug)}}">{{ $category->alt_name }}</a></li>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                         <!-- Left part start -->
                         <div class="col-lg-12 col-md-12">
                             <div class="row">
