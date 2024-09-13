@@ -349,7 +349,7 @@
 
     <body>
         <!-- LOADING AREA START ===== -->
-        <div class="loading-area">
+        {{-- <div class="loading-area">
             <div class="loading-box"></div>
             <div class="loading-pic">
                 <div class="windows8">
@@ -370,7 +370,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- LOADING AREA  END ====== -->
 
         <div class="page-wraper">
@@ -475,6 +475,11 @@
                                 <div class="aon-bnr-write">
                                     <h2 class="text-top-line">Hire <span class="text-secondry">Experts</span> & </h2>
                                     <h2 class="text-bot-line">Get Your Job Done Within your Budget</h2>
+
+                
+
+                                    <p style="font-weight: 700;color:#fff" class="my-2 pt-3">Didn't find what you're looking for?</p>
+                                    <h3 style="font-weight: 800;color:#fff">Give a Miss call on <span style="color: yellow">888-464-6047</span>. We will call you back</h3>
                                 </div>
                             </div>
                         </div>
@@ -528,6 +533,13 @@
                                     </div>
 
                                 </form>
+
+                                <div class=" text-center mt-4 mb-2">
+                                    <p>Search what you Require, Answer a Few Questions, Get Connected with Top Service
+                                        Providers within Your Budget.</p>
+                                    <a href="{{ route('all.category') }}" class="btn btn-secondary">Browse All</a>
+                                </div>
+
                             </div>
                             <!-- Search Form End-->
                         </div>

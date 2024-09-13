@@ -71,6 +71,12 @@
             overflow: hidden;
             overflow-y: scroll;
         }
+
+        .dropdown-item:focus, .dropdown-item:hover {
+            /* color: #fff;
+            text-decoration: none;
+            background-color: #022278; */
+        }
     </style>
 
 <!-- Google tag (gtag.js) -->
