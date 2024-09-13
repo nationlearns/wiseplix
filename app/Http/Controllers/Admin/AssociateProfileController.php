@@ -33,4 +33,13 @@ class AssociateProfileController extends Controller
         return redirect()->back()->with('success', 'Associate Profile Added');
 
     }
+
+
+    function update(Request $request, $id) {
+
+        $profile = AssociateProfile::findOrFail($id)->update($request->all());
+
+        return redirect()->back()->with('success', 'Associate Profile Updated');
+
+    }
 }
