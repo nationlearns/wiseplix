@@ -537,7 +537,7 @@
                                 <div class=" text-center mt-4 mb-2">
                                     <p>Search what you Require, Answer a Few Questions, Get Connected with Top Service
                                         Providers within Your Budget.</p>
-                                    <a href="{{ route('all.category') }}" class="btn btn-secondary">Browse All</a>
+                                    <a href="{{ route('all.category') }}" class="btn btn-secondary">All Categories</a>
                                 </div>
 
                             </div>
