@@ -562,7 +562,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <p>Search what you Require, Answer a Few Questions, Get Connected with Top Service
                                         Providers within Your Budget.</p>
-                                    <a href="{{ route('all.category') }}" class="btn btn-secondary">Browse All</a>
+                                    <a href="{{ route('category') }}" class="btn btn-secondary">Browse All</a>
                                 </div>
                             </div>
                         </div>
