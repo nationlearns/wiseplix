@@ -128,7 +128,12 @@
                                                             <label class="form-label">Select Category</label>
                                                             <select class="form-control select2-search-disable" name="subcategory_id">
                                                                 <option>Select SubCategory</option>
-                                                                <option value="{{$user->associate->subcategory_id}}" selected>{{$user->associate->subCategory->slug1}}</option>
+                                                                @if ($user->associate->subCategory()->exists())
+                                                                    
+                                                                    <option value="{{$user->associate->subcategory_id}}" selected>{{$user->associate->subCategory->slug1}}</option>
+                                                                @else
+                                                                    <option value=""></option>
+                                                                @endif
                                                             </select>
                                                         </div>
                                                     </div>
@@ -290,6 +295,7 @@
 
                             @endif
                             
+
 
 
                             {{-- {{$user->associate}} --}}
