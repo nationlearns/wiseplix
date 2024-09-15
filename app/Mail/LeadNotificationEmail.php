@@ -33,8 +33,7 @@ class LeadNotificationEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Lead Alert ! WisePlix Pro.
-',
+            subject: 'New Lead Alert! '. $this->lead->name.'! WisePlix Pro',
         );
     }
 
@@ -48,7 +47,7 @@ class LeadNotificationEmail extends Mailable
             with: [
                 'partner' => $this->partner,
                 'lead' => $this->lead,
-                'url' => config('app.url').'api/lead-details/'.$this->lead->id
+                'url' => 'https://play.google.com/store/apps/details?id=com.nlpro.wiseplix'
             ]
         );
     }

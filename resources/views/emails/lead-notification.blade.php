@@ -1,6 +1,6 @@
 <x-mail::message>
 
-# {{$lead['name']}} is looking for {{$lead->category['alt_name']}}
+# {{$lead['name']}} is looking for {{$lead->subcategory['slug']}}
 # {{$lead['pin_code']}}, {{$lead->location['district_name']}}
 
 <b>Lead Details</b>
@@ -13,8 +13,8 @@ $answers = json_decode($lead->answers, true);
 @if ($answers && is_array($answers))
 @foreach ($answers as $answer)
 
-Question: {{ $answer['question'] ?? '-' }}             
-Answer: {{ $answer['answer'] ?? '-' }}
+{{$loop->iteration}}. {{ $answer['question'] ?? '-' }}             
+- {{ $answer['answer'] ?? '-' }}
 
 @endforeach
 @else                                                        
