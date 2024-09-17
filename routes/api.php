@@ -62,6 +62,9 @@ Route::group(['middleware' => 'auth:sanctum'],function(){
 
 });
 
+Route::post('/create-lead', [LeadController::class, 'createLead']);
+
+
 Route::post('/associate-message/store', [AssociateMessageController::class, 'store'])->name('associate-message.store');
 
 Route::get('/get-all-category', [CategoriesController::class, 'getAllCategory']);

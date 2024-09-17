@@ -21,7 +21,7 @@ use DB;
 use Carbon\Carbon;
 use App\Jobs\SendLeadNotificationEmail;
 use App\Jobs\SendLeadConfirmationEmail;
-
+use Validator;
 class LeadsController extends Controller{
     
     public function createUser(array $data){
@@ -708,4 +708,68 @@ class LeadsController extends Controller{
         return redirect()->back()->with('status', 'Status Updated Successfully');
 
     }
+
+
+    /**
+     * Create a new lead.
+    */
+    public function createLead(Request $request){
+        // Validation
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|exists:users,id',
+            'category_id' => 'required|exists:categories,id',
+            'subcategory_id' => 'required|exists:sub_categories,id',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'mobile' => 'required|string|max:15',
+            'gender' => 'nullable|in:male,female,other',
+            'pin_code' => 'required|string|max:10',
+            'lead_status' => 'required|string|in:Open,Closed,Pending',
+            'status' => 'required|boolean',
+            'district_name' => 'nullable|string|max:255',
+            'state' => 'nullable|string|max:255',
+            'location_id' => 'nullable|exists:locations,id',
+            'area_name' => 'nullable|string|max:255',
+            'answers' => 'nullable|json',
+        ]);
+
+        // Return validation errors if they exist
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        // Store lead data
+        $lead = new Lead();
+        $lead->user_id = $request->user_id;
+        $lead->category_id = $request->category_id;
+        $lead->subcategory_id = $request->subcategory_id;
+        $lead->name = $request->name;
+        $lead->email = $request->email;
+        $lead->mobile = $request->mobile;
+        $lead->gender = $request->gender;
+        $lead->pin_code = $request->pin_code;
+        $lead->lead_status = $request->lead_status;
+        $lead->status = $request->status;
+        $lead->added_by = auth()->user()->id; // Admin creating the lead
+        $lead->district_name = $request->district_name;
+        $lead->state = $request->state;
+        $lead->location_id = $request->location_id;
+        $lead->area_name = $request->area_name;
+        $lead->answers = $request->answers;
+        $lead->created_at = now();
+        $lead->updated_at = now();
+        $lead->save();
+
+        // Response
+        return response()->json([
+            'status' => true,
+            'message' => 'Lead created successfully',
+            'lead' => $lead
+        ], 201);
+    }
+
 }
