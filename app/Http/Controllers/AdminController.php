@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Categories;
 use App\Models\ContactUs;
 use App\Models\User;
+use App\Models\Leads;
 use Illuminate\Http\RedirectResponse;
 
 class AdminController extends Controller
@@ -18,7 +19,8 @@ class AdminController extends Controller
         $cat = Categories::get()->count();
         $subcat = DB::table('sub_categories')->get()->count();
         $user = User::get()->count();
-        return view('admin.index',compact('cat','subcat','user'));
+        $leads_count = Leads::get()->count();
+        return view('admin.index',compact('cat','subcat','user', 'leads_count'));
     }
 
     public function AdminLogout(Request $request): RedirectResponse
