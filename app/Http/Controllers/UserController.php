@@ -19,9 +19,9 @@ class UserController extends Controller
 {
     public function viewCategory()
     {
-        $data = DB::table('categories')->select('*')->where('status', 1)->orderBy('position', 'ASC')->paginate(8);
+        $data = DB::table('categories')->select('*')->where('status', 1)->orderBy('alt_name', 'ASC')->paginate(8);
 
-        $categories = Categories::where('status', 1)->orderBy('position', 'ASC')->get();
+        $categories = Categories::where('status', 1)->orderBy('alt_name', 'ASC')->get();
 
         return view('all_category',  compact('data', 'categories'));
     }
