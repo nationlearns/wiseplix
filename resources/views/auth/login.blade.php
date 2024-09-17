@@ -111,11 +111,18 @@
                                     <input type="submit" value="Log In"
                                         class="btn btn-pill text-white btn-block btn-primary">
                                 </form>
-                                <div class="d-flex mt-5 align-items-center">
+                                <div class="mt-5 align-items-center text-center">
                                     <span class="caption">Don't have an account?</span>
-                                    <span class="ml-auto"><a href="{{ route('register') }}" class="forgot-pass">Register
+                                    <span class="ml-auto"><a href="{{ route('register') }}" class="">Register
                                             Here</a></span>
                                 </div>
+                                @if (Route::has('password.request'))
+                                    <div class="text-center py-2">
+                                        <a class="text-center" href="{{ route('password.request') }}">
+                                            {{ __('Forgot your password?') }}
+                                        </a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
