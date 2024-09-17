@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\AssociateProfile;
 use App\Models\Wallet;
 use App\Models\Categories;
+// use App\Models\Categories;
+
 
 use Illuminate\Support\Facades\Hash;
 
@@ -62,7 +64,6 @@ class AssociateUserController extends Controller
         $cat = Categories::get();
 
         $user = User::where([['role', 'pro'], ['id', $id]])->with('leadPurchased')->first();
-
 
         return view('admin.associates.show', compact('user', 'cat'));
     }

@@ -56,4 +56,17 @@ class AssociateProfile extends Model
 
         return 0; // Default value if there are no reviews
     }
+
+
+    public function subCategoriesArray(){
+        // Since 'subcategory_id' is stored as an array, we can cast it to array and use whereIn
+        // $subcategoryIds = json_decode($this->subcategory_id); // Convert string to array
+
+        return SubCategory::whereIn('id', $this->subcategory_id)->get();
+    }
+
+
+    protected $casts = [
+        'subcategory_id' => 'array'
+    ];
 }

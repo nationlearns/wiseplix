@@ -13,10 +13,16 @@ class AssociateProfileController extends Controller
 
         $user = User::where('id', $id)->first();
 
+
+
+        // if ($request->has('subcategory_id')) {
+        //     $sub_categories = implode(',', $request->input('subcategory_id'));
+        // }
+
         $profile = AssociateProfile::create([
             'user_id' => $request['user_id'],
             'category_id' => $request['category_id'],
-            'subcategory_id' => $request['subcategory_id'],
+            'subcategory_id' => array_map('intval', $request->input('subcategory_id')),
             'location_id' => $request['location_id'],
             'full_name' => $request['full_name'],
             'email' => $request['email'],

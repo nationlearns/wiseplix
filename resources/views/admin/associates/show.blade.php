@@ -54,12 +54,12 @@
                         <div class="card-header d-flex align-items-center justify-content-between">
                             <h5 class="mb-0">Associate Profile</h5>
                             
-                            @if ($user->associate()->exists())
+                            {{-- @if ($user->associate()->exists())
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editAssociateProfile">
                                     Edit Profile
                                 </button>
-                            @endif
+                            @endif --}}
 
                         </div>
                         <div class="card-body">
@@ -75,7 +75,12 @@
                                     @endif
                                 </div>
                                 <p><b>Category:</b> {{$user->associate->category['alt_name'] ?? '-'}}</p>
-                                <p><b>Sub-Category:</b> {{$user->associate->subCategory['slug1'] ?? '-'}}</p>
+                                <p><b>Sub-Category:</b> 
+                                    @foreach ($user->associate->subCategoriesArray() as $item)
+                                        <span class="badge bg-primary">{{$item['slug']}}</span> 
+                                    @endforeach
+                                    {{-- {{$user->associate->subCategoriesArray()}} --}}
+                                </p>
                                 <p><b>Name:</b> {{$user->associate['full_name'] ?? '-'}}</p>
                                 <p><b>Email:</b> {{$user->associate['email'] ?? '-'}}</p>
                                 <p><b>Phone:</b> {{$user->associate['phone'] ?? '-'}}</p>
@@ -123,17 +128,13 @@
                                                             </select>
                                                         </div>
                                                     </div>
+
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
-                                                            <label class="form-label">Select Category</label>
-                                                            <select class="form-control select2-search-disable" name="subcategory_id">
+                                                            <label class="form-label">Select SubCategory</label>
+                                                            <select class="form-control select2-search-disable js-example-basic-multiple" name="subcategory_id[]" id="subcategory_id" multiple>
                                                                 <option>Select SubCategory</option>
-                                                                @if ($user->associate->subCategory()->exists())
-                                                                    
-                                                                    <option value="{{$user->associate->subcategory_id}}" selected>{{$user->associate->subCategory->slug1}}</option>
-                                                                @else
-                                                                    <option value=""></option>
-                                                                @endif
+                                                                <option value=""></option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -226,8 +227,8 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Select Category</label>
-                                                <select class="form-control select2-search-disable" name="subcategory_id">
+                                                <label class="form-label">Select SubCategory</label>
+                                                <select class="form-control select2-search-disable js-example-basic-multiple" name="subcategory_id[]" id="subcategory_id" multiple>
                                                     <option>Select SubCategory</option>
                                                     <option value=""></option>
                                                 </select>
@@ -412,6 +413,8 @@
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+
     <script type="text/javascript">
 
         $(document).ready(function(){
@@ -424,10 +427,10 @@
                         type: "GET",
                         dataType:"json",
                         success:function(data){
-                            $('select[name="subcategory_id"]').html('');
-                            var d =$('select[name="subcategory_id"]').empty();
+                            $('select[id="subcategory_id"]').html('');
+                            var d =$('select[id="subcategory_id"]').empty();
                             $.each(data, function(key, value){
-                                $('select[name="subcategory_id"]').append('<option value="'+ value.id + '">' + value.slug + '</option>');
+                                $('select[id="subcategory_id"]').append('<option value="'+ value.id + '">' + value.slug + '</option>');
                             });
                         },
 
@@ -493,5 +496,8 @@
             });
         });
 
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
+        });
 </script>
 @endsection
