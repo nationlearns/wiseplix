@@ -222,7 +222,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
 
     Route::controller(WalletController::class)->group(function(){
-        Route::post('/wallet/store', 'store')->name('wallet.store');
+        Route::post('/wallet/store/{id}', 'store')->name('wallet.store');
     });
 
     Route::post('/associate/{id}/associate-profile/store', [AssociateProfileController::class, 'store'])->name('associate-profile.store');

@@ -310,11 +310,11 @@
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between">
 
-                                <h4 class="mb-2">Total Wallet Amount: {{ $user->getTotalWalletAmount() }}</h4>
+                                <h4 class="mb-2">Current Wallet Balance: {{$user->getWallet['amount']}}</h4>
                                 <a href="" data-bs-toggle="modal" data-bs-target="#addWalletPoint" class="mb-2 btn btn-dark btn-md">Add Wallet Point</a>
                             </div>
 
-                            <h5 class="mb-2">Wallet Transactions</h5>
+                            {{-- <h5 class="mb-2">Wallet Transactions</h5>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -323,14 +323,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
+                                    {{$user->getWallet}}
                                     @foreach($user->getWallet as $wallet)
                                         <tr>
-                                            <td>{{ $wallet->amount }}</td>
-                                            <td>{{ $wallet->created_at }}</td>
+                                            <td>{{ $user->getWallet->amount }}</td>
+                                            <td>{{ $user->getWallet->created_at }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
-                            </table>
+                            </table> --}}
                         </div>
                     </div>
 
@@ -386,7 +388,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{route('wallet.store')}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('wallet.store', $user['id'])}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="user_id" value="{{$user['id']}}">
                         <div class="mb-3">

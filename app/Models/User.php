@@ -69,13 +69,13 @@ class User extends Authenticatable
     }
 
     public function getWallet(){
-        return $this->hasMany('App\Models\Wallet', 'user_id')->orderBy('created_at', 'Desc');
+        return $this->hasOne('App\Models\Wallet', 'user_id');
     }
 
     // Method to calculate the total wallet amount
-    public function getTotalWalletAmount(){
-        return $this->getWallet->sum('amount');
-    }
+    // public function getTotalWalletAmount(){
+    //     return $this->getWallet->sum('amount');
+    // }
 
     public function leadPurchased(){
         return $this->hasMany('App\Models\PurchaseLeadDetails', 'user_id');
