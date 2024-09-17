@@ -80,6 +80,17 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6 contents">
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <div class="row justify-content-center">
                         <a href="https://wiseplix.com/" class="text-center">
                             <img src="{{asset('images/logo/wiseplix-logo.png')}}" alt="WisePlix" width="200px" class="mb-4">
