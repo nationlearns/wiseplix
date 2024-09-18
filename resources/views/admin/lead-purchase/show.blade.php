@@ -40,6 +40,7 @@
                                     @foreach ($data->getPurchaseDetails as $purchaseDetail)
                                         <tr style="border-bottom:1px solid">                                            
                                             <td style="border:1px solid lightgray">
+                                                <p class="mb-1"><b>ID:</b>{{$purchaseDetail->user->id}}</p>
                                                 <p class="mb-1"><b>Name:</b>{{$purchaseDetail->user->name}}</p>
                                                 <p class="mb-1"><b>Email:</b>{{$purchaseDetail->user->email}}</p>
                                                 <p class="mb-1"><b>Phone:</b>{{$purchaseDetail->user->mobile}}</p>
