@@ -30,61 +30,52 @@
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th>Leads Posted By</th>
-                                        <th>Purchased By</th>
-                                        <th>Purchased At</th>
-                                        <th>Action</th>
+                                        <th>Lead Details</th>
+                                        <th>Q/A</th>
+                                        <th>Date</th>
+                                        {{-- <th>Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data as $key => $item)
+                                    @foreach ($leads as $key => $item)
                                         <tr style="border-bottom:1px solid">
-                                            {{-- <td>{{$item}}</td> --}}
                                             <td style="border:1px solid lightgray">
-                                                Name: {{$item->lead->name ?? '-'}} <br>
-                                                Email: {{$item->lead->email ?? '-'}} <br>
-                                                Category: {{$item->lead->category['alt_name'] ?? '-'}} <br>
-                                                Sub-Category: {{$item->lead->subcategory['slug'] ?? '-'}} <br> <br>
+                                                <p class="mb-1"><b>Lead ID: </b>{{$item['id']}}</p>
+                                                <p class="mb-1"><b>Category: </b> {{$item->category['alt_name']}}</p>
+                                                <p class="mb-1"><b>Sub-Category: </b> {{$item->subcategory['slug']}}</p>
+                                                <p class="mb-1"><b>Name: </b>{{$item['name']}}</p>
+                                                <p class="mb-1"><b>Email: </b>{{$item['email']}}</p>
+                                                <p class="mb-1"><b>Phone: </b>{{$item['phone']}}</p>
+                                                <p class="mb-1"><b>Location: </b>{{$item->location->name ?? '-'}}</p>
+                                                <p class="mb-1"><b>Date Posted: </b>{{date('d M, Y', strtotime($item->created_at)); }}</p>
+                                            </td>
 
-                                                {{-- @if ($item->lead && $item->lead->answers)
-
+                                            <td style="border:1px solid lightgray">
+                                                @if ($item && $item['answers'])
                                                     @php
-                                                        $answers = json_decode($item->lead->answers, true);
+                                                        $answers = json_decode($item->answers, true);
                                                     @endphp
-                                                
+
                                                     @if ($answers && is_array($answers))
-                                                        <ul>
-                                                            @foreach ($answers as $answer)
-                                                                <li>
-                                                                    Question: {{ $answer['question'] ?? '-' }} <br>
-                                                                    Answer: {{ $answer['answer'] ?? '-' }}
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
+                                                        @foreach ($answers as $answer)
+
+                                                        <div>
+                                                            <p class="mb-0"> <b>{{$loop->iteration}}. </b> {{ $answer['question'] ?? '-' }}</p>            
+                                                            <p><b>-</b> {{ $answer['answer'] ?? '-' }} </p>
+                                                        </div>
+
+                                                        @endforeach
                                                     @else                                                        
                                                         -
                                                     @endif
-                                                    
+
                                                 @else
-                                                    -
+                                                    -   
                                                 @endif
-                                                    
-                                                
-                                                <p class="mb-0">Gender: {{$item->lead['gender'] ?? '-'}}</p>
-                                                <p class="mb-0">Lead Status: {{$item->lead['lead_status'] ?? '-'}}</p>
-                                                <p class="mb-0">Area: {{$item->lead['area_name'] ?? '-'}}</p>
-                                                <p class="mb-0">Disctrict: {{$item->lead['district_name'] ?? '-'}}</p>
-                                                <p class="mb-0">State: {{$item->lead['state'] ?? '-'}}</p> --}}
-                                                {{-- <p class="mb-0">Bought Time: {{$item->lead['bought_times'] ?? '-'}}</p> --}}
                                             </td>
+
                                             <td style="border:1px solid lightgray">
-                                                Name: {{$item->user['name'] ?? 'N/A'}} <br>
-                                                Email: {{$item->user['email'] ?? 'N/A'}} <br>
-                                                Phone: {{$item->user['mobile'] ?? 'N/A'}} <br>
-                                            </td>
-                                            <td style="border:1px solid lightgray">{{date('d M, Y', strtotime($item->created_at)); }}</td>
-                                            <td style="border:1px solid lightgray">
-                                                <a href="{{route('admin.lead-purchase.show', $item->id)}}" class="btn btn-info btn-sm">View Lead</a>
+                                                <a href="{{route('admin.lead-purchase.show', $item->id)}}" class="btn btn-info btn-sm">View Purchase History</a>
                                             </td>
                                         </tr>
                                     @endforeach

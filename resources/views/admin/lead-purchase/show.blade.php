@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Lead Details</h4>
+                        <h4 class="mb-sm-0">Lead Purchased BY</h4>
 
                         {{-- <div class="page-title-right">
                             <ol class="breadcrumb m-0">
@@ -30,55 +30,32 @@
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th>Leads Details</th>
-                                        <th>Q/A</th>
+                                        <th>Purchased By</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Message</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr style="border-bottom:1px solid">
-                                        {{-- <td>{{$item}}</td> --}}
-                                        <td style="border:1px solid lightgray">
-                                            Name: {{$data->lead->name ?? '-'}} <br>
-                                            Email: {{$data->lead->email ?? '-'}} <br>
-                                            Category: {{$data->lead->category['alt_name'] ?? '-'}} <br>
-                                            Sub-Category: {{$data->lead->subcategory['slug'] ?? '-'}} <br> <br>
-                                            
-                                            <p class="mb-0">Gender: {{$item->lead['gender'] ?? '-'}}</p>
-                                            <p class="mb-0">Lead Status: {{$data->lead['lead_status'] ?? '-'}}</p>
-                                            <p class="mb-0">Area: {{$data->lead['area_name'] ?? '-'}}</p>
-                                            <p class="mb-0">Disctrict: {{$data->lead['district_name'] ?? '-'}}</p>
-                                            <p class="mb-0">State: {{$data->lead['state'] ?? '-'}}</p>
-                                            <p class="mb-0">Bought Time: {{$data->lead['bought_times'] ?? '-'}}</p>
-                                        </td>
-                                        <td style="border:1px solid lightgray">
-                                            @if ($data->lead && $data->lead->answers)
-
-                                                @php
-                                                    $answers = json_decode($data->lead->answers, true);
-                                                @endphp
-                                            
-                                                @if ($answers && is_array($answers))
-                                                    <ul>
-                                                        @foreach ($answers as $answer)
-                                                            <li>
-                                                                Question: {{ $answer['question'] ?? '-' }} <br>
-                                                                Answer: {{ $answer['answer'] ?? '-' }}
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                @else                                                        
-                                                    -
-                                                @endif
+                                    @foreach ($data->getPurchaseDetails as $purchaseDetail)
+                                        <tr style="border-bottom:1px solid">                                            
+                                            <td style="border:1px solid lightgray">
+                                                <p class="mb-1"><b>Name:</b>{{$purchaseDetail->user->name}}</p>
+                                                <p class="mb-1"><b>Email:</b>{{$purchaseDetail->user->email}}</p>
+                                                <p class="mb-1"><b>Phone:</b>{{$purchaseDetail->user->mobile}}</p>
+                                            </td>
+                                            <td style="border:1px solid lightgray">
+                                                {{date('d M, Y', strtotime($purchaseDetail->created_at)); }}
+                                            </td>
+                                            <td style="border:1px solid lightgray">
+                                                <p>{{$purchaseDetail['status']}}</p>
                                                 
-                                            @else
-                                                -
-                                            @endif
-                                        </td>
-                                        {{-- <td style="border:1px solid lightgray">{{date('d M, Y', strtotime($item->created_at)); }}</td>
-                                        <td style="border:1px solid lightgray">
-                                            <a href="{{route('admin.lead-purchase.show', $item->id)}}" class="btn btn-info btn-sm">View Lead</a>
-                                        </td> --}}
-                                    </tr>
+                                            </td>
+                                            <td style="border:1px solid lightgray">
+                                                <p>{{$purchaseDetail['message']}}</p>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                         
                                 </tbody>
                             </table>
