@@ -582,7 +582,9 @@
                                                     <img src="{{asset('images/category-icons/'.$item->cat_image)}}" alt="" class="mw-100">
                                                     {{-- <img
                                                         src="https://wiseplix-prod.s3.ap-south-1.amazonaws.com/Images/category_image/{{ $item->upload_category_image }}"
-                                                        alt=""></a> --}}
+                                                        alt="">
+                                                    </a> --}}
+                                                    </a>
                                             </div>
                                             <h4 class="aon-cat-title">{{ $item->alt_name }}</h4>
                                         </div>
