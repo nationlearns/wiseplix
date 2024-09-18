@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Subcategory;
 class AssociateProfile extends Model
 {
     use HasFactory;
@@ -62,7 +62,7 @@ class AssociateProfile extends Model
         // Since 'subcategory_id' is stored as an array, we can cast it to array and use whereIn
         $subcategoryIds = json_decode($this->subcategory_id); // Convert string to array
 
-        return SubCategory::whereIn('id', $subcategoryIds)->get();
+        return Subcategory::whereIn('id', $subcategoryIds)->get();
     }
 
 
