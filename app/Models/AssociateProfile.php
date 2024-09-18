@@ -60,13 +60,13 @@ class AssociateProfile extends Model
 
     public function subCategoriesArray(){
         // Since 'subcategory_id' is stored as an array, we can cast it to array and use whereIn
-        // $subcategoryIds = json_decode($this->subcategory_id); // Convert string to array
+        $subcategoryIds = json_decode($this->subcategory_id); // Convert string to array
 
-        return SubCategory::whereIn('id', $this->subcategory_id)->get();
+        return SubCategory::whereIn('id', $subcategoryIds)->get();
     }
 
 
     protected $casts = [
-        'subcategory_id' => 'array'
+        // 'subcategory_id' => 'json'
     ];
 }

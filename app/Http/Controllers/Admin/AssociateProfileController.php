@@ -22,7 +22,7 @@ class AssociateProfileController extends Controller
         $profile = AssociateProfile::create([
             'user_id' => $request['user_id'],
             'category_id' => $request['category_id'],
-            'subcategory_id' => array_map('intval', $request->input('subcategory_id')),
+            'subcategory_id' => json_encode(array_map('intval', $request->input('subcategory_id'))),
             'location_id' => $request['location_id'],
             'full_name' => $request['full_name'],
             'email' => $request['email'],
