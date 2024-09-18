@@ -311,7 +311,7 @@
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between">
 
-                                <h4 class="mb-2">Current Wallet Balance: {{$user->getWallet['amount']}}</h4>
+                                <h4 class="mb-2">Current Wallet Balance: {{$user->getWallet['amount'] ?? ''}}</h4>
                                 <a href="" data-bs-toggle="modal" data-bs-target="#addWalletPoint" class="mb-2 btn btn-dark btn-md">Add Wallet Point</a>
                             </div>
 
