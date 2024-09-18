@@ -240,6 +240,11 @@
                     max-width: none;
                     left: 30px;
                 }
+
+                .search-form{
+                    margin-top: 8rem;
+                }
+                .aon-banner-text{margin: 4.5rem auto}
             }
 
             @media (max-width: 768px) {
