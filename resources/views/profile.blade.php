@@ -878,16 +878,44 @@
 
                             <div class="my-3">
                                 <label for="status">Status</label>
-                                <select name="status" id="" class="form-control" style="border: 1px solid lightgray !important">
+                                <select name="status" id="status" class="form-control" style="border: 1px solid lightgray !important">
                                     <option value="approved">Approve</option>
+                                    <option value="total-amount-paid">Total Amount Paid</option>
                                     <option value="rejected">Reject</option>
                                 </select>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" id="message-container">
                                 <label for="message">Message</label>
                                 <textarea name="message" id="" cols="30" rows="10"  class="form-control" style="min-height: 100px;border: 1px solid lightgray !important"></textarea>
 
                             </div>
+
+                            <!-- Radio buttons container initially hidden -->
+                            <div class="mb-3" id="radio-buttons-container" style="display: none;">
+                                <label>Select Reason for Rejection</label>
+                                <div>
+                                    <label><input type="radio" name="message" value="No communication"> No communication</label>
+                                </div>
+                                <div>
+                                    <label><input type="radio" name="message" value="Expensive/Higher quotation"> Expensive/Higher quotation</label>
+                                </div>
+                                <div>
+                                    <label><input type="radio" name="message" value="Unprofessionalism"> Unprofessionalism</label>
+                                </div>
+                                <div>
+                                    <label><input type="radio" name="message" value="Got better deal elsewhere"> Got better deal elsewhere</label>
+                                </div>
+                                <div>
+                                    <label><input type="radio" name="message" value=" Not interested"> Not interested</label>
+                                </div>
+                                <div>
+                                    <label><input type="radio" name="message" value="Changed my plan"> Changed my plan</label>
+                                </div>
+                            </div>
+
+
+                            
+
                             <div class="mb-4">
                                 <button class="btn btn-dark" type="submit">Update</button>
                             </div>
@@ -1064,6 +1092,21 @@
             console.log('hello');
             
         })
+
+
+
+        $(document).ready(function() {
+            $('#status').change(function() {
+                var selectedStatus = $(this).val();
+                if (selectedStatus === 'rejected') {
+                    $('#message-container').hide();
+                    $('#radio-buttons-container').show();
+                } else {
+                    $('#radio-buttons-container').hide();
+                    $('#message-container').show();
+                }
+            });
+        });
     </script>
     
 
