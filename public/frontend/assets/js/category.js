@@ -413,9 +413,13 @@ function saveLeads() {
 
                 $('#thankYouMdl').modal('show');
 
-                setTimeout(function() {
-                    window.location.href = '/category/profile-listing/' + lastPart + '?location_id='+ location  +'&subcategory_id='+query+'&min_rating=';
-                }, 2500);
+                // setTimeout(function() {
+                //     window.location.href = '/category/profile-listing/' + lastPart + '?location_id='+ location  +'&subcategory_id='+query+'&min_rating=';
+                // }, 2500);
+
+                document.getElementById("okeyButton").onclick = function () {
+                   window.location.href = '/category/profile-listing/' + lastPart + '?location_id='+ location  +'&subcategory_id='+query+'&min_rating=';
+                };
                 
             } else {
                 $('#submitData').attr('disabled', false);

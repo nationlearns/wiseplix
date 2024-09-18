@@ -460,9 +460,10 @@ function saveLeads() {
                         
                         let lastPart = categoryRes.slug;
 
-                        setTimeout(function () {
+                        document.getElementById("okeyButton").onclick = function () {
                             window.location.href = '/category/profile-listing/' + lastPart + '?location_id='+ location  +'&subcategory_id='+subcategory+'&min_rating=';
-                        }, 2500);
+
+                        };
                     }
                 });
 

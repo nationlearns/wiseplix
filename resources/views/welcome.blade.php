@@ -1406,7 +1406,7 @@
 
                     <div class="modal-footer">
 
-                        <button type="button" class="btn btn-secondary btn-lg" style="background-color: #00bcd4;border-color: white;" data-dismiss="modal">Okey!</button>
+                        <button type="button" class="btn btn-secondary btn-lg" style="background-color: #00bcd4;border-color: white;" data-dismiss="modal" id="okeyButton">Okey!</button>
 
                     </div>
                 </div>
