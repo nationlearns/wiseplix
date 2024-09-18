@@ -422,7 +422,7 @@
                                     </li>
                                     <li class="has-child text-black"><a href="{{ url('contact-us') }}">Contact Us</a>
                                     </li>
-                                    <li class="has-child text-black"><a href="{{route ('dashboard')}}">Business professional</a>
+                                    <li class="has-child text-black"><a href="https://play.google.com/store/apps/details?id=com.nlpro.wiseplix">Business professional</a>
                                     </li>
                                 </ul>
                             </div>

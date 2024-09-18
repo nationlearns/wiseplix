@@ -43,7 +43,7 @@
                         <li class="has-child"><a href="{{url('about-us')}}">About Us</a>
                         </li>
                         <li><a href="{{url('contact-us')}}">Contact Us</a></li>
-                        <li><a href="">Business professional</a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.nlpro.wiseplix">Business professional</a></li>
                     </ul>
 
                 </div>
