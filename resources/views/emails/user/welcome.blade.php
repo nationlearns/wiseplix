@@ -9,7 +9,7 @@ Next time you need a service, you know where to come! We would also appreciate i
 
 Thank you for choosing Wiseplix!
 
-<x-mail::button url="{{route('home')}}">
+<x-mail::button url="https://wiseplix.com/">
 Visit Now
 </x-mail::button>
 
