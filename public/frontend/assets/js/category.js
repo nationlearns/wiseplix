@@ -113,15 +113,21 @@ function displayQuestion() {
         currentQuestion.options.forEach((option, index) => {
             optionsForm.append(`
                 <div class="form-check" id="questionandans">
-                    <input class="form-check-input" type="checkbox" name="answer" value="${index}" id="option${index}">
+                    <input class="form-check-input" type="checkbox" name="answer[]" value="${index}" id="option${index}">
                     <label class="form-check-label" class="fs-4" for="option${index}">${option}</label>
                 </div>
             `);
         });
         $("#next-button").prop("disabled", true);
         // Enable Next button when an option is selected
-        $('input[name="answer"]').change(function() {
-            $("#next-button").prop("disabled", false);
+        // $('input[name="answer"]').change(function () {
+        //     $("#next-button").prop("disabled", false);
+        // });
+
+        // Enable the Next button if any checkbox is selected
+        $('input[name="answer[]"]').change(function () {
+            const anyChecked = $('input[name="answer[]"]:checked').length > 0;
+            $("#next-button").prop("disabled", !anyChecked);
         });
     }
 
@@ -162,19 +168,85 @@ $('#submit-button2').click(function() {
 
 });
 
-$("#next-button").click(function() {
-    const selectedAnswerIndex = $('input[name="answer"]:checked').val();
-    if (selectedAnswerIndex === undefined) {
-        alert("Please select an answer.");
+// $("#next-button").click(function() {
+//     const selectedAnswerIndex = $('input[name="answer[]"]:checked').val();
+//     if (selectedAnswerIndex === undefined) {
+//         alert("Please select an answer.");
+//         return;
+//     }
+//     // Handle the selected answer here (you can store it or perform other actions)
+//     const currentQuestion = questionsData[currentQuestionIndex];
+//     const selectedAnswer = currentQuestion.options[selectedAnswerIndex];
+//     answers.push({ question: currentQuestion.question, answer: selectedAnswer, category_id: currentQuestion.category_id, subcategory_id: currentQuestion.subcategory_id });
+//     currentQuestionIndex++;
+//     displayQuestion();
+// });
+
+
+// $("#next-button").click(function () {
+//     // Collect all checked answers
+//     const selectedAnswers = $('input[name="answer[]"]:checked')
+//         .map(function () {
+//             return $(this).val();
+//         })
+//         .get();
+
+//     if (selectedAnswers.length === 0) {
+//         alert("Please select at least one answer.");
+//         return;
+//     }
+
+//     // Get the current question
+//     const currentQuestion = questionsData[currentQuestionIndex];
+
+//     // Push each selected answer into the answers array
+//     selectedAnswers.forEach((selectedAnswerIndex) => {
+//         const selectedAnswer = currentQuestion.options[selectedAnswerIndex];
+//         answers.push({
+//             question: currentQuestion.question,
+//             answer: selectedAnswer,
+//             category_id: currentQuestion.category_id,
+//             subcategory_id: currentQuestion.subcategory_id,
+//         });
+//     });
+
+//     currentQuestionIndex++;
+//     displayQuestion();
+// });
+
+$("#next-button").click(function () {
+    const selectedAnswers = [];
+
+    // Collect all selected answers
+    $('input[name="answer[]"]:checked').each(function () {
+        const selectedAnswerIndex = $(this).val();
+        const currentQuestion = questionsData[currentQuestionIndex];
+        const selectedAnswer = currentQuestion.options[selectedAnswerIndex];
+        selectedAnswers.push(selectedAnswer);
+    });
+
+    if (selectedAnswers.length === 0) {
+        alert("Please select at least one answer.");
         return;
     }
-    // Handle the selected answer here (you can store it or perform other actions)
+
+    // Join selected answers as a comma-separated string
+    const joinedAnswers = selectedAnswers.join(", ");
+
+    // Push question and joined answers to the answers array
     const currentQuestion = questionsData[currentQuestionIndex];
-    const selectedAnswer = currentQuestion.options[selectedAnswerIndex];
-    answers.push({ question: currentQuestion.question, answer: selectedAnswer, category_id: currentQuestion.category_id, subcategory_id: currentQuestion.subcategory_id });
+    answers.push({
+        question: currentQuestion.question,
+        answer: joinedAnswers, // Save comma-separated values here
+        category_id: currentQuestion.category_id,
+        subcategory_id: currentQuestion.subcategory_id,
+    });
+
     currentQuestionIndex++;
     displayQuestion();
 });
+
+
 
 $("#submit-button").click(function() {
     let name = $('#userName').val();

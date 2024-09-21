@@ -58,6 +58,61 @@ class LeadsController extends Controller{
 
     public function saveUserQuestionAnswerData(Request $request){
         
+        // $data = $request->all();
+
+        // // Check if a user with the given mobile number or email already exists
+        // $existingUser = User::where('mobile', $data['mobile'])
+        //     ->orWhere('email', $data['email'])
+        //     ->first();
+
+        // // Determine if the user is new or existing
+        // $isNewUser = !$existingUser;
+
+        // // Create or get the user
+        // $user = $this->createUser($data);
+
+        // $categoryData = Subcategory::select('sub_categories.category_id')->where('sub_categories.id', $data['subcategory_id'])->get()->toArray();
+        
+        // $category_id = $categoryData[0]['category_id'];
+
+        // $answerArray = [];
+
+        // if (isset($data['answers']) && is_array($data['answers']) && count($data['answers']) > 0) {
+        //     foreach ($data['answers'] as $ans) {
+        //         $data['question'] = $ans['question'];
+        //         $data['answer'] = $ans['answer'];
+        //         $answerArray[]['answers'] = $data;
+        //     }
+        // } else {
+        //     // If $data['answers'] is not set or empty, add a null entry to $answerArray
+        //     $answerArray[]['answers'] = null;
+        // }
+
+        // $userId = $user->id;
+
+        // $lead = Leads::create([
+        //     'user_id' => $userId,
+        //     'category_id' => $category_id,
+        //     'subcategory_id' => $data['subcategory_id'],
+        //     'answers' => !empty($data['answers']) ? json_encode($data['answers']) : null,
+        //     'name' => $data['name'],
+        //     'email' => $data['email'],
+        //     'mobile' => $data['mobile'],
+        //     'gender' => $data['gender'],
+        //     'lead_status' => 'NotSold',
+        //     'status' => '1',
+        //     'added_by' => $userId,
+        //     'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+        //     'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
+        //     'bought_times' => '0',
+        //     'other_query' => $data['comment'],
+        //     'location_id' => $data['location_id'],
+        //     'pin_code' => $data['pinCodeValue'],
+        //     'district_name' => $data['disticName'],
+        //     'state' => $data['stateName'],
+        //     'area_name' => $data['areaName'],
+        // ]);
+
         $data = $request->all();
 
         // Check if a user with the given mobile number or email already exists
@@ -71,37 +126,56 @@ class LeadsController extends Controller{
         // Create or get the user
         $user = $this->createUser($data);
 
-        $categoryData = Subcategory::select('sub_categories.category_id')->where('sub_categories.id', $data['subcategory_id'])->get()->toArray();
-        
+        $categoryData = Subcategory::select('category_id')
+            ->where('id', $data['subcategory_id'])
+            ->get()->toArray();
+
         $category_id = $categoryData[0]['category_id'];
 
         $answerArray = [];
 
+        // Ensure answers are being processed correctly
         if (isset($data['answers']) && is_array($data['answers']) && count($data['answers']) > 0) {
-            foreach ($data['answers'] as $ans) {
-                $data['question'] = $ans['question'];
-                $data['answer'] = $ans['answer'];
-                $answerArray[]['answers'] = $data;
+            foreach ($data['answers'] as $answerSet) {
+                // If 'answer' is an array, it means multiple answers for the same question
+                if (is_array($answerSet['answer'])) {
+                    foreach ($answerSet['answer'] as $answer) {
+                        // Append each selected answer as a separate entry
+                        $answerArray[] = [
+                            'question' => $answerSet['question'],
+                            'answer' => $answer,
+                            'category_id' => $category_id,
+                            'subcategory_id' => $data['subcategory_id']
+                        ];
+                    }
+                } else {
+                    // Single answer case
+                    $answerArray[] = [
+                        'question' => $answerSet['question'],
+                        'answer' => $answerSet['answer'],
+                        'category_id' => $category_id,
+                        'subcategory_id' => $data['subcategory_id']
+                    ];
+                }
             }
         } else {
-            // If $data['answers'] is not set or empty, add a null entry to $answerArray
-            $answerArray[]['answers'] = null;
+            // If no answers are provided, add a null entry to the answer array
+            $answerArray[] = ['question' => null, 'answer' => null];
         }
-
         $userId = $user->id;
-
+        // Insert lead data
         $lead = Leads::create([
-            'user_id' => $userId,
+            'user_id' => $user->id,
             'category_id' => $category_id,
             'subcategory_id' => $data['subcategory_id'],
-            'answers' => !empty($data['answers']) ? json_encode($data['answers']) : null,
+            'answers' => !empty($answerArray) ? json_encode($answerArray) : null,
             'name' => $data['name'],
             'email' => $data['email'],
             'mobile' => $data['mobile'],
             'gender' => $data['gender'],
             'lead_status' => 'NotSold',
             'status' => '1',
-            'added_by' => $userId,
+            'added_by' => $user->id,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'bought_times' => '0',
