@@ -461,7 +461,14 @@ function saveLeads() {
                         let lastPart = categoryRes.slug;
 
                         document.getElementById("okeyButton").onclick = function () {
-                            window.location.href = '/category/profile-listing/' + lastPart + '?location_id='+ location  +'&subcategory_id='+subcategory+'&min_rating=';
+                            window.location.href =
+                                "/category/profile-listing/" +
+                                lastPart +
+                                "?location_id=" +
+                                location +
+                                "&subcategory_id=" +
+                                subcategory +
+                                "&min_rating=&message=HelloWorld";
 
                         };
                     }

@@ -244,7 +244,18 @@
                                     
                                 @endforeach
                             @else
-                                <h4 class="text-danger m-4">No Profile Found</h4>
+
+                                @if (request()['message'])
+                                    <div class="m-4">
+
+                                        <h3 class="mb-3">Your request has been submitted successfully, our professional will reach out to you soon</h3>
+                                        <a href="{{route('profile')}}" class="btn btn-dark">My Profile</a>
+                                    </div>
+
+
+                                @else
+                                    <h4 class="text-danger m-4">No Profile Found</h4>
+                                @endif
                             @endif
                             <!--Pagination Start-->
                             <div class="site-pagination s-p-center">

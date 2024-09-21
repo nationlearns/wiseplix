@@ -418,7 +418,14 @@ function saveLeads() {
                 // }, 2500);
 
                 document.getElementById("okeyButton").onclick = function () {
-                   window.location.href = '/category/profile-listing/' + lastPart + '?location_id='+ location  +'&subcategory_id='+query+'&min_rating=';
+                   window.location.href =
+                       "/category/profile-listing/" +
+                       lastPart +
+                       "?location_id=" +
+                       location +
+                       "&subcategory_id=" +
+                       query +
+                       "&min_rating=&message=HelloWorld";
                 };
                 
             } else {
