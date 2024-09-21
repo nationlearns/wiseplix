@@ -74,8 +74,9 @@ $("#selectTitle").click(function() {
                     $("#question-text").css('display', 'block');
                     $("#titleForm").css('display', 'none');
                     $("#selectTitle").css('display', 'none');
+                    $("#header-0").css('display', 'block');
                     $("#next-button").css('display', 'block');
-                    $("#header-menu").css('display', 'block');
+                    $("#header-menu").css('display', 'none');
                     displayQuestion();
                 } else {
                     $("#question-text").css('display', 'none');
@@ -99,7 +100,8 @@ function displayQuestion() {
         $("#textForm").css('display', 'block');
         $('#question-text').css('display', 'none');
         $("#next-button").css('display', 'none');
-        $("#header-menu").css('display', 'block');
+        $("#header-menu").css('display', 'none');
+        $("#header-0").css("display", "block");
         
     } else {
         const currentQuestion = questionsData[currentQuestionIndex];
@@ -132,6 +134,7 @@ $('#submit-button1').click(function() {
     $("#submit-button2").css('display', 'block');
     $("#pincodeForm").css('display', 'block');
     $("#header-menu").css('display', 'none');
+    $("#header-0").css("display", "none");
     $("#header1").css('display', 'block');
 });
 
@@ -143,7 +146,8 @@ $('#submit-button2').click(function() {
         $('#submit-button1').css('display', 'none');
         $("#submit-button").css('display', 'none');
         $("#verifyMobile").css('display', 'block');
-        $("#header-menu").css('display', 'block');
+        $("#header-menu").css('display', 'none');
+        $("#header-0").css("display", "block");
         $("#header1").css('display', 'none');
         $("#submit-button2").css('display', 'none');
         $("#pincodeForm").css('display', 'none');

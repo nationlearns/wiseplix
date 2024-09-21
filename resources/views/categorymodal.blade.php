@@ -22,6 +22,13 @@
 						Welcome to Wiseplix – the world's best platform to find trusted service providers that fit your budget! Simply answer a few quick questions, and we’ll connect you with the perfect match in no time.	
 					</h5>
 				</div>
+
+				<div class="heading my-3"
+					style=" display:none;border: 1px solid; border-radius: 5px; padding: 10px 0px 0px 0px;"
+					id="header-0">
+					<h5 class="text-center py-2">
+						Your Just a few steps Away to connect with your budget friendly professional.</h5>
+				</div>
 				<div class="heading" style="border: 1px solid; display:none; border-radius: 5px; padding: 10px 0px 0px 0px;" id="header1">
 					<h6 style="text-align: center; font-size: large; ; margin-bottom: 10px;">
 						Great News, You're almost there!</h6>
