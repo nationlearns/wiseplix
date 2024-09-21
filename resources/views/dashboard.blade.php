@@ -1178,7 +1178,9 @@
                             id="header-menu">
                             <h6
                                 style="text-align: center; font-size: large; font-family: system-ui; margin-bottom: 10px;">
-                                Your Just a few steps Away to connect with your budget friendly professional.</h6>
+                                Welcome to Wiseplix – the world's best platform to find trusted service providers that fit your budget! Simply answer a few quick questions, and we’ll connect you with the perfect match in no time.	
+
+                            </h6>
                         </div>
                         <div class="heading"
                             style="border: 1px solid; display:none; border-radius: 5px; padding: 10px 0px 0px 0px;"
