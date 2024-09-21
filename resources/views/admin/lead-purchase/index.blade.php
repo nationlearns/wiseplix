@@ -41,11 +41,11 @@
                                         <tr style="border-bottom:1px solid">
                                             <td style="border:1px solid lightgray">
                                                 <p class="mb-1"><b>Lead ID: </b>{{$item['id']}}</p>
-                                                <p class="mb-1"><b>Category: </b> {{$item->category['alt_name']}}</p>
+                                                <p class="mb-1"><b>Category: </b> {{$item->category['alt_name'] ?? '-' }} </p>
                                                 <p class="mb-1"><b>Sub-Category: </b> {{$item->subcategory['slug'] ?? '-'}}</p>
-                                                <p class="mb-1"><b>Name: </b>{{$item['name']}}</p>
-                                                <p class="mb-1"><b>Email: </b>{{$item['email']}}</p>
-                                                <p class="mb-1"><b>Phone: </b>{{$item['mobile']}}</p>
+                                                <p class="mb-1"><b>Name: </b>{{$item['name'] ?? '-'}}</p>
+                                                <p class="mb-1"><b>Email: </b>{{$item['email'] ?? '-'}}</p>
+                                                <p class="mb-1"><b>Phone: </b>{{$item['mobile'] ?? '-'}}</p>
                                                 <p class="mb-1"><b>Location: </b>{{$item->location->name ?? '-'}}</p>
                                                 <p class="mb-1"><b>Date Posted: </b>{{date('d M, Y', strtotime($item->created_at)); }}</p>
                                             </td>
