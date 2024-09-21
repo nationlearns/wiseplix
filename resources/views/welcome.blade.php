@@ -244,6 +244,20 @@
                 .search-form{
                     margin-top: 8rem;
                 }
+
+                
+                .category-list {
+                    position: absolute;
+                    z-index: 1000;
+                    width: 75%;
+                    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, .05);
+                    box-sizing: border-box;
+                    border-bottom-left-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                    background-color: white;
+                    color: black;
+                }
+
                 .aon-banner-text{margin: 4.5rem auto}
             }
 
