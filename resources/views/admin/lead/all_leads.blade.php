@@ -55,15 +55,15 @@
                                     @foreach ($data as $key => $item)
                                         <tr>
                                             <td>{{$key + 1}}</td>
-                                            <td>{{$item['category']['slug']}}</td>
-                                            <td>{{$item['subcategory']['slug']}}</td>
-                                            <td>{{$item->name}}</td>
-                                            <td>{{$item->email}}</td>
-                                            <td>{{$item->mobile}}</td>
-                                            <td><span class="badge bg-primary">{{$item->lead_status}}</span></td>
-                                            <td>{{$item->area_name}}</td>
-                                            <td>{{$item->district_name}}</td>
-                                            <td>{{$item->state}}</td>
+                                            <td>{{$item['category']['slug'] ?? '-'}}</td>
+                                            <td>{{$item['subcategory']['slug'] ?? '-'}}</td>
+                                            <td>{{$item->name ?? '-'}}</td>
+                                            <td>{{$item->email ?? '-'}}</td>
+                                            <td>{{$item->mobile ?? '-'}}</td>
+                                            <td><span class="badge bg-primary">{{$item->lead_status ?? '-'}}</span></td>
+                                            <td>{{$item->area_name ?? '-'}}</td>
+                                            <td>{{$item->district_name ?? '-'}}</td>
+                                            <td>{{$item->state ?? '-'}}</td>
                                             <td>
                                                 <a href="{{route('edit.price',$item->id)}}" class="btn btn-dark">Edit</a>
                                                 <a href="{{route('delete.price',$item->id)}}" class="btn btn-danger">Delete</a>
