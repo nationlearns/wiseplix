@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\LeadsController;
 use App\Models\Blogs;
 use App\Models\Categories;
 use App\Models\Leads;
+use App\Models\Notification;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -78,18 +79,29 @@ Route::get('/', function () {
 
 
 Route::get('/send-test-email', function(){
-        
+    
+    $data = Leads::where('user_id', 434)->first();
+
     $token = '';
 
     $registrationId = 'eQ5dIaLNQbKp-ebXwPBzv-:APA91bE6EsWrTbuyOUzCEnSh_1v60UhGaSa9qPN9FdCm3uwk9rWzbwJQGFwlAw3nhicqHyIrDT4xPotzJNiJAV477JZLesTvHeRcLjpJWMstVlRgj6AIoFzZKvBqN0xJqhA4thspL_O9';
     
     $title = "New Lead Created";
     
-    $message = 'New Lead Created';
+    $message = $data->name . " "  . " is looking for " . $data->slug . " in " . " " . $data->district_name . "," . $data->pin_code;;
     
     $notification = new NotificationController;
 
     $notification->pushnotification($title, $message, $token, $registrationId);
+
+    Notification::create([
+        'user_id' => 1065,
+        'title' => $title,
+        'message' => $message,
+        'leads_id' => $data->id,
+    ]);
+
+    return response()->json(['success' => true]);
 
 });
 
