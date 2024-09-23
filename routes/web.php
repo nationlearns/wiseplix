@@ -13,11 +13,13 @@ use App\Http\Controllers\Admin\AssociateUserController;
 use App\Http\Controllers\Admin\WalletController;
 use App\Http\Controllers\Admin\AssociateProfileController;
 use App\Http\Controllers\Admin\LeadPurchaseController;
+use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\LeadsController;
 
 
 use App\Models\Blogs;
 use App\Models\Categories;
+use App\Models\Leads;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -74,11 +76,20 @@ Route::get('/', function () {
 })->name('home');
 
 
-Route::get('/send-test-email', function(){
 
-Mail::to('aquib_j@yahoo.com')->send(new TestMail);
+Route::get('/send-test-email', function(){
+        
+    $token = '';
+
+    $registrationId = 'eQ5dIaLNQbKp-ebXwPBzv-:APA91bE6EsWrTbuyOUzCEnSh_1v60UhGaSa9qPN9FdCm3uwk9rWzbwJQGFwlAw3nhicqHyIrDT4xPotzJNiJAV477JZLesTvHeRcLjpJWMstVlRgj6AIoFzZKvBqN0xJqhA4thspL_O9';
     
-    return 'Mail Sent';
+    $title = "New Lead Created";
+    
+    $message = 'New Lead Created';
+    
+    $notification = new NotificationController;
+
+    $notification->pushnotification($title, $message, $token, $registrationId);
 
 });
 
