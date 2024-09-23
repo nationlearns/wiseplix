@@ -27,43 +27,93 @@ class NotificationController extends Controller
     }
 
     public function pushnotification($title,$message,$token,$registrationId){
-        $url = 'https://fcm.googleapis.com/fcm/send';
-        // $FcmToken = User::whereNotNull('device_key')->pluck('device_key')->all();
+        // $url = 'https://fcm.googleapis.com/fcm/send';
+        // // $FcmToken = User::whereNotNull('device_key')->pluck('device_key')->all();
           
-        $serverKey ="APA91bEkQlA5-WMDaMLxiZL0wSsAEEG1A63l6KXyYZGFTmdf9DPYd1SWYe-ZTXQCFoDeoVuicFPQMGa3l8nVIOIMAQ4xm7Q4x0UZCtDdkeoMEKEA21cgL2V1hyZDKcX2CJ93-k5rNISS";
-        $data = [
-            "data" => [
-                "title" => $title,
-                "message" => $message,
-            ],
-            "id" => [$registrationId]
-        ];
-        $encodedData = json_encode($data);
+        // $serverKey ="AAAA3SD3D8s:APA91bEkQlA5-WMDaMLxiZL0wSsAEEG1A63l6KXyYZGFTmdf9DPYd1SWYe-ZTXQCFoDeoVuicFPQMGa3l8nVIOIMAQ4xm7Q4x0UZCtDdkeoMEKEA21cgL2V1hyZDKcX2CJ93-k5rNISS";
+        // $data = [
+        //     "data" => [
+        //         "title" => $title,
+        //         "message" => $message,
+        //     ],
+        //     "id" => [$registrationId]
+        // ];
+        // $encodedData = json_encode($data);
     
         
+        // $headers = [
+        //     'Authorization:key='.$serverKey,
+        //     'Content-Type: application/json',
+        // ];
+    
+        // $ch = curl_init();
+      
+        // curl_setopt($ch, CURLOPT_URL, $url);
+        // curl_setopt($ch, CURLOPT_POST, true);
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        // curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        // // Disabling SSL Certificate support temporarly
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);        
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $encodedData);
+        // // Execute post
+        // $result = curl_exec($ch);
+
+        // if ($result === FALSE) {
+        //     die('Curl failed: ' . curl_error($ch));
+        // }        
+        // // Close connection
+        // curl_close($ch);
+
+
+        $url = 'https://fcm.googleapis.com/fcm/send';
+        $serverKey = "AAAA3SD3D8s:APA91bEkQlA5-WMDaMLxiZL0wSsAEEG1A63l6KXyYZGFTmdf9DPYd1SWYe-ZTXQCFoDeoVuicFPQMGa3l8nVIOIMAQ4xm7Q4x0UZCtDdkeoMEKEA21cgL2V1hyZDKcX2CJ93-k5rNISS"; // Add your Firebase server key here
+
+        $data = [
+            "to" => $registrationId, // Use 'to' instead of 'id'
+            "notification" => [
+                "title" => $title,
+                "body" => $message,
+                "sound" => "default", // Optional: Add sound for notifications
+            ],
+            "data" => [
+                "click_action" => "FLUTTER_NOTIFICATION_CLICK", // For handling in the app
+                "message" => $message
+            ],
+            "priority" => "high" // Ensures timely delivery
+        ];
+
+        $encodedData = json_encode($data);
+
         $headers = [
-            'Authorization:key='.$serverKey,
+            'Authorization: key=' . $serverKey,
             'Content-Type: application/json',
         ];
-    
+
         $ch = curl_init();
-      
+
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-        // Disabling SSL Certificate support temporarly
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);        
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Disabling SSL Certificate support
         curl_setopt($ch, CURLOPT_POSTFIELDS, $encodedData);
+
         // Execute post
         $result = curl_exec($ch);
 
         if ($result === FALSE) {
-            die('Curl failed: ' . curl_error($ch));
-        }        
+            return 'Curl failed: ' . curl_error($ch);
+        }
+
         // Close connection
         curl_close($ch);
+
+        // Return the result for further processing or logging
+        return $result;
+
     }
+
 }
