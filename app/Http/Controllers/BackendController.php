@@ -27,8 +27,9 @@ class BackendController extends Controller
 
     public function AllSubCategory()
     {
+        $categories = DB::table('categories')->get();
         $data = DB::table('sub_categories')->get();
-        return view('admin.subcategory.index', compact('data'));
+        return view('admin.subcategory.index', compact('data', 'categories'));
     }
 
     public function AllBlogs()
