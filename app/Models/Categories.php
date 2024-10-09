@@ -12,7 +12,7 @@ class Categories extends Model
     protected $table = 'categories';  
 
     protected $fillable = [
-        'title','icon','slug','featured','status', 'position', 'cat_image','maincat_id', 'status'
+        'title','icon','slug','featured','status', 'position', 'cat_image','maincat_id', 'status', 'top_cat_id', 'alt_name'
     ]; 
 
     public function subcategory()
