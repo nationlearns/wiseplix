@@ -30,6 +30,7 @@
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                     <tr>
+                                        <th>ID</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Mobile</th>
@@ -41,6 +42,7 @@
                                 <tbody>
                                     @foreach ($associates as $key => $item)
                                         <tr>
+                                            <td>{{$item['id']}}</td>
                                             <td>{{$item['name']}}</td>
                                             <td>{{$item['email']}}</td>
                                             <td>{{$item['mobile']}}</td>
