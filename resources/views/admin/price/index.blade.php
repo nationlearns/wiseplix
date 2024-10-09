@@ -49,9 +49,9 @@
                                     @foreach ($data as $key => $item)
                                         <tr>
                                             <td>{{$key + 1}}</td>
-                                            <td>{{$item['category']['slug']}}</td>
-                                            <td>{{$item['subcategory']['slug']}}</td>
-                                            <td>{{$item->points}}</td>
+                                            <td>{{$item['category']['slug'] ?? '-'}}</td>
+                                            <td>{{$item['subcategory']['slug'] ?? '-'}}</td>
+                                            <td>{{$item->points ?? '-'}}</td>
                                             <td>
                                                 <a href="{{route('edit.price',$item->id)}}" class="btn btn-dark">Edit</a>
                                                 <a href="{{route('delete.price',$item->id)}}" class="btn btn-danger">Delete</a>
