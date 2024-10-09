@@ -198,9 +198,7 @@ class LeadsController extends Controller{
         // Retrieve all partners who match the category, subcategory, and city
         $partners = User::where('role', 'pro')
                         ->whereHas('associate', function ($query) use ($category_id, $data) {
-                            $query->where('category_id', $category_id)
-                                ->orWhere('subcategory_id', $data['subcategory_id'])
-                                ->orWhere('area_of_service', $data['disticName']);
+                            $query->where([['category_id', $category_id], ['subcategory_id', $data['subcategory_id']], ['area_of_service', $data['disticName']]]);
                         })->get();
 
         // Send the notification email to each partner
@@ -817,7 +815,7 @@ class LeadsController extends Controller{
         }
 
         // Store lead data
-        $lead = new Lead();
+        $lead = new Leads();
         $lead->user_id = $request->user_id;
         $lead->category_id = $request->category_id;
         $lead->subcategory_id = $request->subcategory_id;
@@ -844,6 +842,18 @@ class LeadsController extends Controller{
             'message' => 'Lead created successfully',
             'lead' => $lead
         ], 201);
+    }
+
+
+    public function getLeads(){
+        $leads = Leads::with('user', 'category', 'subcategory', 'location')->orderBy('created_at', 'DESC')->get();
+
+        $data = [
+            'message' => 'success',
+            'leads' => $leads,
+        ];
+
+        return response()->json($data, 200);
     }
 
 }
