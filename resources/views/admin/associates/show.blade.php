@@ -312,6 +312,9 @@
                             <div class="d-flex align-items-center justify-content-between">
 
                                 <h4 class="mb-2">Current Wallet Balance: {{$user->getWallet['amount'] ?? ''}}</h4>
+                                @if ($user->getWallet()->exists() && ($user->getWallet['amount'] > 0))
+                                    <a href="" data-bs-toggle="modal" data-bs-target="#deductWalletPoint" class="mb-2 btn btn-danger btn-md">Deduct Wallet Point</a>
+                                @endif
                                 <a href="" data-bs-toggle="modal" data-bs-target="#addWalletPoint" class="mb-2 btn btn-dark btn-md">Add Wallet Point</a>
                             </div>
 
@@ -397,6 +400,30 @@
                             <input type="number" class="form-control" name="amount" placeholder="Enter Amount" min="0" required>
                         </div>
                         <input type="submit" value="Add Wallet Point" class="btn btn-dark mt-4">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="deductWalletPoint" tabindex="-1" aria-labelledby="deductWalletPointLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deductWalletPointLabel">Deduct Wallet Point</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{route('wallet.update', $user->getWallet['id'])}}" method="POST" enctype="multipart/form-data">
+                        @method('PATCH')
+                        @csrf
+                        <input type="hidden" name="user_id" value="{{$user['id']}}">
+                        <div class="mb-3">
+                            <label>Amount</label>
+                            <input type="number" class="form-control" name="amount" placeholder="Enter Amount" min="0" max="{{$user->getWallet['amount']}}" required>
+                        </div>
+                        <input type="submit" value="Deduct Wallet Point" class="btn btn-danger mt-4">
                     </form>
                 </div>
             </div>

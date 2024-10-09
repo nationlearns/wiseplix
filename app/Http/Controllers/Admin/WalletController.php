@@ -31,4 +31,26 @@ class WalletController extends Controller
 
 
     }
+
+
+    function update(Request $request, $wallet_id) {
+
+
+        // Check if user's wallet exists
+        $wallet = Wallet::where('id', $wallet_id)->first();
+
+        if ($request['amount'] > $wallet['amount']) {
+
+           return redirect()->back()->with('error', 'Amount must be less than current balance');
+
+        } else {
+             // Update wallet points
+            $wallet->amount = ($wallet->amount - $request['amount']);
+            $wallet->save();
+        }
+
+        return redirect()->back()->with('success', 'Wallet Point Deducted');
+
+
+    }
 }
