@@ -78,5 +78,15 @@
                 <span>Lead Purchased</span>
             </a>
         </li>
+
+
+        <li>
+            <a href="/admin/employee/leads" class=" waves-effect">
+                <i class="ri-calendar-2-line"></i>
+                <span>All Leads</span>
+            </a>
+        </li>
+
+
     </ul>
 </div>
