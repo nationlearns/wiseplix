@@ -10,6 +10,8 @@ use App\Http\Controllers\AssociateReviewController;
 // use App\Http\Controllers\LeadPurchaseController;
 
 use App\Http\Controllers\Admin\AssociateUserController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\WalletController;
 use App\Http\Controllers\Admin\AssociateProfileController;
 use App\Http\Controllers\Admin\LeadPurchaseController;
@@ -243,9 +245,23 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         Route::delete('/associate/{id}/delete', 'delete')->name('admin.associate.delete');
     });
 
+    Route::controller(CategoryController::class)->group(function(){
+        Route::get('/all/category/{id}/edit', 'edit')->name('admin.category.edit');
+        Route::post('/all/category/store', 'store')->name('admin.category.store');
+        Route::patch('/all/category/{id}/update', 'update')->name('admin.category.update');
+        Route::delete('/all/category/{id}/delete', 'destroy')->name('admin.category.destroy');
+    });
+    
+    Route::controller(SubCategoryController::class)->group(function(){
+        Route::get('/all/subcategory/{id}/edit', 'edit')->name('admin.subcategory.edit');
+        Route::post('/all/subcategory/store', 'store')->name('admin.subcategory.store');
+        Route::patch('/all/subcategory/{id}/update', 'update')->name('admin.subcategory.update');
+        Route::delete('/all/subcategory/{id}/delete', 'destroy')->name('admin.subcategory.destroy');
+    });
 
     Route::controller(WalletController::class)->group(function(){
         Route::post('/wallet/store/{id}', 'store')->name('wallet.store');
+        Route::patch('/wallet/store/{id}/update', 'update')->name('wallet.update');
     });
 
     Route::post('/associate/{id}/associate-profile/store', [AssociateProfileController::class, 'store'])->name('associate-profile.store');
