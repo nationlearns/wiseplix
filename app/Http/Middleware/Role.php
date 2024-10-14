@@ -21,7 +21,7 @@ class Role
                 return redirect()->route('admin.dashboard')->with('error', 'Access denied');
             }
                 
-            return \redirect()->route('admin.dashboard');
+            return \redirect()->route('dashboard');
         }
         return $next($request);
     }

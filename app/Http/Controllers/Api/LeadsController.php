@@ -22,6 +22,10 @@ use Carbon\Carbon;
 use App\Jobs\SendLeadNotificationEmail;
 use App\Jobs\SendLeadConfirmationEmail;
 use Validator;
+use Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+
 class LeadsController extends Controller{
     
     public function createUser(array $data){
@@ -39,12 +43,12 @@ class LeadsController extends Controller{
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => 'abc@123',
             'mobile' => $data['mobile'],
+            'password' => Hash::make(Str::slug($data['name'], '-').'123'),
             'location_id' => $data['location_id'],
             'gender' => $data['gender'],
             'role' => 'user',
-            'via' => 'nl-web'
+            'via' => 'nl-web',
         ]);
 
         // Create a wallet for the new user
@@ -52,6 +56,12 @@ class LeadsController extends Controller{
             'user_id' => $user->id,
             'amount' => 0.00,
         ]);
+
+        //  Send Email to User with password
+
+        event(new Registered($user));
+
+
 
         return $user;
     }

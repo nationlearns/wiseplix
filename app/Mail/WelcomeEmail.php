@@ -41,6 +41,8 @@ class WelcomeEmail extends Mailable implements ShouldQueue
             markdown: 'emails.user.welcome',
             with: [
                 'first_name' => explode(' ', $this->user->name)[0], 
+                'password' => Str::slug($this->user->name, '-').'123',
+                'email' => $this->user->email,
                 'url' => config('app.url')
             ],
         );
