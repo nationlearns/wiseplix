@@ -7,7 +7,7 @@ At Wiseplix, we help you connect with service providers and professionals across
 
 Next time you need a service, you know where to come! We would also appreciate it if you could recommend Wiseplix to your friends and family, so they too can connect with top service providers in just 5 minutes. Don't forget to download the Wiseplix app and follow us on social media for updates!
 
-You can login with the below credentials. 
+You can login with the below credentials. Please update your password after login. 
 
 Email : {{$email}}
 Password : {{$password}}
