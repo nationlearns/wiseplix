@@ -9,8 +9,8 @@ Next time you need a service, you know where to come! We would also appreciate i
 
 You can login with the below credentials. Please update your password after login. 
 
-Email : {{$email}}
-Password : {{$password}}
+<b>Email : {{$email}}</b> <br>
+<b>Password : {{$password}}</b>
 
 Thank you for choosing Wiseplix!
 
@@ -18,7 +18,7 @@ Thank you for choosing Wiseplix!
 Visit Now
 </x-mail::button>
 
-Best regards,
-Dr. Mohammed Haseeb
+Best regards, <br>
+Dr. Mohammed Haseeb <br>
 CEO, Wiseplix
 </x-mail::message>
