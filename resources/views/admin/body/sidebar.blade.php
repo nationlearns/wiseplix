@@ -101,6 +101,23 @@
                     <span>All Leads</span>
                 </a>
             </li>
+
+        @elseif (auth()->user()->role === 'sales')
+           <li>
+                <a href="{{ route('admin.associate.index') }}" class=" waves-effect">
+                    <i class="ri-calendar-2-line"></i>
+                    <span>Associate Profile</span>
+                </a>
+            </li>
+
+        
+        @elseif (auth()->user()->role === 'service')
+           <li>
+                <a href="{{ route('admin.associate.index') }}" class=" waves-effect">
+                    <i class="ri-calendar-2-line"></i>
+                    <span>Associate Profile</span>
+                </a>
+            </li>
         
         @endif
 

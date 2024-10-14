@@ -303,43 +303,45 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-6">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h5 class="mb-0">Wallet Points</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-flex align-items-center justify-content-between">
-
-                                <h4 class="mb-2">Current Wallet Balance: {{$user->getWallet['amount'] ?? ''}}</h4>
-                                @if ($user->getWallet()->exists() && ($user->getWallet['amount'] > 0))
-                                    <a href="" data-bs-toggle="modal" data-bs-target="#deductWalletPoint" class="mb-2 btn btn-danger btn-md">Deduct Wallet Point</a>
-                                @endif
-                                <a href="" data-bs-toggle="modal" data-bs-target="#addWalletPoint" class="mb-2 btn btn-dark btn-md">Add Wallet Point</a>
+                    @if (request()->user()->role != 'sales')                    
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5 class="mb-0">Wallet Points</h5>
                             </div>
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between">
 
-                            {{-- <h5 class="mb-2">Wallet Transactions</h5>
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Amount</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                                    <h4 class="mb-2">Current Wallet Balance: {{$user->getWallet['amount'] ?? ''}}</h4>
+                                    @if ($user->getWallet()->exists() && ($user->getWallet['amount'] > 0))
+                                        <a href="" data-bs-toggle="modal" data-bs-target="#deductWalletPoint" class="mb-2 btn btn-danger btn-md">Deduct Wallet Point</a>
+                                    @endif
+                                    <a href="" data-bs-toggle="modal" data-bs-target="#addWalletPoint" class="mb-2 btn btn-dark btn-md">Add Wallet Point</a>
+                                </div>
 
-                                    {{$user->getWallet}}
-                                    @foreach($user->getWallet as $wallet)
+                                {{-- <h5 class="mb-2">Wallet Transactions</h5>
+                                <table class="table table-bordered">
+                                    <thead>
                                         <tr>
-                                            <td>{{ $user->getWallet->amount }}</td>
-                                            <td>{{ $user->getWallet->created_at }}</td>
+                                            <th>Amount</th>
+                                            <th>Date</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table> --}}
-                        </div>
-                    </div>
+                                    </thead>
+                                    <tbody>
 
+                                        {{$user->getWallet}}
+                                        @foreach($user->getWallet as $wallet)
+                                            <tr>
+                                                <td>{{ $user->getWallet->amount }}</td>
+                                                <td>{{ $user->getWallet->created_at }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table> --}}
+                            </div>
+                        </div>
+                        @endif
                     <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0">Lead Purchased</h5>
@@ -375,8 +377,8 @@
                             {{-- {{$user->leadPurchased}} --}}
                         </div>
                     </div>
-
                 </div>
+               
 
             </div> <!-- end row -->
 
