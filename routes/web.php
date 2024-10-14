@@ -15,8 +15,12 @@ use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\WalletController;
 use App\Http\Controllers\Admin\AssociateProfileController;
 use App\Http\Controllers\Admin\LeadPurchaseController;
+use App\Http\Controllers\Admin\AdminManagerController;
+
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\LeadsController;
+
+use App\Http\Controllers\Admin\Employee\LeadController;
 
 
 use App\Models\Blogs;
@@ -185,8 +189,13 @@ Route::get('/district_name/ajax/{stateName}', [PriceController::class, 'getDistr
 Route::get('/area_name/ajax/{district_name}', [PriceController::class, 'getAreaName']);
 
 
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth'], ['role:admin,employee,sales,service'])->prefix('admin')->group(function () {
     Route::get('dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
+});
+
+
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+    // Route::get('dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
     Route::get('logout', [AdminController::class, 'AdminLogout'])->name('admin.logout');
     Route::get('contact-us', [AdminController::class, 'ContactUs'])->name('admin.contact.us');
 
@@ -234,17 +243,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         Route::get('add/leads','AddLeads')->name('add.leads');
     });
 
-    Route::controller(AssociateUserController::class)->group(function(){
-
-        Route::get('/associate', 'index')->name('admin.associate.index');
-        Route::get('/associate/create', 'create')->name('admin.associate.create');
-        Route::get('/associate/{id}/show', 'show')->name('admin.associate.show');
-        Route::post('/associate/store', 'store')->name('admin.associate.store');
-        Route::get('/associate/get-associate-data/{id}', 'getAssociateData')->name('admin.associate.data');
-        Route::patch('/associate/{id}/update', 'update')->name('admin.associate.update');
-        Route::delete('/associate/{id}/delete', 'delete')->name('admin.associate.delete');
-    });
-
     Route::controller(CategoryController::class)->group(function(){
         Route::get('/all/category/{id}/edit', 'edit')->name('admin.category.edit');
         Route::post('/all/category/store', 'store')->name('admin.category.store');
@@ -264,10 +262,49 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         Route::patch('/wallet/store/{id}/update', 'update')->name('wallet.update');
     });
 
+
+    Route::controller(AdminManagerController::class)->group(function(){
+        Route::get('/admin-manager', 'index')->name('admin-manager.index');
+        Route::get('/admin-manager/create', 'create')->name('admin-manager.create');
+        Route::post('/admin-manager/store', 'store')->name('admin-manager.store');
+        Route::delete('/admin-manager/{id}/delete', 'destroy')->name('admin-manager.delete');
+    });
+
+
+    
+});
+
+Route::middleware(['auth'], ['role:admin,employee'])->prefix('admin')->group(function () {
+
+    Route::get('/employee/leads', [LeadController::class, 'showLeads']);
+    Route::get('/employee/leads/create', [LeadController::class, 'createLead']);
+    Route::post('/employee/leads/store', [LeadController::class, 'storeLead']);
+    Route::get('/questions/ajax/{subcategoryId}', [LeadController::class, 'getQuestionsBySubcategory']);
+
+
+});
+
+
+Route::middleware(['auth'], ['role:admin,sales,service'])->prefix('admin')->group(function () {
+
+
+    Route::controller(AssociateUserController::class)->group(function(){
+
+        Route::get('/associate', 'index')->name('admin.associate.index');
+        Route::get('/associate/create', 'create')->name('admin.associate.create');
+        Route::get('/associate/{id}/show', 'show')->name('admin.associate.show');
+        Route::post('/associate/store', 'store')->name('admin.associate.store');
+        Route::get('/associate/get-associate-data/{id}', 'getAssociateData')->name('admin.associate.data');
+        Route::patch('/associate/{id}/update', 'update')->name('admin.associate.update');
+        Route::delete('/associate/{id}/delete', 'delete')->name('admin.associate.delete');
+        
+    });
+
     Route::post('/associate/{id}/associate-profile/store', [AssociateProfileController::class, 'store'])->name('associate-profile.store');
     Route::patch('/associate/associate-profile/{id}/update', [AssociateProfileController::class, 'update'])->name('associate-profile.update');
     Route::get('/lead-purchase', [LeadPurchaseController::class, 'index'])->name('admin.lead-purchase.index');
     Route::get('/lead-purchase/show/{id}', [LeadPurchaseController::class, 'show'])->name('admin.lead-purchase.show');
+
 });
 
 
