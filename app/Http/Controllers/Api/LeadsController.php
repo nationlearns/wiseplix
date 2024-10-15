@@ -62,6 +62,7 @@ class LeadsController extends Controller{
         event(new Registered($user));
 
 
+        Auth::login($user);
 
         return $user;
     }

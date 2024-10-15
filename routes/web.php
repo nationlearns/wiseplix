@@ -178,7 +178,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('user/logout',[UserController::class,'UserLogout'])->name('user.logout');
 });
-Route::middleware(['auth','role:user'])->group(function () {
+Route::middleware(['auth','role:user', 'verified'])->group(function () {
     Route::get('profile',[UserController::class,'Profile'])->name('profile');
     Route::patch('profile',[ProfileController::class,'updateProfile'])->name('profile.update');
 });

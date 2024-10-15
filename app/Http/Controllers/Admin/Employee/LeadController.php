@@ -281,6 +281,8 @@ class LeadController extends Controller
                 'via' => 'nl-web'
             ]);
 
+            $user->markEmailAsVerified();
+
             // Create a wallet for the new user
             Wallet::create([
                 'user_id' => $user->id,
