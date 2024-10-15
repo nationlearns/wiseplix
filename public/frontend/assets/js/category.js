@@ -70,11 +70,6 @@ $("#selectTitle").click(function() {
             },
             success: function(res) {
                 if (res && res.data.length > 0) {
-
-
-                    // Show Total Count
-                    console.log(res.data.length);
-
                     questionsData = res.data;
                     $("#question-text").css('display', 'block');
                     $("#titleForm").css('display', 'none');
@@ -102,9 +97,6 @@ function displayQuestion() {
 
     $("#currentQuestion").text(currentQuestionIndex + 1);
     $("#questionCount").text('/'+questionsData.length);
-
-    console.log('Current Question No.' + currentQuestionIndex);
-    console.log('Total Question ' + questionsData.length);
     
 
     if (currentQuestionIndex >= questionsData.length) {

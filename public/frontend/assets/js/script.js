@@ -159,6 +159,10 @@ $("#openModalBtn").click(function() {
 });
 
 function displayQuestion() {
+
+    $("#currentQuestion").text(currentQuestionIndex + 1);
+    $("#questionCount").text("/" + questionsData.length);
+
     if (currentQuestionIndex >= questionsData.length) {
         // All questions have been answered
         // $("#questionModal").modal("hide");
@@ -168,7 +172,8 @@ function displayQuestion() {
         $("#next-button").css('display', 'none');
         $("#submit-button1").css('display', 'block');
         $("#options-form").css('display', 'none');
-        $("#textForm").css('display', 'block');
+            $("#question-count").hide();
+        $("#textForm").css('display', 'block');        
         $('#question-text').css('display', 'none');
     } else {
         const currentQuestion = questionsData[currentQuestionIndex];

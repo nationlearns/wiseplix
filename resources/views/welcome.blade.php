@@ -1230,7 +1230,7 @@
                                 style=" display:none;border: 1px solid; border-radius: 5px; padding: 10px 0px 0px 0px;"
                                 id="header-menu">
                                 <h5 class="text-center py-2">
-                                    Your Just a few steps Away to connect with your budget friendly professional.</h5>
+                                    You're Just a few steps Away to connect with your budget friendly professional.</h5>
                             </div>
                             
                             <div class="heading"
@@ -1359,21 +1359,32 @@
                             </div>
                         </div>
                         <div class="modal-footer" style="border-top: 0 none;">
-                            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_button">Close</button> -->
-                            <button type="button" class="btn btn-info" id="next-button">Next</button>
-                            <button type="button" class="btn btn-info" style="display: none;"
-                                id="submit-button">Next</button>
-                            <div style="display:none" id="Verify-mobile">
-                                <button type="button" class="btn btn-info" id="Verify-Otp">Verify</button>
+
+                            <div class="d-flex justify-content-end align-items-center" style="gap: 1rem">
+                                <div id="question-count" class="py-2">
+                                    <div class="text-center">
+                                        <h4 class="mb-0">
+                                            <b><span id="currentQuestion"></span><span id="questionCount"></span></b>
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_button">Close</button> -->
+                                <button type="button" class="btn btn-info" id="next-button">Next</button>
+                                <button type="button" class="btn btn-info" style="display: none;"
+                                    id="submit-button">Next</button>
+                                <div style="display:none" id="Verify-mobile">
+                                    <button type="button" class="btn btn-info" id="Verify-Otp">Verify</button>
+                                </div>
+                                <button type="button" class="btn btn-info" style="display: none;"
+                                    id="submitData1">Submit</button>
+                                <button type="button" class="btn btn-info" style="display: none;"
+                                    id="submit-button2">Next</button>
+                                <button type="button" class="btn btn-info" style="display: none;"
+                                    id="submitData">Submit</button>
+                                <button type="button" class="btn btn-info" style="display: none;"
+                                    id="submit-button1">Next</button>
                             </div>
-                            <button type="button" class="btn btn-info" style="display: none;"
-                                id="submitData1">Submit</button>
-                            <button type="button" class="btn btn-info" style="display: none;"
-                                id="submit-button2">Next</button>
-                            <button type="button" class="btn btn-info" style="display: none;"
-                                id="submitData">Submit</button>
-                            <button type="button" class="btn btn-info" style="display: none;"
-                                id="submit-button1">Next</button>
                         </div>
                     </div>
                 </div>

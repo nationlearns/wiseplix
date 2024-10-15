@@ -27,7 +27,7 @@
 					style=" display:none;border: 1px solid; border-radius: 5px; padding: 10px 0px 0px 0px;"
 					id="header-0">
 					<h5 class="text-center py-2">
-						Your Just a few steps Away to connect with your budget friendly professional.</h5>
+						You're Just a few steps Away to connect with your budget friendly professional.</h5>
 				</div>
 				<div class="heading" style="border: 1px solid; display:none; border-radius: 5px; padding: 10px 0px 0px 0px;" id="header1">
 					<h6 style="text-align: center; font-size: large; ; margin-bottom: 10px;">
