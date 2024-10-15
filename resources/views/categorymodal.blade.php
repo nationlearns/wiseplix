@@ -143,19 +143,36 @@
 						</div>
 					</div>
 				</div>
+
+				
+
 				<div class="modal-footer" style="border-top: 0 none;">
 
-					<button type="button" class="modal-btn" style="display:none " val="" id="selectTitle">Next</button>
-					<button type="button" class="modal-btn" style="display:none" id="next-button">Next</button>
-					<button type="button" class="modal-btn" style="display: none;" id="submit-button">Next</button>
-					<button type="button" class="modal-btn" style="display: none;" id="submit-button2">Next</button>
+					<div class="d-flex justify-content-end align-items-center" style="gap: 1rem">
 
-					<div style="display:none" id="Verify-mobile">
-						<button type="button" class="modal-btn" id="Verify-Otp">Verify</button>
+						<div id="question-count" class="py-2">
+							<div class="text-center">
+								<h4 class="mb-0">
+									<b><span id="currentQuestion"></span><span id="questionCount"></span></b>
+								</h4>
+							</div>
+						</div>
+
+						<button type="button" class="modal-btn" style="display:none " val="" id="selectTitle">Next</button>
+						<button type="button" class="modal-btn" style="display:none" id="next-button">Next</button>
+						<button type="button" class="modal-btn" style="display: none;" id="submit-button">Next</button>
+						<button type="button" class="modal-btn" style="display: none;" id="submit-button2">Next</button>
+
+						<div style="display:none" id="Verify-mobile">
+							<button type="button" class="modal-btn" id="Verify-Otp">Verify</button>
+						</div>
+						<button type="button" class="modal-btn" style="display: none;" id="submitData1">Submit</button>
+						<button type="button" class="modal-btn" style="display: none;" id="submitData">Submit</button>
+						<button type="button" class="modal-btn" style="display: none;" id="submit-button1">Next</button>
+
 					</div>
-					<button type="button" class="modal-btn" style="display: none;" id="submitData1">Submit</button>
-					<button type="button" class="modal-btn" style="display: none;" id="submitData">Submit</button>
-					<button type="button" class="modal-btn" style="display: none;" id="submit-button1">Next</button>
+
+					
 				</div>
 			</div>
 		</div>

@@ -70,6 +70,11 @@ $("#selectTitle").click(function() {
             },
             success: function(res) {
                 if (res && res.data.length > 0) {
+
+
+                    // Show Total Count
+                    console.log(res.data.length);
+
                     questionsData = res.data;
                     $("#question-text").css('display', 'block');
                     $("#titleForm").css('display', 'none');
@@ -94,9 +99,18 @@ $("#selectTitle").click(function() {
 });
 
 function displayQuestion() {
+
+    $("#currentQuestion").text(currentQuestionIndex + 1);
+    $("#questionCount").text('/'+questionsData.length);
+
+    console.log('Current Question No.' + currentQuestionIndex);
+    console.log('Total Question ' + questionsData.length);
+    
+
     if (currentQuestionIndex >= questionsData.length) {
         $("#submit-button1").css('display', 'block');
         $("#options-form").css('display', 'none');
+        $("#question-count").hide();
         $("#textForm").css('display', 'block');
         $('#question-text').css('display', 'none');
         $("#next-button").css('display', 'none');
@@ -128,6 +142,9 @@ function displayQuestion() {
         $('input[name="answer[]"]').change(function () {
             const anyChecked = $('input[name="answer[]"]:checked').length > 0;
             $("#next-button").prop("disabled", !anyChecked);
+
+            // 
+
         });
     }
 
