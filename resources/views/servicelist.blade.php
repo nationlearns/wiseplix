@@ -4,6 +4,18 @@
 <!-- Mirrored from bytesed.com/tf/qixer/qixer_html/service_list.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 22 Nov 2023 12:09:35 GMT -->
 
 <head>
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16535550826">
+        </script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'AW-16535550826');
+        </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />

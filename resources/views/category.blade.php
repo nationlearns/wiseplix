@@ -3,7 +3,20 @@
 
 <!-- Mirrored from aonetheme.com/sf-html-demo/all-categories.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Jan 2024 08:53:49 GMT -->
 
+
 <head>
+
+
+    <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16535550826">
+        </script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'AW-16535550826');
+        </script>
 
     <!-- META -->
     <meta charset="utf-8">
