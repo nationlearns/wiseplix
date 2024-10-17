@@ -155,22 +155,24 @@ $('#submit-button1').click(function() {
 
 $('#submit-button2').click(function() {
     let pinCode = $("#numberInput").val();
-    if (pinCode != '') {
-        $("#next-button").css('display', 'none');
-        $("#textForm").css('display', 'none');
-        $('#submit-button1').css('display', 'none');
-        $("#submit-button").css('display', 'none');
-        $("#verifyMobile").css('display', 'block');
-        $("#header-menu").css('display', 'none');
-        $("#header-0").css("display", "block");
-        $("#header1").css('display', 'none');
-        $("#submit-button2").css('display', 'none');
-        $("#pincodeForm").css('display', 'none');
 
+    let pinCodeLength = pinCode.length;
+
+    if ((pinCode != "") && (pinCodeLength >= 6)) {
+        $("#next-button").css("display", "none");
+        $("#textForm").css("display", "none");
+        $("#submit-button1").css("display", "none");
+        $("#submit-button").css("display", "none");
+        $("#verifyMobile").css("display", "block");
+        $("#header-menu").css("display", "none");
+        $("#header-0").css("display", "block");
+        $("#header1").css("display", "none");
+        $("#submit-button2").css("display", "none");
+        $("#pincodeForm").css("display", "none");
     } else {
-        $("#error").text('Please the Pincode');
-        setTimeout(function() {
-            $("#error").text('');
+        $("#error").text("Please select the Pincode");
+        setTimeout(function () {
+            $("#error").text("");
         }, 5000);
     }
 

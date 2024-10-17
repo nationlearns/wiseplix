@@ -41,7 +41,7 @@
 
 				</form>
 				
-				<p class="error" style="color:red" id="error"> </p>
+				{{-- <p class="error" style="color:red" id="error"> </p> --}}
 				
 				<h3 class="success" style="color:green" id="success"></h3>
 				
@@ -144,6 +144,7 @@
 					</div>
 				</div>
 
+				<p class="error" style="color:red" id="error"> </p>
 				
 
 				<div class="modal-footer" style="border-top: 0 none;">
