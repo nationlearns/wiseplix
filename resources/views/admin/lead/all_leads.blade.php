@@ -65,8 +65,9 @@
                                             <td>{{$item->district_name ?? '-'}}</td>
                                             <td>{{$item->state ?? '-'}}</td>
                                             <td>
-                                                <a href="{{route('edit.price',$item->id)}}" class="btn btn-dark">Edit</a>
-                                                <a href="{{route('delete.price',$item->id)}}" class="btn btn-danger">Delete</a>
+                                                <a href="{{route('lead.purchase-history',$item->id)}}" class="btn btn-primary ">View Details</a>
+                                                {{-- <a href="{{route('edit.price',$item->id)}}" class="btn btn-dark">Edit</a>
+                                                <a href="{{route('delete.price',$item->id)}}" class="btn btn-danger">Delete</a> --}}
                                             </td>
                                         </tr>
                                     @endforeach

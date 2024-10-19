@@ -191,12 +191,14 @@ Route::get('/area_name/ajax/{district_name}', [PriceController::class, 'getAreaN
 
 Route::middleware(['auth'], ['role:admin,employee,sales,service'])->prefix('admin')->group(function () {
     Route::get('dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
+    Route::get('logout', [AdminController::class, 'AdminLogout'])->name('admin.logout');
+
 });
 
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     // Route::get('dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
-    Route::get('logout', [AdminController::class, 'AdminLogout'])->name('admin.logout');
+    // Route::get('logout', [AdminController::class, 'AdminLogout'])->name('admin.logout');
     Route::get('contact-us', [AdminController::class, 'ContactUs'])->name('admin.contact.us');
 
     Route::controller(BackendController::class)->group(function () {
@@ -241,6 +243,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
         Route::get('delete/price/{id}','DeletePrice')->name('delete.price');
         Route::get('all/leads','AllLeads')->name('all.leads');
         Route::get('add/leads','AddLeads')->name('add.leads');
+        Route::get('all/leads/purchase-history/{id}','purchaseHistory')->name('lead.purchase-history');
     });
 
     Route::controller(CategoryController::class)->group(function(){

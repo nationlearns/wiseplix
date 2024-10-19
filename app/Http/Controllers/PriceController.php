@@ -80,6 +80,12 @@ class PriceController extends Controller
         return view('admin.lead.all_leads',compact('data'));
     }
 
+    function purchaseHistory($id){
+        $data = Leads::with('getPurchaseDetails')->findOrFail($id);
+        // return $data;
+        return view('admin.lead.show',compact('data'));
+    }
+
     public function AddLeads(){
         $cat = Categories::where('status',1)->get();
         $qtn = Questions::get();

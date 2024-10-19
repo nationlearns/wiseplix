@@ -363,7 +363,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr>
-                                                                        <th scope="row">{{$item->category['alt_name']}}</th>
+                                                                        <th scope="row">{{$item->category['alt_name'] ?? '-'}}</th>
                                                                         <td>
                                                                             {{$item->subcategory->slug}}
                                                                     
