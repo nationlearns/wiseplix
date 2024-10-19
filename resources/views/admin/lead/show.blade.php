@@ -52,7 +52,11 @@
 
                                     @foreach ($data->getPurchaseDetails as $key => $associate)
                                         <tr>
-                                            <th scope="row">{{$associate->user['name'] ?? '-'}}</th>
+                                            <th scope="row">
+                                                <p><b>Name</b>  : {{$associate->user['name'] ?? '-'}}</p>
+                                                <p><b>Email</b> : {{$associate->user['email'] ?? '-'}}</p>
+                                                <p><b>Phone</b> : {{$associate->user['mobile'] ?? '-'}}</p>                                                
+                                            </th>
                                             <td>
                                                 
                                                 @if ($associate->user->associate()->exists())                                                                                
