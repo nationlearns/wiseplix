@@ -42,10 +42,7 @@
                             <p><b>Phone:</b> {{$user['mobile']}}</p>
                             <p><b>Gender:</b> {{$user['gender']}}</p>
                         </div>
-                    </div>
-
-                    
-
+                    </div>              
                 </div> <!-- end col -->
                 
 
@@ -408,29 +405,30 @@
         </div>
     </div>
 
-
-    <div class="modal fade" id="deductWalletPoint" tabindex="-1" aria-labelledby="deductWalletPointLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deductWalletPointLabel">Deduct Wallet Point</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{route('wallet.update', $user->getWallet['id'])}}" method="POST" enctype="multipart/form-data">
-                        @method('PATCH')
-                        @csrf
-                        <input type="hidden" name="user_id" value="{{$user['id']}}">
-                        <div class="mb-3">
-                            <label>Amount</label>
-                            <input type="number" class="form-control" name="amount" placeholder="Enter Amount" min="0" max="{{$user->getWallet['amount']}}" required>
-                        </div>
-                        <input type="submit" value="Deduct Wallet Point" class="btn btn-danger mt-4">
-                    </form>
+    @if ($user->getWallet()->exists() && ($user->getWallet['amount'] > 0))
+        <div class="modal fade" id="deductWalletPoint" tabindex="-1" aria-labelledby="deductWalletPointLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deductWalletPointLabel">Deduct Wallet Point</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{route('wallet.update', $user->getWallet['id'])}}" method="POST" enctype="multipart/form-data">
+                            @method('PATCH')
+                            @csrf
+                            <input type="hidden" name="user_id" value="{{$user['id']}}">
+                            <div class="mb-3">
+                                <label>Amount</label>
+                                <input type="number" class="form-control" name="amount" placeholder="Enter Amount" min="0" max="{{$user->getWallet['amount']}}" required>
+                            </div>
+                            <input type="submit" value="Deduct Wallet Point" class="btn btn-danger mt-4">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
 
 

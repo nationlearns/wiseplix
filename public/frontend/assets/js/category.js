@@ -156,9 +156,11 @@ $('#submit-button1').click(function() {
 $('#submit-button2').click(function() {
     let pinCode = $("#numberInput").val();
 
+    let location = $("#location_id").val();
+
     let pinCodeLength = pinCode.length;
 
-    if ((pinCode != "") && (pinCodeLength >= 6)) {
+    if (pinCode != "" && pinCodeLength >= 6 && location != '') {
         $("#next-button").css("display", "none");
         $("#textForm").css("display", "none");
         $("#submit-button1").css("display", "none");
