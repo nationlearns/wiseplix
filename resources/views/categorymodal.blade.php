@@ -56,6 +56,7 @@
 					<div class="form-group">
 						<label for="exampleFormControlTextarea1" style="">Additional Info</label>
 						<textarea class="form-control" style="height:calc(3rem + 0.75rem + 2px) !important" id="otherDetails" rows="10"></textarea>
+						<small>Add any service related request here. Please do not share your mobile number or email or any personal details.</small>
 					</div>
 				</form>
 

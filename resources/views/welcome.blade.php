@@ -1266,6 +1266,8 @@
                                     <label for="exampleFormControlTextarea1" class="form-check-label"
                                         style="font-weight: 700;">Additional Info</label>
                                     <textarea class="form-control" style="height:65px !important" id="otherDetails" rows="3"></textarea>
+						        <small>Add any service related request here. Please do not share your mobile number or email or any personal details.</small>
+                                    
                                 </div>
                             </form>
 
