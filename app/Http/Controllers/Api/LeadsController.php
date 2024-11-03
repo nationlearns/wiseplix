@@ -9,7 +9,7 @@ use App\Models\Leads;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 use App\Models\PurchaseLeadDetails;
 use App\Models\Subcategory;
 use App\Models\followup;
@@ -67,7 +67,7 @@ class LeadsController extends Controller{
 
         Auth::login($user);
 
-        // event(new Registered($user));  
+        event(new Registered($user));  
         Log::info('User Login'); 
 
         return $user;
