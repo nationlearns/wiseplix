@@ -36,7 +36,7 @@ class LeadsController extends Controller{
 
         // If user already exists, return the existing user
         if ($existingUser) {
-            Auth::login($existingUser);
+            // Auth::login($existingUser);
             // if(!Auth::check()){
             // }
             return $existingUser;
@@ -61,14 +61,14 @@ class LeadsController extends Controller{
         ]);
 
 
-        Log::info('Login started'); 
+        // Log::info('Login started'); 
 
-        $user = User::find($user->id);   
+        // $user = User::find($user->id);   
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        event(new Registered($user));  
-        Log::info('User Login'); 
+        // event(new Registered($user));  
+        // Log::info('User Login'); 
 
         return $user;
     }
@@ -150,6 +150,11 @@ class LeadsController extends Controller{
 
         // Create or get the user
         $user = $this->createUser($data);
+
+        Auth::login($user);
+
+        Log::info(Auth::check());
+        Log::info(Auth::user());
 
         $categoryData = Subcategory::select('category_id')
             ->where('id', $data['subcategory_id'])
@@ -241,7 +246,7 @@ class LeadsController extends Controller{
             'success_msg' => $welcomeMessage,
             'new_user' => $isNewUser ? $user : null,
             'old_user' => !$isNewUser ? $user : null,
-            'partner' => $partners
+            'partner' => $partners,
         ]);
 
     }
