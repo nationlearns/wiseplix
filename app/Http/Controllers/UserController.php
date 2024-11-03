@@ -191,25 +191,25 @@ class UserController extends Controller
         // Execute the query and get the profiles
         $profile = $query->get();
 
-        // Process each profile to retrieve subcategories
-        foreach ($profile as $user_profile) {
-            $subcategoryIds = json_decode($user_profile->subcategory_id, true);
-
-            if (is_array($subcategoryIds)) {
-                $user_profile->subcategories = Subcategory::whereIn('id', $subcategoryIds)->get();
-            } else {
-                $user_profile->subcategories = collect();
+        if($profile !=  null || $profile != ''){
+            // Process each profile to retrieve subcategories
+            foreach ($profile as $user_profile) {
+                $subcategoryIds = json_decode($user_profile->subcategory_id, true);
+    
+                if (is_array($subcategoryIds)) {
+                    $user_profile->subcategories = Subcategory::whereIn('id', $subcategoryIds)->get();
+                } else {
+                    $user_profile->subcategories = collect();
+                }
             }
+    
+            $count = $profile->count();
+    
+    
+            return view('category-profile-listing', compact('category', 'profile', 'count', 'locations', 'subcategories')) ;
         }
-
-        // return $profile;
-
-        $count = $profile->count();
-
-
-
-        return view('category-profile-listing', compact('category', 'profile', 'count', 'locations', 'subcategories')) ;
-
+    
+            return view('category-profile-listing', compact('category', 'count', 'locations', 'subcategories')) ;
 
 
     }
