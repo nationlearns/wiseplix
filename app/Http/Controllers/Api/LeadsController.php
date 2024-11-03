@@ -58,11 +58,9 @@ class LeadsController extends Controller{
         ]);
 
         //  Send Email to User with password
-
-        event(new Registered($user));
-
-
         Auth::login($user);
+
+        event(new Registered($user));        
 
         return $user;
     }
