@@ -158,6 +158,11 @@ class LeadsController extends Controller{
         Log::info(Auth::user());
         Log::info('Session Data:', session()->all());
 
+        Log::info('Before Redirect: ', [
+            'session_id' => session()->getId(),
+            'user' => Auth::user(),
+        ]);
+
         $categoryData = Subcategory::select('category_id')
             ->where('id', $data['subcategory_id'])
             ->get()->toArray();

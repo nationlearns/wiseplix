@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Blogs;
-use App\Models\Categories;
 use App\Models\User;
+use App\Models\Blogs;
 use App\Models\Leads;
 use App\Models\Location;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use App\Models\AssociateProfile;
+use App\Models\Categories;
 use App\Models\Subcategory;
+use Illuminate\Http\Request;
 use App\Models\AssociateReview;
+use App\Models\AssociateProfile;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
@@ -125,6 +126,10 @@ class UserController extends Controller
 
     public function profileListing(Request $request, $slug){
 
+        Log::info('After Redirect: ', [
+            'session_id' => session()->getId(),
+            'user' => Auth::user(),
+        ]);
 
         $locations = Location::take(100)->get();
 
@@ -179,7 +184,7 @@ class UserController extends Controller
             }
         }
 
-
+        
         
         // Execute the query and get the profiles
         $profile = $query->get();
