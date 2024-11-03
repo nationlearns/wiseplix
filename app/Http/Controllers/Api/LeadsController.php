@@ -36,9 +36,9 @@ class LeadsController extends Controller{
 
         // If user already exists, return the existing user
         if ($existingUser) {
-            if(!Auth::check()){
-                Auth::login($existingUser);
-            }
+            Auth::login($existingUser);
+            // if(!Auth::check()){
+            // }
             return $existingUser;
         }
 
@@ -76,9 +76,9 @@ class LeadsController extends Controller{
     public function testCreateUser(){
         // Sample data for testing
         $data = [
-            'name' => 'Test User',
-            'email' => 'testuser@example.com',
-            'mobile' => '1234567890',
+            'name' => 'Okay Google',
+            'email' => 'testuserexample@example.com',
+            'mobile' => '+92348572371234567890',
             'location_id' => 2, // Assuming 1 is a valid location ID
             'gender' => 'male',
         ];
