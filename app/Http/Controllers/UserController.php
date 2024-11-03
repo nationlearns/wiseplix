@@ -191,8 +191,10 @@ class UserController extends Controller
         // Execute the query and get the profiles
         $profile = $query->get();
 
-        if($profile !=  null || $profile != ''){
-            // Process each profile to retrieve subcategories
+        if($profile->isEmpty()){
+            return view('category-profile-listing', compact('category', 'locations', 'subcategories')) ;
+        }
+        else{
             foreach ($profile as $user_profile) {
                 $subcategoryIds = json_decode($user_profile->subcategory_id, true);
     
@@ -207,9 +209,7 @@ class UserController extends Controller
     
     
             return view('category-profile-listing', compact('category', 'profile', 'count', 'locations', 'subcategories')) ;
-        }
-    
-            return view('category-profile-listing', compact('category', 'count', 'locations', 'subcategories')) ;
+        }            
 
 
     }
