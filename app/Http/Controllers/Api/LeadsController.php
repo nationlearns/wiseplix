@@ -152,9 +152,11 @@ class LeadsController extends Controller{
         $user = $this->createUser($data);
 
         Auth::login($user);
+        session()->regenerate();
 
         Log::info(Auth::check());
         Log::info(Auth::user());
+        Log::info('Session Data:', session()->all());
 
         $categoryData = Subcategory::select('category_id')
             ->where('id', $data['subcategory_id'])
