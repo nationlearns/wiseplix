@@ -36,7 +36,7 @@ class LeadsController extends Controller{
 
         // If user already exists, return the existing user
         if ($existingUser) {
-            if(Auth::check()){
+            if(!Auth::check()){
                 Auth::login($existingUser);
             }
             return $existingUser;
@@ -47,7 +47,7 @@ class LeadsController extends Controller{
             'name' => $data['name'],
             'email' => $data['email'],
             'mobile' => $data['mobile'],
-            'password' => Hash::make(Str::slug($data['name'], '-').'123'),
+            'password' => Hash::make('wiseplix-123'),
             'location_id' => $data['location_id'],
             'gender' => $data['gender'],
             'role' => 'user',
@@ -60,7 +60,11 @@ class LeadsController extends Controller{
             'amount' => 0.00,
         ]);
 
-        //  Send Email to User with password
+
+        Log::info('Login started'); 
+
+        $user = User::find($user->id);   
+        
         Auth::login($user);
 
         // event(new Registered($user));  
@@ -70,61 +74,6 @@ class LeadsController extends Controller{
     }
 
     public function saveUserQuestionAnswerData(Request $request){
-        
-        // $data = $request->all();
-
-        // // Check if a user with the given mobile number or email already exists
-        // $existingUser = User::where('mobile', $data['mobile'])
-        //     ->orWhere('email', $data['email'])
-        //     ->first();
-
-        // // Determine if the user is new or existing
-        // $isNewUser = !$existingUser;
-
-        // // Create or get the user
-        // $user = $this->createUser($data);
-
-        // $categoryData = Subcategory::select('sub_categories.category_id')->where('sub_categories.id', $data['subcategory_id'])->get()->toArray();
-        
-        // $category_id = $categoryData[0]['category_id'];
-
-        // $answerArray = [];
-
-        // if (isset($data['answers']) && is_array($data['answers']) && count($data['answers']) > 0) {
-        //     foreach ($data['answers'] as $ans) {
-        //         $data['question'] = $ans['question'];
-        //         $data['answer'] = $ans['answer'];
-        //         $answerArray[]['answers'] = $data;
-        //     }
-        // } else {
-        //     // If $data['answers'] is not set or empty, add a null entry to $answerArray
-        //     $answerArray[]['answers'] = null;
-        // }
-
-        // $userId = $user->id;
-
-        // $lead = Leads::create([
-        //     'user_id' => $userId,
-        //     'category_id' => $category_id,
-        //     'subcategory_id' => $data['subcategory_id'],
-        //     'answers' => !empty($data['answers']) ? json_encode($data['answers']) : null,
-        //     'name' => $data['name'],
-        //     'email' => $data['email'],
-        //     'mobile' => $data['mobile'],
-        //     'gender' => $data['gender'],
-        //     'lead_status' => 'NotSold',
-        //     'status' => '1',
-        //     'added_by' => $userId,
-        //     'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
-        //     'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
-        //     'bought_times' => '0',
-        //     'other_query' => $data['comment'],
-        //     'location_id' => $data['location_id'],
-        //     'pin_code' => $data['pinCodeValue'],
-        //     'district_name' => $data['disticName'],
-        //     'state' => $data['stateName'],
-        //     'area_name' => $data['areaName'],
-        // ]);
 
         $data = $request->all();
 
