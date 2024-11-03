@@ -36,6 +36,9 @@ class LeadsController extends Controller{
 
         // If user already exists, return the existing user
         if ($existingUser) {
+            if(Auth::check()){
+                Auth::login($existingUser);
+            }
             return $existingUser;
         }
 
@@ -60,7 +63,8 @@ class LeadsController extends Controller{
         //  Send Email to User with password
         Auth::login($user);
 
-        event(new Registered($user));        
+        // event(new Registered($user));  
+        Log::info('User Login'); 
 
         return $user;
     }
