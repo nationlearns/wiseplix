@@ -85,4 +85,3 @@ Route::get('/get-category-detail/{id}', [CategoriesController::class, 'getCatego
 
 Route::get('/getAllStates', [CategoriesController::class, 'getUniqueStates']);
 Route::post('/getDistrictByState', [CategoriesController::class, 'getUniqueDistrictsByState']);
-Route::post('/test-create-user', [LeadsController::class, 'testCreateUser']);
