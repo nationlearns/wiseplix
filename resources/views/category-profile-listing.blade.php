@@ -195,7 +195,8 @@
                             </div>
 
                             <!--BLock 1-->
-                            @if ($count > 0)
+                            
+                            @if (isset($count) && ($count > 0))
                                 @foreach ($profile as $item)
 
                                     <div class="col-md-9 my-4">
