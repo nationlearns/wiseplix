@@ -73,24 +73,65 @@ class LeadsController extends Controller{
         return $user;
     }
 
-    public function testCreateUser(){
-        // Sample data for testing
-        $data = [
-            'name' => 'Okay Google',
-            'email' => 'testuserexample@example.com',
-            'mobile' => '+92348572371234567890',
-            'location_id' => 2, // Assuming 1 is a valid location ID
-            'gender' => 'male',
-        ];
+    public function testCreateUser(Request $request)
+    {
+        // Validate the request data
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'mobile' => 'required|numeric|unique:users,mobile',
+            'location_id' => 'required|integer',
+            'gender' => 'required|string|in:male,female,other',
+        ]);
 
-        // Call createUser method with sample data
-        $user = $this->createUser($data);
+        // Check if a user with the given mobile number or email already exists
+        $existingUser = User::where('mobile', $data['mobile'])
+            ->orWhere('email', $data['email'])
+            ->first();
 
-        // Output the created user and their login status
+        // If user already exists, log them in and return their details
+        if ($existingUser) {
+            if (!Auth::check()) {
+                Auth::login($existingUser);
+            }
+            return response()->json([
+                'status' => 'existing_user',
+                'user' => $existingUser,
+                'is_authenticated' => Auth::check(),
+                'authenticated_user' => Auth::user(),
+            ]);
+        }
+
+        // Create a new user
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'mobile' => $data['mobile'],
+            'password' => Hash::make('wiseplix-123'), // Set a default password for testing
+            'location_id' => $data['location_id'],
+            'gender' => $data['gender'],
+            'role' => 'user',
+            'via' => 'nl-web',
+        ]);
+
+        // Create a wallet for the new user
+        Wallet::create([
+            'user_id' => $user->id,
+            'amount' => 0.00,
+        ]);
+
+        // Log in the newly created user
+        Auth::login($user);
+
+        // Log the event (optional)
+        Log::info('User created and logged in:', ['user_id' => $user->id]);
+
+        // Return the user and their authentication status
         return response()->json([
+            'status' => 'new_user_created',
             'user' => $user,
-            'is_authenticated' => auth()->check(),
-            'authenticated_user' => auth()->user()
+            'is_authenticated' => Auth::check(),
+            'authenticated_user' => Auth::user(),
         ]);
     }
 
