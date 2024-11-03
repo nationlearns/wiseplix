@@ -64,7 +64,7 @@ class LeadsController extends Controller{
         Log::info('Login started'); 
 
         $user = User::find($user->id);   
-        
+
         Auth::login($user);
 
         // event(new Registered($user));  
@@ -72,6 +72,28 @@ class LeadsController extends Controller{
 
         return $user;
     }
+
+    public function testCreateUser(){
+        // Sample data for testing
+        $data = [
+            'name' => 'Test User',
+            'email' => 'testuser@example.com',
+            'mobile' => '1234567890',
+            'location_id' => 2, // Assuming 1 is a valid location ID
+            'gender' => 'male',
+        ];
+
+        // Call createUser method with sample data
+        $user = $this->createUser($data);
+
+        // Output the created user and their login status
+        return response()->json([
+            'user' => $user,
+            'is_authenticated' => auth()->check(),
+            'authenticated_user' => auth()->user()
+        ]);
+    }
+
 
     public function saveUserQuestionAnswerData(Request $request){
 
