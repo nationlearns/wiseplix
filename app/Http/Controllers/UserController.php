@@ -124,26 +124,6 @@ class UserController extends Controller
 
 
     public function profileListing(Request $request, $slug){
-        // $category = Categories::where('slug', $slug)->first();
-
-        // $profile = AssociateProfile::where('category_id', $category->id)->get();
-
-        // foreach ($profile as $user_profile) {
-        //     // Decode the JSON array of subcategory IDs if it's valid
-        //     $subcategoryIds = json_decode($user_profile->subcategory_id, true);
-
-        //     if (is_array($subcategoryIds)) {
-        //         // Fetch the subcategory names
-        //         $user_profile->subcategories = Subcategory::whereIn('id', $subcategoryIds)->get();
-        //     } else {
-        //         $user_profile->subcategories = collect(); // Return an empty collection if invalid
-        //     }
-        // }
-        // $count = $profile->count();
-
-
-
-
 
 
         $locations = Location::take(100)->get();
@@ -168,10 +148,23 @@ class UserController extends Controller
         
 
         // Apply Subcategory filter if provided
+        // if ($request->has('subcategory_id') && !empty($request->subcategory_id)) {
+        //     // Assuming subcategory_id is stored as a JSON array in the database
+        //     $query->whereJsonContains('subcategory_id', (int)$request->subcategory_id);
+        // }
+
+        // Apply Subcategory filter if provided
         if ($request->has('subcategory_id') && !empty($request->subcategory_id)) {
-            // Assuming subcategory_id is stored as a JSON array in the database
-            $query->whereJsonContains('subcategory_id', (int)$request->subcategory_id);
+            $subcategoryId = (int) $request->subcategory_id;
+
+            $query->whereNotNull('subcategory_id') // Ensure it's not NULL
+                ->where('subcategory_id', '!=', '') // Ensure it's not an empty string
+                ->where(function ($q) use ($subcategoryId) {
+                    $q->whereJsonContains('subcategory_id', $subcategoryId)
+                        ->orWhereRaw("JSON_VALID(subcategory_id) = 1"); // Optional check for valid JSON
+                });
         }
+
 
             // Apply Reviews Filter
         if ($request->filled('min_rating')) {
