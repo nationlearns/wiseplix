@@ -58,81 +58,15 @@ class LeadsController extends Controller{
         Wallet::create([
             'user_id' => $user->id,
             'amount' => 0.00,
-        ]);
+        ]);  
 
+        Auth::login($user);
+        
+        session()->regenerate();
 
-        // Log::info('Login started'); 
-
-        // $user = User::find($user->id);   
-
-        // Auth::login($user);
-
-        // event(new Registered($user));  
-        // Log::info('User Login'); 
+        event(new Registered($user)); 
 
         return $user;
-    }
-
-    public function testCreateUser(Request $request)
-    {
-        // Validate the request data
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'mobile' => 'required|numeric|unique:users,mobile',
-            'location_id' => 'required|integer',
-            'gender' => 'required|string|in:male,female,other',
-        ]);
-
-        // Check if a user with the given mobile number or email already exists
-        $existingUser = User::where('mobile', $data['mobile'])
-            ->orWhere('email', $data['email'])
-            ->first();
-
-        // If user already exists, log them in and return their details
-        if ($existingUser) {
-            if (!Auth::check()) {
-                Auth::login($existingUser);
-            }
-            return response()->json([
-                'status' => 'existing_user',
-                'user' => $existingUser,
-                'is_authenticated' => Auth::check(),
-                'authenticated_user' => Auth::user(),
-            ]);
-        }
-
-        // Create a new user
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'mobile' => $data['mobile'],
-            'password' => Hash::make('wiseplix-123'), // Set a default password for testing
-            'location_id' => $data['location_id'],
-            'gender' => $data['gender'],
-            'role' => 'user',
-            'via' => 'nl-web',
-        ]);
-
-        // Create a wallet for the new user
-        Wallet::create([
-            'user_id' => $user->id,
-            'amount' => 0.00,
-        ]);
-
-        // Log in the newly created user
-        Auth::login($user);
-
-        // Log the event (optional)
-        Log::info('User created and logged in:', ['user_id' => $user->id]);
-
-        // Return the user and their authentication status
-        return response()->json([
-            'status' => 'new_user_created',
-            'user' => $user,
-            'is_authenticated' => Auth::check(),
-            'authenticated_user' => Auth::user(),
-        ]);
     }
 
 
@@ -150,18 +84,6 @@ class LeadsController extends Controller{
 
         // Create or get the user
         $user = $this->createUser($data);
-
-        Auth::login($user);
-        session()->regenerate();
-
-        Log::info(Auth::check());
-        Log::info(Auth::user());
-        Log::info('Session Data:', session()->all());
-
-        Log::info('Before Redirect: ', [
-            'session_id' => session()->getId(),
-            'user' => Auth::user(),
-        ]);
 
         $categoryData = Subcategory::select('category_id')
             ->where('id', $data['subcategory_id'])

@@ -126,11 +126,6 @@ class UserController extends Controller
 
     public function profileListing(Request $request, $slug){
 
-        Log::info('After Redirect: ', [
-            'session_id' => session()->getId(),
-            'user' => Auth::user(),
-        ]);
-
         $locations = Location::take(100)->get();
 
         // Retrieve the category by slug
