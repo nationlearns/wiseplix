@@ -56,9 +56,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    public function sendEmailVerificationNotification() {
-        $this->notify(new \App\Notifications\CustomVerifyEmailQueued);
-    }
+    // public function sendEmailVerificationNotification() {
+    //     $this->notify(new \App\Notifications\CustomVerifyEmailQueued);
+    // }
 
     public function associate(){
         return $this->hasOne('App\Models\AssociateProfile', 'user_id');
