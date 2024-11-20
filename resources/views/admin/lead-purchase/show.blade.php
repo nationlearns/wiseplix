@@ -37,8 +37,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($data->getPurchaseDetails as $purchaseDetail)
-                                        <tr style="border-bottom:1px solid">                                            
+
+                                    @forelse ($data->getPurchaseDetails as $purchaseDetail)
+                                         <tr style="border-bottom:1px solid">                                            
                                             <td style="border:1px solid lightgray">
                                                 <p class="mb-1"><b>ID:</b>{{$purchaseDetail->user->id}}</p>
                                                 <p class="mb-1"><b>Name:</b>{{$purchaseDetail->user->name}}</p>
@@ -56,7 +57,13 @@
                                                 <p>{{$purchaseDetail['message']}}</p>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>    
+                                            <td colspan="4">
+                                                -
+                                            </td>
+                                        </tr>
+                                    @endforelse
                                         
                                 </tbody>
                             </table>
