@@ -32,7 +32,7 @@ class SendLeadNotificationEmail implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::mailer('smtp')->to($this->partner->email)->send(
+        Mail::mailer('smtp')->to($this->partner->associate->email)->send(
             new LeadNotificationEmail(
                 $this->lead,
                 $this->partner,
