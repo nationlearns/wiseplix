@@ -156,13 +156,15 @@ class LeadsController extends Controller{
 
         // Retrieve all partners who match the category, subcategory, and city
         $partners = User::where('role', 'pro')
-                        ->whereHas('associate', function ($query) use ($category_id, $lead) {
-                            $query->where([['category_id', $category_id], ['location_id', $lead['location_id']]]);
-                        })->get();
+                        // ->whereHas('associate', function ($query) use ($category_id, $lead) {
+                        //     $query->where([['category_id', $category_id], ['location_id', $lead['location_id']]]);
+                        // })
+                        
+                        ->get();
 
-        \Log::info($partners);
+        // \Log::info($partners);
 
-        \Log::info($data);
+        // \Log::info($data);
 
         // Send the notification email to each partner
         foreach ($partners as $partner) {
